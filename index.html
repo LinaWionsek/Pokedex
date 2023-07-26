@@ -11,12 +11,15 @@
 
 
         async function loadAllPokemon() {
-
-            for (let i = 1; i < 11; i++) {
+            let j = 1
+            for (let i = j; i < j + 10; i++) {
                 await loadPokemon(i)
                 renderPokemonPreviewHTML(i);
             }
         }
+
+
+
 
 
         function renderPokemonPreviewHTML(i) {
@@ -26,6 +29,15 @@
                         <img src="${allPokemon[i - 1]['sprites']['other']['official-artwork']['front_default']}"/>
                     </div>
                 `;
+        }
+
+
+
+        async function loadPokemon(i) {
+            let url = 'https://pokeapi.co/api/v2/pokemon/' + i;
+            let response = await fetch(url);
+            let currentPokemon = await response.json(); // JSON 
+            allPokemon.push(currentPokemon);
         }
 
         function findColor(i) {
@@ -45,15 +57,6 @@
                     return 'white'
             }
         }
-
-        async function loadPokemon(i) {
-            let url = 'https://pokeapi.co/api/v2/pokemon/' + i;
-            let response = await fetch(url);
-            let currentPokemon = await response.json(); // JSON 
-            allPokemon.push(currentPokemon);
-        }
-
-
 
 
         // // Name, Bild
