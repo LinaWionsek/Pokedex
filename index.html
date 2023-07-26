@@ -7,21 +7,60 @@
     <title>Document</title>
 
     <script>
-        let currentPokemon;
+        let allPokemon = []
 
-        async function loadPokemon() {
-            let url = 'https://pokeapi.co/api/v2/pokemon/charmander';
+
+        async function loadAllPokemon() {
+
+            for (let i = 1; i < 11; i++) {
+                await loadPokemon(i)
+                renderPokemonPreviewHTML(i);
+            }
+        }
+
+
+        function renderPokemonPreviewHTML(i) {
+            document.getElementById('pokedex').innerHTML += `
+                    <div style = "background-color: ${findColor(i)}">
+                        <div>${allPokemon[i - 1]['name']}</div>
+                        <img src="${allPokemon[i - 1]['sprites']['other']['official-artwork']['front_default']}"/>
+                    </div>
+                `;
+        }
+
+        function findColor(i) {
+
+            let type = allPokemon[i - 1]['types'][0]['type']['name']
+            switch (type) {
+                case 'grass':
+                case 'bug':
+                    return 'green'
+                case 'fire':
+                    return '#fb6c6c'
+                case 'water':
+                    return 'blue'
+
+                default:
+                    console.log(type)
+                    return 'white'
+            }
+        }
+
+        async function loadPokemon(i) {
+            let url = 'https://pokeapi.co/api/v2/pokemon/' + i;
             let response = await fetch(url);
-            currentPokemon = await response.json();
-            console.log(currentPokemon)
-            renderPokemonInfo()
+            let currentPokemon = await response.json(); // JSON 
+            allPokemon.push(currentPokemon);
         }
 
-        // Name, Bild
-        function renderPokemonInfo() {
-            document.getElementById('pokemonName').innerHTML = currentPokemon['name']
-            document.getElementById('pokemonImage').src = currentPokemon['sprites']['other']['official-artwork']['front_default']
-        }
+
+
+
+        // // Name, Bild
+        // function renderPokemonInfo(currentPokemon) {
+        //     document.getElementById('pokemonName').innerHTML = currentPokemon['name']
+        //     document.getElementById('pokemonImage').src = currentPokemon['sprites']['other']['official-artwork']['front_default']
+        // }
 
     </script>
 
@@ -69,6 +108,7 @@
         #pokemonName::first-letter {
             text-transform: uppercase;
         }
+
         #pokemonImage {
             height: 300px;
             margin-top: -224px;
@@ -88,27 +128,31 @@
 
 </head>
 
-<body onload="loadPokemon()">
-
-    <div class="pokemonCardContainer">
+<body onload="loadAllPokemon()">
+    <div id="pokedex"></div>
+    <div class="pokemonCardContainer" style="display: none;">
 
         <div id="pokemonCard">
 
             <div id="pokemon">
-                
+
             </div>
 
             <div class="info-container">
                 <img id="pokemonImage">
                 <div id="pokemonName">Name</div>
                 <div id="stats">
-                  
+                    <div id="hp"></div>
+                    <div id="hpValue"></div>
+
                 </div>
             </div>
 
         </div>
 
     </div>
+
+
 
 
 
