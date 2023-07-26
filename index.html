@@ -20,7 +20,7 @@
         // Name, Bild
         function renderPokemonInfo() {
             document.getElementById('pokemonName').innerHTML = currentPokemon['name']
-            document.getElementById('pokedex').innerHTML += `<img src="${currentPokemon['sprites']['other']['official-artwork']['front_default']}">`
+            document.getElementById('pokemonImage').src = currentPokemon['sprites']['other']['official-artwork']['front_default']
         }
 
     </script>
@@ -28,17 +28,61 @@
     <style>
         body {
             margin: 0;
+            height: 100vh;
+            background-color: #f6f8fc;
+            font-family: 'Lato', sans-serif;
+            font-family: 'Roboto', sans-serif;
         }
 
-        #pokedex {
+        #content {
+            width: 50vw;
+        }
+
+        .pokemonCardContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        #pokemonCard {
+            display: flex;
+            flex-direction: column;
+            width: 50vw;
+
+
+        }
+
+        #pokemon {
+            border-top-left-radius: 40px;
+            border-top-right-radius: 40px;
+            width: 100%;
             min-height: 50vh;
-            background-color: rgb(255, 28, 28);
             color: white;
-            padding-top: 1px;
+            display: flex;
+            justify-content: center;
+            background-color: #fb6c6c;
+
         }
 
-        #pokedex img {
-            min-height: 300px;
+        #pokemonName::first-letter {
+            text-transform: uppercase;
+        }
+        #pokemonImage {
+            height: 300px;
+            margin-top: -224px;
+        }
+
+        .info-container {
+            background-color: white;
+            border-radius: 40px;
+            margin-top: -40px;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 20px;
         }
     </style>
 
@@ -46,9 +90,28 @@
 
 <body onload="loadPokemon()">
 
-    <div id="pokedex">
-        <h1 id="pokemonName">Name</h1>
+    <div class="pokemonCardContainer">
+
+        <div id="pokemonCard">
+
+            <div id="pokemon">
+                
+            </div>
+
+            <div class="info-container">
+                <img id="pokemonImage">
+                <div id="pokemonName">Name</div>
+                <div id="stats">
+                  
+                </div>
+            </div>
+
+        </div>
+
     </div>
+
+
+
 
 </body>
 
