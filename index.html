@@ -9,10 +9,10 @@
     <script>
         let allPokemon = []
 
-
+        // 9 oder 19 durchlauefe bei 152 pokemon j
         async function loadAllPokemon() {
             let j = 1
-            for (let i = j; i < j + 10; i++) {
+            for (let i = j; i < j + 50; i++) {
                 await loadPokemon(i)
                 renderPokemonPreviewHTML(i);
             }
@@ -24,8 +24,8 @@
 
         function renderPokemonPreviewHTML(i) {
             document.getElementById('pokedex').innerHTML += `
-                    <div style = "background-color: ${findColor(i)}">
-                        <div>${allPokemon[i - 1]['name']}</div>
+                    <div class="previewCard" style = "background-color: ${findColor(i)}">
+                        <div class="previewCardPokemonName"><h4>${allPokemon[i - 1]['name']}<h4></div>
                         <img src="${allPokemon[i - 1]['sprites']['other']['official-artwork']['front_default']}"/>
                     </div>
                 `;
@@ -45,16 +45,34 @@
             let type = allPokemon[i - 1]['types'][0]['type']['name']
             switch (type) {
                 case 'grass':
+                    return '#75b658' //#75b658 3 #c5dcae 2 #46d1b1 1
                 case 'bug':
-                    return 'green'
+                    return '#c7de9f'
                 case 'fire':
                     return '#fb6c6c'
                 case 'water':
-                    return 'blue'
+                    return '#77befe'
+                case 'electric':
+                    return '#ffd86f' //#ffce4b-dunkler
+                case 'ghost':
+                    return '#8d5c9f'//#8d5c9f #7d528d 1
+                case 'fighting':
+                    return '#cb7f72' //#cfd6e3 #c43027 -rot #bb5544
+                case 'ground':
+                    return '#faebc2'
+                case 'rock':
+                    return '#49465b'
+                case 'psychic':
+                    return '#ef7295'
+                case 'poison':
+                    return '#bd94e0'
 
+                // case 'normal': 
+                //     return '#faebc2'
+                // #9553cd
                 default:
                     console.log(type)
-                    return 'white'
+                return 'lightgrey'
             }
         }
 
@@ -73,11 +91,50 @@
             height: 100vh;
             background-color: #f6f8fc;
             font-family: 'Lato', sans-serif;
-            font-family: 'Roboto', sans-serif;
         }
 
-        #content {
-            width: 50vw;
+        .m-top80 {
+            margin-top: 80px;
+        }
+
+        .headline {
+            text-align: center;
+        }
+
+        #pokedex {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 1%;
+        }
+
+        .previewCardPokemonName::first-letter {
+            text-transform: uppercase;
+        }
+
+
+        .previewCard {
+            padding: 10px;
+            border-radius: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            margin: 1%;
+            color: white;
+            font-size: x-large;
+            height: 300px;
+            width: 400px;
+            max-height: 300px;
+            max-width: 400px;
+        }
+
+        .previewCard:hover {
+            cursor: pointer;
+        }
+        .previewCard img {
+            height: 200px;
+            width: 200px;
         }
 
         .pokemonCardContainer {
@@ -132,31 +189,36 @@
 </head>
 
 <body onload="loadAllPokemon()">
-    <div id="pokedex"></div>
-    <div class="pokemonCardContainer" style="display: none;">
+    <div class="m-top80">
+        <h1 class="headline">POKEDEX</h1>
+        <div id="pokedex"></div>
+        <div class="pokemonCardContainer" style="display: none;">
 
-        <div id="pokemonCard">
+            <div id="pokemonCard">
 
-            <div id="pokemon">
-
-            </div>
-
-            <div class="info-container">
-                <img id="pokemonImage">
-                <div id="pokemonName">Name</div>
-                <div id="stats">
-                    <div id="hp"></div>
-                    <div id="hpValue"></div>
+                <div id="pokemon">
 
                 </div>
+
+                <div class="info-container">
+                    <img id="pokemonImage">
+                    <div id="pokemonName">Name</div>
+                    <div id="stats">
+                        <div id="hp"></div>
+                        <div id="hpValue"></div>
+
+                    </div>
+                </div>
+
             </div>
 
         </div>
 
+
+
+
+
     </div>
-
-
-
 
 
 
