@@ -8,29 +8,32 @@
 
     <script>
         let allPokemon = []
-
         // 9 oder 19 durchlauefe bei 152 pokemon j
         async function loadAllPokemon() {
             let j = 1
-            for (let i = j; i < j + 50; i++) {
+            for (let i = j; i < j + 98; i++) {
                 await loadPokemon(i)
                 renderPokemonPreviewHTML(i);
             }
         }
 
-
-
-
-
         function renderPokemonPreviewHTML(i) {
-            document.getElementById('pokedex').innerHTML += `
+                document.getElementById('pokedex').innerHTML += `
                     <div class="previewCard" style = "background-color: ${findColor(i)}">
                         <div class="previewCardPokemonName"><h4>${allPokemon[i - 1]['name']}<h4></div>
+                        <div>#${allPokemon[i - 1]['id']}</div>
+                        <div>${allPokemon[i - 1]['types']['0']['type']['name']}</div>
+                        <div id ="typeTwo"></div>
                         <img src="${allPokemon[i - 1]['sprites']['other']['official-artwork']['front_default']}"/>
                     </div>
                 `;
         }
 
+        // function addSecondType(i) {
+            // let secondType = allPokemon[i - 1]['types']['1']['type']['name'];
+        //     if (secondType === !undefined) 
+        //     document.getElementById('typeTwo').style.visibility = "hidden";
+        // }
 
 
         async function loadPokemon(i) {
@@ -40,6 +43,7 @@
             allPokemon.push(currentPokemon);
         }
 
+        
         function findColor(i) {
 
             let type = allPokemon[i - 1]['types'][0]['type']['name']
@@ -72,7 +76,7 @@
                 // #9553cd
                 default:
                     console.log(type)
-                return 'lightgrey'
+                    return 'lightgrey'
             }
         }
 
@@ -96,7 +100,9 @@
         .m-top80 {
             margin-top: 80px;
         }
-
+#typeTwo {
+    visibility: visible;
+}
         .headline {
             text-align: center;
         }
@@ -119,12 +125,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            flex: 1;
+            /* flex: 1; */
             margin: 1%;
             color: white;
             font-size: x-large;
-            height: 300px;
-            width: 400px;
+            height: 250px;
+            width: 300px;
             max-height: 300px;
             max-width: 400px;
         }
@@ -132,9 +138,10 @@
         .previewCard:hover {
             cursor: pointer;
         }
+
         .previewCard img {
-            height: 200px;
-            width: 200px;
+            height: 100px;
+            width: 100px;
         }
 
         .pokemonCardContainer {
@@ -192,26 +199,19 @@
     <div class="m-top80">
         <h1 class="headline">POKEDEX</h1>
         <div id="pokedex"></div>
+
         <div class="pokemonCardContainer" style="display: none;">
-
             <div id="pokemonCard">
-
-                <div id="pokemon">
-
-                </div>
-
+                <div id="pokemon"></div>
                 <div class="info-container">
                     <img id="pokemonImage">
                     <div id="pokemonName">Name</div>
                     <div id="stats">
                         <div id="hp"></div>
                         <div id="hpValue"></div>
-
                     </div>
                 </div>
-
             </div>
-
         </div>
 
 
