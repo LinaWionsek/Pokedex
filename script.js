@@ -2,31 +2,31 @@ let allPokemon = []
 // 9 oder 19 durchlauefe bei 152 pokemon j
 async function loadAllPokemon() {
     let j = 1
-    for (let i = j; i < j + 98; i++) {
+    for (let i = j; i < j + 50; i++) {
         await loadPokemon(i)
         renderPokemonPreviewHTML(i);
     }
 }
 
 function renderPokemonPreviewHTML(i) {
-    let type = allPokemon[i - 1]['types'][0]['type']['name'];
+    let types = allPokemon[i - 1]['types'];
+    let type = types[0]['type']['name'];
+    let secondType = '';
+    if (types[1]) {
+        secondType = types[1]['type']['name'];
+    }
+
 
     document.getElementById('pokedex').innerHTML += `
             <div class="previewCard" style = "background-color: ${findColor(i, type)}">
                 <div class="previewCardPokemonName"><h4>${allPokemon[i - 1]['name']}<h4></div>
                 <div>#${allPokemon[i - 1]['id']}</div>
-                <div>${allPokemon[i - 1]['types']['0']['type']['name']}</div> 
-                <div id ="typeTwo"></div>
+                <div>${type}</div> 
+                <div id ="typeTwo">${secondType}</div>
                 <img src="${allPokemon[i - 1]['sprites']['other']['official-artwork']['front_default']}"/>
             </div>
-        `;
+               `;
 }
-
-// function addSecondType(i) {
-// let secondType = allPokemon[i - 1]['types']['1']['type']['name'];
-//     if (secondType === !undefined) 
-//     document.getElementById('typeTwo').style.visibility = "hidden";
-// }
 
 
 async function loadPokemon(i) {
