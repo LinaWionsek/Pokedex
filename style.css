@@ -87,7 +87,9 @@ h4 {
 
 .pokemon-type-tag {
     border: 1px solid;
-    min-width: 75px !important;
+    min-width: 75px;
+    text-align: center;
+    padding: 2px;
 }
 
 .justify-content-around {
@@ -127,8 +129,8 @@ h4 {
     text-transform: uppercase;
 }
 
-.previewCard-Pokemon-Name::first-letter {
-    text-transform: uppercase !important;
+#pokemonNamePreview::first-letter {
+    text-transform: uppercase;
 }
 
 #pokemonImage {

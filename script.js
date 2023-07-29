@@ -2,7 +2,7 @@ let allPokemon = []
 // 9 oder 19 durchlauefe bei 152 pokemon j
 async function loadAllPokemon() {
     let j = 1
-    for (let i = j; i < j + 50; i++) {
+    for (let i = j; i < j + 150; i++) {
         await loadPokemon(i)
         renderPokemonPreviewHTML(i);
     }
@@ -20,7 +20,7 @@ function renderPokemonPreviewHTML(i) {
     document.getElementById('pokedex').innerHTML += `
             <div class="previewCard" style = "background-color: ${findColor(i, type)}">
                 <div class="previewCard-Pokemon-Id">#${allPokemon[i - 1]['id']}</div>
-                <div class="previewCard-Pokemon-Name"><h4>${allPokemon[i - 1]['name']}<h4></div>
+                <div id="pokemonNamePreview"><h4>${allPokemon[i - 1]['name']}<h4></div>
                 
                 <div class="justify-content-around">
                     <div class="previewCard-Pokemon-Types">
