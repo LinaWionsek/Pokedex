@@ -19,13 +19,18 @@ function renderPokemonPreviewHTML(i) {
 
     document.getElementById('pokedex').innerHTML += `
             <div class="previewCard" style = "background-color: ${findColor(i, type)}">
-                <div class="previewCardPokemonName"><h4>${allPokemon[i - 1]['name']}<h4></div>
-                <div>#${allPokemon[i - 1]['id']}</div>
-                <div>${type}</div> 
-                <div id ="typeTwo">${secondType}</div>
-                <img src="${allPokemon[i - 1]['sprites']['other']['official-artwork']['front_default']}"/>
+                <div class="previewCard-Pokemon-Id">#${allPokemon[i - 1]['id']}</div>
+                <div class="previewCard-Pokemon-Name"><h4>${allPokemon[i - 1]['name']}<h4></div>
+                
+                <div class="justify-content-around">
+                    <div class="previewCard-Pokemon-Types">
+                        <div class="pokemon-type-tag">${type}</div> 
+                        <div class="pokemon-type-tag" id ="typeTwo">${secondType}</div>
+                    </div> 
+                    <img src="${allPokemon[i - 1]['sprites']['other']['official-artwork']['front_default']}"/>
+                </div>
             </div>
-               `;
+                `;
 }
 
 
