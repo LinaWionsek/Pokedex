@@ -13,7 +13,7 @@ function renderPokemonPreviewHTML(i) {
     let type = types[0]['type']['name'];
     let secondType = '';
     if (types[1]) {
-        secondType = types[1]['type']['name'];
+        secondType = `<div class="pokemon-type-tag typeTwo">${types[1]['type']['name']}</div>`;
     }
 
 
@@ -25,7 +25,7 @@ function renderPokemonPreviewHTML(i) {
                 <div class="justify-content-around">
                     <div class="previewCard-Pokemon-Types">
                         <div class="pokemon-type-tag">${type}</div> 
-                        <div class="pokemon-type-tag" id ="typeTwo">${secondType}</div>
+                        ${secondType}
                     </div> 
                     <img src="${allPokemon[i - 1]['sprites']['other']['official-artwork']['front_default']}"/>
                 </div>
