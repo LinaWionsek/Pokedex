@@ -14,10 +14,17 @@ h4 {
     margin-top: 80px;
 }
 
-#typeTwo {
-    visibility: visible;
+
+.justify-content-around {
+    display: flex;
+    justify-content: space-between;
 }
 
+.d-none {
+    display: none;
+  }
+
+/* -------------------------------------------------------------------------------- */
 .headline {
     text-align: center;
 }
@@ -29,29 +36,17 @@ h4 {
     padding: 1%;
 }
 
-.previewCardPokemonName::first-letter {
-    text-transform: uppercase;
-}
-
-.d-none {
-   border: 0;
-}
-
 .previewCard {
     border-radius: 20px;
     border: 3px solid;
     border-color: black;
     display: flex;
     flex-direction: column;
-    /*  align-items: center; */
     padding: 20px;
     margin: 1%;
     color: black;
     font-size: x-large;
-    /* height: 250px; */
     width: 300px;
-    /* max-height: 300px;
-    max-width: 400px;  */
 }
 
 .previewCard:hover {
@@ -59,10 +54,9 @@ h4 {
 }
 
 .previewCard img {
-    height: 150px;
-    width: 150px;
+    height: 180px;
+    width: 180px;
 }
-
 
 .previewCard-Pokemon-Id {
     display: flex;
@@ -70,12 +64,9 @@ h4 {
     width: 100%;
 }
 
-.previewCard-Pokemon-Name {
-    display: flex;
-    justify-content: space-evenly;
-    width: 100%;
+.previewCard-Pokemon-Name :first-letter {
+    text-transform: uppercase;
 }
-
 
 .previewCard-Pokemon-Types {
     display: flex;
@@ -87,22 +78,40 @@ h4 {
 .pokemon-type-tag {
     border: 2px solid;
     border-radius: 16px;
-    min-width: 75px;
+    width: 100px;
     text-align: center;
     padding: 2px;
 }
 
-.justify-content-around {
-    display: flex;
-    justify-content: space-between;
+#typeTwo {
+    visibility: visible;
 }
 
-.pokemonCardContainer {
+
+
+/* --------------------------------------POKEMON_CARD------------------------------------------ */
+#pokemonCardContainer {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
     width: 100%;
+    background-color: #f6f8fc;
+    height: 100%;
+    width: 100%;
+}
+
+.bg {
+    z-index: 999;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
 }
 
 #pokemonCard {
@@ -122,19 +131,6 @@ h4 {
     background-color: #fb6c6c;
 }
 
-#pokemonName::first-letter {
-    text-transform: uppercase;
-}
-
-#pokemonNamePreview::first-letter {
-    text-transform: uppercase;
-}
-
-#pokemonImage {
-    height: 300px;
-    margin-top: -224px;
-}
-
 .info-container {
     background-color: white;
     border-radius: 20px;
@@ -145,3 +141,13 @@ h4 {
     align-items: center;
     padding-bottom: 20px;
 }
+
+#pokemonImage {
+    height: 300px;
+    margin-top: -224px;
+}
+
+.remove-scrolling { 
+    height: 100%; 
+    overflow: hidden; 
+  } 

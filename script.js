@@ -2,7 +2,7 @@ let allPokemon = []
 // 9 oder 19 durchlauefe bei 152 pokemon j
 async function loadAllPokemon() {
     let j = 1
-    for (let i = j; i < j + 150; i++) {
+    for (let i = j; i < j + 100; i++) {
         await loadPokemon(i)
         renderPokemonPreviewHTML(i);
     }
@@ -15,12 +15,12 @@ function renderPokemonPreviewHTML(i) {
     if (types[1]) {
         secondType = `<div class="pokemon-type-tag typeTwo">${types[1]['type']['name']}</div>`;
     }
-
+    
 
     document.getElementById('pokedex').innerHTML += `
-            <div class="previewCard" style = "background-color: ${findColor(i, type)}">
+            <div onclick="openPokemonCard()" class="previewCard" style = "background-color: ${findColor(i, type)}">
                 <div class="previewCard-Pokemon-Id">#${allPokemon[i - 1]['id']}</div>
-                <div id="pokemonNamePreview"><h4>${allPokemon[i - 1]['name']}<h4></div>
+                <div class="previewCard-Pokemon-Name"><h4>${allPokemon[i - 1]['name']}<h4></div>
                 
                 <div class="justify-content-around">
                     <div class="previewCard-Pokemon-Types">
@@ -79,8 +79,17 @@ function findColor(i, type) {
 }
 
 
-// // Name, Bild
-// function renderPokemonInfo(currentPokemon) {
-//     document.getElementById('pokemonName').innerHTML = currentPokemon['name']
-//     document.getElementById('pokemonImage').src = currentPokemon['sprites']['other']['official-artwork']['front_default']
-// }
+function openPokemonCard() {
+    document.getElementById('hide_pokemon_card').classList.remove("d-none");
+    disableScroll();
+}
+
+
+function disableScroll() {
+    document.body.classList.add("remove-scrolling");
+}
+
+
+function enableScroll() {
+    document.body.classList.remove("remove-scrolling");
+}

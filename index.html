@@ -11,18 +11,20 @@
 </head>
 
 <body onload="loadAllPokemon()">
-    <div class="m-top80">
+    <div class="m-top80" >
         <h1 class="headline">POKEDEX</h1>
         <div id="pokedex"></div>
-        <div class="pokemonCardContainer" style="display: none;">
-            <div id="pokemonCard">
-                <div id="pokemon"></div>
-                <div class="info-container">
-                    <img id="pokemonImage">
-                    <div id="pokemonName">Name</div>
-                    <div id="stats">
-                        <div id="hp"></div>
-                        <div id="hpValue"></div>
+        <div id="hide_pokemon_card" class="d-none">
+            <div id="pokemonCardContainer" class="bg">
+                <div id="pokemonCard">
+                    <div id="pokemon"></div>
+                    <div class="info-container">
+                        <img id="pokemonImage">
+                        <div id="pokemonName">Name</div>
+                        <div id="stats">
+                            <div id="hp"></div>
+                            <div id="hpValue"></div>
+                        </div>
                     </div>
                 </div>
             </div>
