@@ -117,7 +117,7 @@ h4 {
 #pokemonCard {
     display: flex;
     flex-direction: column;
-    width: 50vw;
+    width: 40vw;
 }
 
 #pokemon {
@@ -142,7 +142,7 @@ h4 {
     padding-bottom: 20px;
 }
 
-#pokemonImage {
+.pokemonImage {
     height: 300px;
     margin-top: -224px;
 }
