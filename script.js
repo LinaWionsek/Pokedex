@@ -39,8 +39,9 @@ function createPreviewCardHTML(pokemon) {
         secondType = `<div class="pokemon-type-tag typeTwo">${types[1]['type']['name']}</div>`;
     }
 
-    return /*html*/ `
-    <div onclick="openPokemonCard(${pokemon})" class="previewCard" style = "background-color: ${findColor(pokemon, type)}">
+   
+
+    return /*html*/ `<div class="previewCard" id="openCard" style = "background-color: ${findColor(pokemon, type)}">
                 <div class="previewCard-Pokemon-Id">#${pokemon['id']}</div>
                 <div class="previewCard-Pokemon-Name"><h4>${pokemon['name']}<h4></div>
                 
@@ -55,17 +56,22 @@ function createPreviewCardHTML(pokemon) {
     `;
 }
 
+// function 
+/* var params = pokemon;
+var str = '<div onclick="openPokemonCard('
+    + JSON.stringify(params)
+    + ')"class="previewCard" style = "background-color: ${findColor(pokemon, type)}">';
+document.write(str); */
 
-// openPokemonCard(${pokemon})
 
-/* function openPokemonCard(pokemon) {
+function openPokemonCard(pokemon) {
     document.getElementById('hide_pokemon_card').classList.remove("d-none");
     renderPokemonCard(pokemon)
     disableScroll();
 }
- */
 
-/* function renderPokemonCard(pokemon) {
+
+function renderPokemonCard(pokemon) {
     let stats = pokemon['stats'];
     let types = pokemon['types'];
     let type = types[0]['type']['name'];
@@ -76,7 +82,7 @@ function createPreviewCardHTML(pokemon) {
 
     document.getElementById('pokemonCard').innerHTML += createPokemonCardHTML(pokemon)
             
-} */
+}
 
 
 function createPokemonCardHTML(pokemon) {
@@ -105,7 +111,7 @@ function enableScroll() {
 
 
 
-function findColor(pokemon,type) {
+function findColor(pokemon, type) {
     // let type = allPokemon[i - 1]['types'][0]['type']['name'];
     switch (type) {
         case 'grass':
