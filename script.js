@@ -3,7 +3,7 @@ let currentPokemon;
 // 9 oder 19 durchlauefe bei 152 pokemon j
 async function loadAllPokemon() {
     let j = 1
-    for (let i = j; i < j + 10; i++) {
+    for (let i = j; i < j + 40; i++) {
         await loadPokemon(i)
         renderPokemonPreviewHTML(i);
     }
@@ -74,23 +74,49 @@ function renderPokemonCard(pokemon) {
         secondType = `<div class="pokemon-type-tag typeTwo">${types[1]['type']['name']}</div>`;
     }
 
-    document.getElementById('pokemonCard').innerHTML += createPokemonCardHTML(pokemon)
-            
+    document.getElementById('pokemonCard').innerHTML = createPokemonCardHTML(pokemon)
+
 }
 
 
 function createPokemonCardHTML(pokemon) {
+
+    let types = pokemon['types'];
+    let type = types[0]['type']['name'];
+    let secondType = '';
+    if (types[1]) {
+        secondType = `<div class="pokemon-type-tag typeTwo">${types[1]['type']['name']}</div>`;
+    }
+
     return /*html*/ `
-            <div id="pokemon">test2</div>
+            <div id="pokemon" style = "background-color: ${findColor(pokemon, type)}">
+                <div class="arrow" onclick="closeCard()">
+                <img class="arrow" src="img/left-arrow.png" alt="">
+                </div>
+                <div class="pokemonCard-name"><h1>${pokemon['name']}</h1></div>
+                <div class="pokemonCard-id"><h3>#${pokemon['id']}</h3></div>
+                <div class="pokemonCard-pokemon-type">
+                <div class="pokemon-type-tag"><h4>${type}</h4></div> 
+                <h4>${secondType}</h4> 
+                    </div> 
+                </div>
+            </div>
+            
             <div class="info-container">
+                
             <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-            <div id="pokemonName">Name2</div>
+            <div id="pokemonName"></div>
             <div id="stats">
                 <div id="hp"></div>
                 <div id="hpValue"></div>
             </div>
             </div>
     `;
+}
+
+function closeCard() {
+    document.getElementById('hide_pokemon_card').classList.add("d-none");
+    enableScroll();
 }
 
 
@@ -109,9 +135,9 @@ function findColor(pokemon, type) {
     // let type = allPokemon[i - 1]['types'][0]['type']['name'];
     switch (type) {
         case 'grass':
-            return '#75b658' //#75b658 3 #c5dcae 2 #46d1b1 1
+            return '#46d1b1' //#75b658 3 #c5dcae 2 #46d1b1 1
         case 'bug':
-            return '#c7de9f'
+            return '#75b658' //c7de9f 1
         case 'fire':
             return '#fb6c6c'
         case 'water':
