@@ -20,28 +20,19 @@ async function loadPokemon(i) {
 
 function renderPokemonPreviewHTML(i) {
     let pokemon = allPokemon[i - 1];
-    let types = pokemon['types'];
-    let type = types[0]['type']['name'];
-    let secondType = '';
-    if (types[1]) {
-        secondType = `<div class="pokemon-type-tag typeTwo">${types[1]['type']['name']}</div>`;
-    }
-
     document.getElementById('pokedex').innerHTML += createPreviewCardHTML(pokemon);
 }
 
 
 function createPreviewCardHTML(pokemon) {
-    let types = pokemon['types'];
-    let type = types[0]['type']['name'];
-    let secondType = '';
-    if (types[1]) {
-        secondType = `<div class="pokemon-type-tag typeTwo">${types[1]['type']['name']}</div>`;
-    }
+
+    let type = findFirstType(pokemon);
+    let secondType = findSecondType(pokemon);
+
     let i = pokemon['id'];
     return /*html*/ `<div onclick="openPokemonCard(${i})" class="previewCard" style = "background-color: ${findColor(pokemon, type)}">
-                <div class="previewCard-Pokemon-Id">#${pokemon['id']}</div>
-                <div class="previewCard-Pokemon-Name"><h4>${pokemon['name']}<h4></div>
+                <div class="previewCard-Pokemon-Id"><h3>#${pokemon['id']}</h3></div>
+                <div class="Pokemon-Name text-capitalize h3">${pokemon['name']}</div>
                 
                 <div class="justify-content-around">
                     <div class="previewCard-Pokemon-Types">
@@ -55,6 +46,19 @@ function createPreviewCardHTML(pokemon) {
 }
 
 
+function findFirstType(pokemon) {
+    return pokemon['types'][0]['type']['name'];
+}
+
+
+function findSecondType(pokemon) {
+    let types = pokemon['types'];
+    let secondType = '';
+    if (types[1]) {
+        secondType = `<div class="pokemon-type-tag secondType">${types[1]['type']['name']}</div>`;
+    }
+    return secondType;
+}
 
 
 function openPokemonCard(i) {
@@ -66,39 +70,27 @@ function openPokemonCard(i) {
 
 
 function renderPokemonCard(pokemon) {
-    let stats = pokemon['stats'];
-    let types = pokemon['types'];
-    let type = types[0]['type']['name'];
-    let secondType = '';
-    if (types[1]) {
-        secondType = `<div class="pokemon-type-tag typeTwo">${types[1]['type']['name']}</div>`;
-    }
-
     document.getElementById('pokemonCard').innerHTML = createPokemonCardHTML(pokemon)
-
 }
 
 
 function createPokemonCardHTML(pokemon) {
 
-    let types = pokemon['types'];
-    let type = types[0]['type']['name'];
-    let secondType = '';
-    if (types[1]) {
-        secondType = `<div class="pokemon-type-tag typeTwo">${types[1]['type']['name']}</div>`;
-    }
+    let type = findFirstType(pokemon);
+    let secondType = findSecondType(pokemon);
 
     return /*html*/ `
             <div id="pokemon" style = "background-color: ${findColor(pokemon, type)}">
                 <div class="arrow" onclick="closeCard()">
                 <img class="arrow" src="img/left-arrow.png" alt="">
                 </div>
-                <div class="pokemonCard-name"><h1>${pokemon['name']}</h1></div>
-                <div class="pokemonCard-id"><h3>#${pokemon['id']}</h3></div>
+                <div class="pokemonCard-id h6 mb-0">#${pokemon['id']}</div>
+                <div class="Pokemon-Name h2 d-flex w-100 text-capitalize">${pokemon['name']}</div>
+               
                 <div class="pokemonCard-pokemon-type">
-                <div class="pokemon-type-tag"><h4>${type}</h4></div> 
-                <h4>${secondType}</h4> 
-                    </div> 
+                <div class="pokemon-type-tag">${type}</div>
+                ${secondType} 
+                </div> 
                 </div>
             </div>
             
