@@ -97,7 +97,7 @@ function createPokemonCardHTML(pokemon) {
             <div class="info-container">
                 
                 <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-                <div>Base Stats</div>
+                <div class="info-nav">Base Stats</div>
                 <div>
 
                     <div class="info-content">

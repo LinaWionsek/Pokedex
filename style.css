@@ -169,6 +169,10 @@ body {
     width: 100%;
 }
 
+
+/* --------------------------------------POKEMON_INFO------------------------------------------ */
+
+
 .info-container {
     width: 100%;
     background-color: white;
@@ -193,6 +197,10 @@ body {
     overflow: hidden;
 }
 
+.info-nav {
+    width: 400px;
+    display: flex;
+}
 
 .info-content {
     width: 400px;
