@@ -192,3 +192,17 @@ body {
     height: 100%;
     overflow: hidden;
 }
+
+
+.info-content {
+    width: 400px;
+}
+
+.stats {
+    display: flex;
+}
+
+.stats-container {
+    display: flex;
+    gap: 8px;
+}

@@ -96,13 +96,64 @@ function createPokemonCardHTML(pokemon) {
             
             <div class="info-container">
                 
-            <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-            <div id="pokemonName"></div>
-            <div id="stats">
-                <div id="hp"></div>
-                <div id="hpValue"></div>
+                <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
+                <div>Base Stats</div>
+                <div>
+
+                    <div class="info-content">
+
+                        <div class="stats-container">
+                            <div class="stats">
+                                <div>${pokemon['stats']['0']['stat']['name']}</div>
+                                <div>${pokemon['stats']['0']['base_stat']}</div>
+                            </div>
+                            <div>BAR</div>
+                        </div>
+                        
+                        <div class="stats-container">
+                            <div class="stats">
+                                <div>${pokemon['stats']['1']['stat']['name']}</div>
+                                <div>${pokemon['stats']['1']['base_stat']}</div>
+                            </div>
+                            <div>BAR</div>
+                        </div>
+
+                        <div class="stats-container">
+                            <div class="stats">
+                                <div>${pokemon['stats']['2']['stat']['name']}</div>
+                                <div>${pokemon['stats']['2']['base_stat']}</div>
+                            </div>
+                            <div>BAR</div>
+                        </div>
+
+                        <div class="stats-container">
+                            <div class="stats">
+                                <div>${pokemon['stats']['3']['stat']['name']}</div>
+                                <div>${pokemon['stats']['3']['base_stat']}</div>
+                            </div>
+                            <div>BAR</div>
+                        </div>
+
+                        <div class="stats-container">
+                            <div class="stats">
+                                <div>${pokemon['stats']['4']['stat']['name']}</div>
+                                <div>${pokemon['stats']['4']['base_stat']}</div>
+                            </div>
+                            <div>BAR</div>
+                        </div>
+
+                        <div class="stats-container">
+                            <div class="stats">
+                                <div>${pokemon['stats']['5']['stat']['name']}</div>
+                                <div>${pokemon['stats']['5']['base_stat']}</div>
+                            </div>
+                            <div>BAR</div>
+                        </div>
+
+                    </div>  
+                </div>
             </div>
-            </div>
+            
     `;
 }
 
