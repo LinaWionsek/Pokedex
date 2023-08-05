@@ -105,8 +105,31 @@ function createPokemonCardHTML(pokemon) {
                             <div class="stat-name">${pokemon['stats'].map(s => `<span>${s['stat']['name']}</span>`).join(' ')}</div>
                             <div class="stat-value">${pokemon['stats'].map(s => `<span>${s['base_stat']}</span>`).join(' ')}</div>
                         </div>
-                        <div>BAR</div>
+
+                        <div class="bars">
+                            <div class="progress w-100" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="progress w-100" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="progress w-100" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="progress w-100" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="progress w-100" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="progress w-100" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+                        <div>   
+
+
                     </div>
+                    
 
                 </div>  
             </div>   
