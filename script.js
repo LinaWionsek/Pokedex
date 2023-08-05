@@ -82,78 +82,34 @@ function createPokemonCardHTML(pokemon) {
     return /*html*/ `
             <div id="pokemon" style = "background-color: ${findColor(pokemon, type)}">
                 <div class="arrow" onclick="closeCard()">
-                <img class="arrow" src="img/left-arrow.png" alt="">
+                    <img class="arrow" src="img/left-arrow.png" alt="">
                 </div>
                 <div class="pokemonCard-id h4 mb-0">#${pokemon['id']}</div>
                 <div class="Pokemon-Name h2 d-flex w-100 text-capitalize">${pokemon['name']}</div>
                
                 <div class="pokemonCard-pokemon-type">
-                <div class="pokemon-type-tag">${type}</div>
-                ${secondType} 
+                    <div class="pokemon-type-tag">${type}</div>
+                    ${secondType} 
                 </div> 
-                </div>
             </div>
             
             <div class="info-container">
                 
                 <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-                <div class="info-nav">Base Stats</div>
-                <div>
+                <nav class="info-nav">Base Stats</nav>
+              
+                <div class="info-content">
 
-                    <div class="info-content">
-
-                        <div class="stats-container">
-                            <div class="stats">
-                                <div>${pokemon['stats']['0']['stat']['name']}</div>
-                                <div>${pokemon['stats']['0']['base_stat']}</div>
-                            </div>
-                            <div>BAR</div>
+                    <div class="stats-container">
+                        <div class="stats">
+                            <div class="stat-name">${pokemon['stats'].map(s => `<span>${s['stat']['name']}</span>`).join(' ')}</div>
+                            <div class="stat-value">${pokemon['stats'].map(s => `<span>${s['base_stat']}</span>`).join(' ')}</div>
                         </div>
-                        
-                        <div class="stats-container">
-                            <div class="stats">
-                                <div>${pokemon['stats']['1']['stat']['name']}</div>
-                                <div>${pokemon['stats']['1']['base_stat']}</div>
-                            </div>
-                            <div>BAR</div>
-                        </div>
+                        <div>BAR</div>
+                    </div>
 
-                        <div class="stats-container">
-                            <div class="stats">
-                                <div>${pokemon['stats']['2']['stat']['name']}</div>
-                                <div>${pokemon['stats']['2']['base_stat']}</div>
-                            </div>
-                            <div>BAR</div>
-                        </div>
-
-                        <div class="stats-container">
-                            <div class="stats">
-                                <div>${pokemon['stats']['3']['stat']['name']}</div>
-                                <div>${pokemon['stats']['3']['base_stat']}</div>
-                            </div>
-                            <div>BAR</div>
-                        </div>
-
-                        <div class="stats-container">
-                            <div class="stats">
-                                <div>${pokemon['stats']['4']['stat']['name']}</div>
-                                <div>${pokemon['stats']['4']['base_stat']}</div>
-                            </div>
-                            <div>BAR</div>
-                        </div>
-
-                        <div class="stats-container">
-                            <div class="stats">
-                                <div>${pokemon['stats']['5']['stat']['name']}</div>
-                                <div>${pokemon['stats']['5']['base_stat']}</div>
-                            </div>
-                            <div>BAR</div>
-                        </div>
-
-                    </div>  
-                </div>
-            </div>
-            
+                </div>  
+            </div>   
     `;
 }
 

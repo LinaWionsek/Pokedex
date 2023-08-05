@@ -200,6 +200,7 @@ body {
 .info-nav {
     width: 400px;
     display: flex;
+    margin-bottom: 32px;
 }
 
 .info-content {
@@ -212,5 +213,19 @@ body {
 
 .stats-container {
     display: flex;
+    gap: 8px;
+}
+
+.stat-name {
+    display: flex;
+    flex-direction: column;
+    width: 125px;
+    gap: 8px;
+}
+
+.stat-value {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
     gap: 8px;
 }
