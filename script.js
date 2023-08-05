@@ -3,7 +3,7 @@ let currentPokemon;
 // 9 oder 19 durchlauefe bei 152 pokemon j
 async function loadAllPokemon() {
     let j = 1
-    for (let i = j; i < j + 40; i++) {
+    for (let i = j; i < j + 20; i++) {
         await loadPokemon(i)
         renderPokemonPreviewHTML(i);
     }
@@ -31,7 +31,7 @@ function createPreviewCardHTML(pokemon) {
 
     let i = pokemon['id'];
     return /*html*/ `<div onclick="openPokemonCard(${i})" class="previewCard" style = "background-color: ${findColor(pokemon, type)}">
-                <div class="previewCard-Pokemon-Id"><h3>#${pokemon['id']}</h3></div>
+                <div class="previewCard-Pokemon-Id h4">#${pokemon['id']}</div>
                 <div class="Pokemon-Name text-capitalize h3">${pokemon['name']}</div>
                 
                 <div class="justify-content-around">
@@ -84,7 +84,7 @@ function createPokemonCardHTML(pokemon) {
                 <div class="arrow" onclick="closeCard()">
                 <img class="arrow" src="img/left-arrow.png" alt="">
                 </div>
-                <div class="pokemonCard-id h6 mb-0">#${pokemon['id']}</div>
+                <div class="pokemonCard-id h4 mb-0">#${pokemon['id']}</div>
                 <div class="Pokemon-Name h2 d-flex w-100 text-capitalize">${pokemon['name']}</div>
                
                 <div class="pokemonCard-pokemon-type">

@@ -2,7 +2,7 @@ body {
     margin: 0;
     height: 100vh;
     background-color: #f3f5fa;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Lato', sans-serif !important;
 }
 
 .m-top80 {
