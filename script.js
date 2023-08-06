@@ -4,7 +4,8 @@ let currentPokemon;
 async function loadAllPokemon() {
     let j = 1
     for (let i = j; i < j + 20; i++) {
-        await loadPokemon(i)
+        
+        await loadPokemon(i);
         renderPokemonPreviewHTML(i);
     }
 }
@@ -65,6 +66,7 @@ function openPokemonCard(i) {
     let pokemon = allPokemon[i - 1]
     document.getElementById('hide_pokemon_card').classList.remove("d-none");
     renderPokemonCard(pokemon)
+    valueBar(pokemon)
     disableScroll();
 }
 
@@ -96,7 +98,7 @@ function createPokemonCardHTML(pokemon) {
             <div class="info-container">
                 
                 <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-                <nav class="info-nav">Base Stats</nav>
+                <nav class="info-nav"><b>Base Stats</b></nav>
               
                 <div class="info-content">
 
@@ -106,25 +108,8 @@ function createPokemonCardHTML(pokemon) {
                             <div class="stat-value">${pokemon['stats'].map(s => `<span>${s['base_stat']}</span>`).join(' ')}</div>
                         </div>
 
-                        <div class="bars">
-                            <div class="progress w-100" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: 0%"></div>
-                            </div>
-                            <div class="progress w-100" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: 0%"></div>
-                            </div>
-                            <div class="progress w-100" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: 0%"></div>
-                            </div>
-                            <div class="progress w-100" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: 0%"></div>
-                            </div>
-                            <div class="progress w-100" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: 0%"></div>
-                            </div>
-                            <div class="progress w-100" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: 0%"></div>
-                            </div>
+                        <div id="value-bar" class="bars">
+                           
                         <div>   
 
 
@@ -134,6 +119,26 @@ function createPokemonCardHTML(pokemon) {
                 </div>  
             </div>   
     `;
+}
+
+function valueBar(pokemon) {
+    let rates = pokemon['stats'].map(s => `${s['base_stat']}`)
+    console.log(rates);
+    console.log(rates.length);
+   
+    for (let i = 0; i < rates.length; i++) {
+        console.log(i)
+        const rate = rates[i]
+        document.getElementById('value-bar').innerHTML += `
+            <div class="progress bar-height w-100" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar" style="width: ${rates[i]}%" height="20px"></div>
+            </div>
+        `;
+        //  document.getElementById('value-bar${i}').style += `width: ${rates[i]}%`;
+    }
+
+    // document.getElementById('value-bar').style = `width: ${value}%`;
+
 }
 
 function closeCard() {
@@ -150,7 +155,6 @@ function disableScroll() {
 function enableScroll() {
     document.body.classList.remove("remove-scrolling");
 }
-
 
 
 function findColor(pokemon, type) {
