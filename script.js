@@ -3,8 +3,8 @@ let currentPokemon;
 // 9 oder 19 durchlauefe bei 152 pokemon j
 async function loadAllPokemon() {
     let j = 1
-    for (let i = j; i < j + 20; i++) {
-        
+    for (let i = j; i < j + 100; i++) {
+
         await loadPokemon(i);
         renderPokemonPreviewHTML(i);
     }
@@ -32,7 +32,7 @@ function createPreviewCardHTML(pokemon) {
 
     let i = pokemon['id'];
     return /*html*/ `<div onclick="openPokemonCard(${i})" class="previewCard" style = "background-color: ${findColor(pokemon, type)}">
-                <div class="previewCard-Pokemon-Id h4">#${pokemon['id']}</div>
+                <div class="previewCard-Pokemon-Id h5">#${pokemon['id']}</div>
                 <div class="Pokemon-Name text-capitalize h3">${pokemon['name']}</div>
                 
                 <div class="justify-content-around">
@@ -86,11 +86,11 @@ function createPokemonCardHTML(pokemon) {
                 <div class="arrow" onclick="closeCard()">
                     <img class="arrow" src="img/left-arrow.png" alt="">
                 </div>
-                <div class="pokemonCard-id h4 mb-0">#${pokemon['id']}</div>
+                <div class="pokemonCard-id h5 mb-0">#${pokemon['id']}</div>
                 <div class="Pokemon-Name h2 d-flex w-100 text-capitalize">${pokemon['name']}</div>
                
                 <div class="pokemonCard-pokemon-type">
-                    <div class="pokemon-type-tag">${type}</div>
+                    <div class="pokemon-type-tag " style = "background-color: ${findColorFirstTag(pokemon, type)}">${type}</div>
                     ${secondType} 
                 </div> 
             </div>
@@ -125,7 +125,7 @@ function valueBar(pokemon) {
     let rates = pokemon['stats'].map(s => `${s['base_stat']}`)
     console.log(rates);
     console.log(rates.length);
-   
+
     for (let i = 0; i < rates.length; i++) {
         console.log(i)
         const rate = rates[i]
@@ -157,37 +157,94 @@ function enableScroll() {
 }
 
 
+function findColorFirstTag(pokemon, type) {
+    // let type = allPokemon[i - 1]['types'][0]['type']['name'];
+    switch (type) {
+        case 'normal':
+            return '#767676'
+        case 'fire':
+            return '#767676'
+        case 'water':
+            return '#767676'
+        case 'electric':
+            return '#767676'
+        case 'grass':
+            return '#767676'
+        case 'ice':
+            return '#767676'
+        case 'poison':
+            return '#767676'
+        case 'ground':
+            return '#767676'
+        case 'flying':
+            return '#767676'
+        case 'psychic':
+            return '#767676'
+        case 'bug':
+            return '#767676'
+        case 'rock':
+            return '#767676'
+        case 'ghost':
+            return '#767676'
+        case 'dragon':
+            return '#767676'
+        case 'dark':
+            return '#767676'
+        case 'steel':
+            return '#767676'
+        case 'fairy':
+            return '#767676'
+
+
+        default:
+            // console.log(type)
+            return '#767676'
+    }
+}
+
+/*  */
+
 function findColor(pokemon, type) {
     // let type = allPokemon[i - 1]['types'][0]['type']['name'];
     switch (type) {
-        case 'grass':
-            return '#46d1b1' //#75b658 3 #c5dcae 2 #46d1b1 1
-        case 'bug':
-            return '#75b658' //c7de9f 1
+        case 'normal':
+            return '#767676'
         case 'fire':
-            return '#fb6c6c'
+            return '#767676'
         case 'water':
-            return '#77befe'
+            return '#767676'
         case 'electric':
-            return '#ffd86f' //#ffce4b-dunkler
-        case 'ghost':
-            return '#8d5c9f'//#8d5c9f #7d528d 1
-        case 'fighting':
-            return '#cb7f72' //#cfd6e3 #c43027 -rot #bb5544
-        case 'ground':
-            return '#faebc2'
-        case 'rock':
-            return '#49465b'
-        case 'psychic':
-            return '#ef7295'
+            return '#767676'
+        case 'grass':
+            return '#767676'
+        case 'ice':
+            return '#767676'
         case 'poison':
-            return '#bd94e0'
+            return '#767676'
+        case 'ground':
+            return '#767676'
+        case 'flying':
+            return '#767676'
+        case 'psychic':
+            return '#767676'
+        case 'bug':
+            return '#767676'
+        case 'rock':
+            return '#767676'
+        case 'ghost':
+            return '#767676'
+        case 'dragon':
+            return '#767676'
+        case 'dark':
+            return '#767676'
+        case 'steel':
+            return '#767676'
+        case 'fairy':
+            return '#767676'
 
-        // case 'normal': 
-        //     return '#faebc2'
-        // #9553cd
+
         default:
             // console.log(type)
-            return 'lightgrey'
+            return '#767676'
     }
 }
