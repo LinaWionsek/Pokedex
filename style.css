@@ -188,8 +188,7 @@ body {
 
 .pokemonImage {
     height: 300px;
-    margin-top: -245px;
-    /* -224px; */
+    margin-top: -200px;
 }
 
 .remove-scrolling {
