@@ -56,7 +56,7 @@ function findSecondType(pokemon) {
     let types = pokemon['types'];
     let secondType = '';
     if (types[1]) {
-        secondType = `<div class="pokemon-type-tag secondType">${types[1]['type']['name']}</div>`;
+        secondType = `<div class="pokemon-type-tag secondType" style = "background-color: ${findColorTag(pokemon, types[1]['type']['name'])}">${types[1]['type']['name']}</div>`;
     }
     return secondType;
 }
@@ -90,7 +90,7 @@ function createPokemonCardHTML(pokemon) {
                 <div class="Pokemon-Name h2 d-flex w-100 text-capitalize">${pokemon['name']}</div>
                
                 <div class="pokemonCard-pokemon-type">
-                    <div class="pokemon-type-tag " style = "background-color: ${findColorFirstTag(pokemon, type)}">${type}</div>
+                    <div class="pokemon-type-tag " style = "background-color: ${findColorTag(pokemon, type)}">${type}</div>
                     ${secondType} 
                 </div> 
             </div>
@@ -105,7 +105,7 @@ function createPokemonCardHTML(pokemon) {
                         <div class="stats"><span class="stat-name">${s['stat']['name']}</span>
                             <span class="stat-value">${s['base_stat']}</span>
                             <div class="progress bar-height-width" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: ${s['base_stat']}%; height=20px; background-color: ${findColorFirstTag(pokemon, type)};"></div>
+                                <div class="progress-bar" style="width: ${s['base_stat']}%; height=20px; background-color: ${findColorTag(pokemon, type)};"></div>
                             </div>
                         </div>`).join(' ')}
                     </div>       
@@ -195,7 +195,7 @@ function findColor(pokemon, type) {
     }
 }
 
-function findColorFirstTag(pokemon, type) {
+function findColorTag(pokemon, type) {
     // let type = allPokemon[i - 1]['types'][0]['type']['name'];
     switch (type) {
         case 'normal':
