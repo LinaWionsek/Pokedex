@@ -96,50 +96,43 @@ function createPokemonCardHTML(pokemon) {
             </div>
             
             <div class="info-container">
-                
                 <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
                 <nav class="info-nav"><b>Base Stats</b></nav>
               
-                <div class="info-content">
-
+                <div class="info-content">   
                     <div class="stats-container">
-                        <div class="stats">
-                            <div class="stat-name">${pokemon['stats'].map(s => `<span>${s['stat']['name']}</span>`).join(' ')}</div>
-                            <div class="stat-value">${pokemon['stats'].map(s => `<span>${s['base_stat']}</span>`).join(' ')}</div>
-                        </div>
-
-                        <div id="value-bar" class="bars">
-                           
-                        <div>   
-
-
-                    </div>
-                    
-
+                        ${pokemon['stats'].map(s => `
+                        <div class="stats"><span class="stat-name">${s['stat']['name']}</span>
+                            <span class="stat-value">${s['base_stat']}</span>
+                            <div class="progress bar-height-width" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" style="width: ${s['base_stat']}%; height=20px; background-color: ${findColorFirstTag(pokemon, type)};"></div>
+                            </div>
+                        </div>`).join(' ')}
+                    </div>       
                 </div>  
             </div>   
     `;
 }
 
-function valueBar(pokemon) {
-    let rates = pokemon['stats'].map(s => `${s['base_stat']}`)
-    console.log(rates);
-    console.log(rates.length);
+// function valueBar(pokemon) {
+//     let rates = pokemon['stats'].map(s => `${s['base_stat']}`)
+//     console.log(rates);
+//     console.log(rates.length);
 
-    for (let i = 0; i < rates.length; i++) {
-        console.log(i)
-        const rate = rates[i]
-        document.getElementById('value-bar').innerHTML += `
-            <div class="progress bar-height w-100" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar" style="width: ${rates[i]}%" height="20px"></div>
-            </div>
-        `;
+//     for (let i = 0; i < rates.length; i++) {
+//         console.log(i)
+//         const rate = rates[i]
+//         document.getElementById('value-bar').innerHTML += `
+//             <div class="progress bar-height w-100" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+//                 <div class="progress-bar" style="width: ${s['base_stat']}%" height="20px"></div>
+//             </div>
+//         `;
         //  document.getElementById('value-bar${i}').style += `width: ${rates[i]}%`;
-    }
+    // }
 
     // document.getElementById('value-bar').style = `width: ${value}%`;
 
-}
+// }
 
 function closeCard() {
     document.getElementById('hide_pokemon_card').classList.add("d-none");
@@ -157,7 +150,7 @@ function enableScroll() {
 }
 
 
-function findColorFirstTag(pokemon, type) {
+function findColor(pokemon, type) {
     // let type = allPokemon[i - 1]['types'][0]['type']['name'];
     switch (type) {
         case 'normal':
@@ -202,9 +195,7 @@ function findColorFirstTag(pokemon, type) {
     }
 }
 
-/*  */
-
-function findColor(pokemon, type) {
+function findColorFirstTag(pokemon, type) {
     // let type = allPokemon[i - 1]['types'][0]['type']['name'];
     switch (type) {
         case 'normal':

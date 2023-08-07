@@ -201,7 +201,6 @@ body {
     width: 400px;
     display: flex;
     margin-bottom: 32px;
-    
 }
 
 .info-content {
@@ -210,21 +209,26 @@ body {
 
 .stats {
     display: flex;
-}
-
-.stats-container {
-    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 12px;
     gap: 16px;
    
 }
 
-.stat-name {
+
+.stats-container {
     display: flex;
-    flex-direction: column;
+   flex-direction: column;
+   
+}
+
+.stat-name {
     width: 125px;
-    justify-content: flex-start;
     gap: 8px;
-    color: #666666;
+    font-weight: 550;
+    font-size: 14px;
+    
 }
 
 .stat-name :first-letter {
@@ -232,11 +236,10 @@ body {
 }
 
 .stat-value {
-    display: flex;
-    flex-direction: column;
     text-align: right;
-    justify-content: flex-start;
     gap: 8px;
+    width: 35px;
+    color: #666666;
 }
 
 .bars {
@@ -248,10 +251,11 @@ body {
    
 }
 
-.bar-height {
+.bar-height-width {
     height: 20px !important;
-    margin-bottom: 12px;
+    width: 200px;
 }
+
 
 @media(max-width: 768px) {
   #pokemonCard {
