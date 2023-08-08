@@ -77,8 +77,8 @@ body {
 
 .pokemon-type-tag {
     border: 1px solid;
-    border-radius: 16px;
-    width: 100px;
+    border-radius: 5px;
+    width: 80px;
     text-align: center;
     padding: 2px;
     font-size: 14px;
@@ -228,11 +228,10 @@ body {
     gap: 8px;
     font-weight: 550;
     font-size: 14px;
-    
 }
 
-.stat-name :first-letter {
-    text-transform: uppercase;
+.stat-name:first-letter {
+    text-transform: uppercase !important;
 }
 
 .stat-value {
