@@ -193,7 +193,7 @@ body {
 
 .pokemonImage {
     height: 350px;
-    margin-top: -200px;
+    margin-top: -290px;
 }
 
 .remove-scrolling {
@@ -204,7 +204,7 @@ body {
 .info-nav {
     width: 400px;
     display: flex;
-    margin-bottom: px;
+    margin-bottom: 24px;
 }
 
 .info-content {
