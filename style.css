@@ -10,11 +10,6 @@ body {
 }
 
 
-.justify-content-around {
-    display: flex;
-    justify-content: space-between;
-}
-
 .d-none {
     display: none;
 }
@@ -50,8 +45,8 @@ body {
 }
 
 .previewCard img {
-    height: 180px;
-    width: 180px;
+    height: 150px;
+    width: 150px;
 }
 
 .previewCard-Pokemon-Id {
@@ -68,11 +63,12 @@ body {
     font-size: x-large;
 }
 
-.previewCard-Pokemon-Types {
+.previewCard-details {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
     gap: 8px;
+    width: 110px;
 }
 
 .pokemon-type-tag {
@@ -193,7 +189,7 @@ body {
 
 .pokemonImage {
     height: 350px;
-    margin-top: -290px;
+    margin-top: -270px;
 }
 
 .remove-scrolling {
@@ -205,6 +201,7 @@ body {
     width: 400px;
     display: flex;
     margin-bottom: 24px;
+    justify-content: space-between;
 }
 
 .info-content {

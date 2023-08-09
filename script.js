@@ -3,7 +3,7 @@ let currentPokemon;
 // 9 oder 19 durchlauefe bei 152 pokemon j
 async function loadAllPokemon() {
     let j = 1
-    for (let i = j; i < j + 200; i++) {
+    for (let i = j; i < j + 20; i++) {
 
         await loadPokemon(i);
         renderPokemonPreviewHTML(i);
@@ -33,10 +33,11 @@ function createPreviewCardHTML(pokemon) {
     let i = pokemon['id'];
     return /*html*/ `<div onclick="openPokemonCard(${i})" class="previewCard" style = "background-color: ${findColor(pokemon, type)}">
                 <div class="previewCard-Pokemon-Id h5">#${pokemon['id']}</div>
-                <div class="Pokemon-Name text-capitalize h3">${pokemon['name']}</div>
+               
                 
-                <div class="justify-content-around">
-                    <div class="previewCard-Pokemon-Types">
+                <div class="d-flex w-100">
+                    <div class="previewCard-details">
+                    <div class="Pokemon-Name text-capitalize h5">${pokemon['name']}</div>
                         <div class="pokemon-type-tag" style = "background-color: ${findColorTag(pokemon, type)}">${type}</div> 
                         ${secondType}
                     </div> 
@@ -97,7 +98,12 @@ function createPokemonCardHTML(pokemon) {
             
             <div class="info-container">
                 <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-                <nav class="info-nav"><b><a style= "color: ${findColor(pokemon, type)};">Base Stats</a></b></nav>
+                <nav class="info-nav">
+                    <b><a style= "color: ${findColor(pokemon, type)};">About</a></b> 
+                    <b><a style= "color: ${findColor(pokemon, type)};">Base Stats</a></b>
+                    <b><a style= "color: ${findColor(pokemon, type)};">Evolution</a></b>
+                    <b><a style= "color: ${findColor(pokemon, type)};">Moves</a></b>
+                </nav>
               
                 <div class="info-content">   
                     <div class="stats-container">
