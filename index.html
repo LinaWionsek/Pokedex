@@ -13,7 +13,7 @@
 
         async function loadAllPokemon() {
             let j = 1
-            for (let i = j; i < j + 20; i++) {
+            for (let i = j; i < j + 2; i++) {
 
                 await loadPokemon(i);
                 renderPokemonPreviewHTML(i);
@@ -30,39 +30,53 @@
         }
 
 
-        function renderPokemonInfo(i) {
-            let pokemon = allPokemon[i - 1];
-            document.getElementById('pokedex').innerHTML += renderPokemonInfoHTML(pokemon);
-        }
-
-        // Name, Bild
-        function renderPokemonInfoHTML(pokemon) {
-            return /*html*/`
-            <div>#${pokemon['id']}</div>
-            <img src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-            `;
-        }
-
         function renderPokemonPreviewHTML(i) {
             let pokemon = allPokemon[i - 1];
             document.getElementById('content').innerHTML += createPreviewCardHTML(pokemon);
         }
 
         function createPreviewCardHTML(pokemon) {
+            let i = pokemon['id'];
             return /*html*/ `
             <div >#${pokemon['id']}</div>
                 <div>${pokemon['name']}</div>
-                <img onclick="openDialog()" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
+                <img onclick="openPokedex(${i})" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
         
             `;
         }
 
-        function openDialog() {
-            document.getElementById('dialog').classList.remove('d-none');
+
+        function openPokedex(i) {
+            let pokemon = allPokemon[i - 1]
+            document.getElementById('pokedex').classList.remove("d-none");
+            renderPokedex(pokemon);
         }
 
-        function closeDialog() {
-            document.getElementById('dialog').classList.add('d-none');
+
+        // Name, Bild
+        function renderPokedex(pokemon) {
+            document.getElementById('pokedex').innerHTML = createPokemonCardHTML(pokemon)
+        }
+
+        function createPokemonCardHTML(pokemon) {
+
+
+
+            return /*html*/ `
+            <div class="pokedex-container">
+            <div id="pokedex-top"></div>
+            <div class="pokedex-bottom"></div>
+            </div>
+            `;
+        }
+
+
+        // function openDialog() {
+        //     document.getElementById('dialog').classList.remove('d-none');
+        // }
+
+        function closePokedex() {
+            document.getElementById('pokedex').classList.add('d-none');
         }
 
 
@@ -73,18 +87,37 @@
             margin: 0;
         }
 
-        #pokedex {
+        .pokedex {
+            height: 50vh;
+            width: 50vw;
+            background-color: white;
+            border: 1px solid lightgray;
+            border-radius: 10px;
+            padding: 24px;
+        }
+
+        .pokedex-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #pokedex-top {
             min-height: 50vh;
             background-color: rgb(255, 28, 28);
             color: white;
             padding-top: 1px;
+            /* BONUS */
+            border-top-left-radius: 40px;
+            border-top-right-radius: 40px;
+            width: 50vw;
         }
 
-        #pokedex img {
+        #pokedex-top img {
             min-height: 300px;
         }
 
-        .info-container {
+        .pokedex-bottom {
             background-color: white;
             border-radius: 40px;
             margin-top: -40px;
@@ -93,6 +126,8 @@
             flex-direction: column;
             align-items: center;
             padding-bottom: 20px;
+            width: 50vw;
+
         }
 
 
@@ -128,12 +163,10 @@
 <body onload="loadAllPokemon()">
     <div id="content">
 
-
-        <div id="pokedex">
-            <h1 id="pokemonName">Name</h1>
-        </div>
-        <div class="info-container"></div>
-
+        <!-- <div id="pokedex"> -->
+        <!-- <div id="pokedex-top"></div>
+        <div class="pokedex-bottom"></div> -->
+        <!-- </div> -->
 
         <!-- ALT -->
         <!-- <div id="pokedex"></div>
@@ -143,12 +176,11 @@
             </div>
         </div> -->
 
-        <div id="dialog" class="dialog-bg d-none" onclick="closeDialog()">
-            <div class="dialog">
+        <div id="pokedex" class="dialog-bg d-none" onclick="closePokedex()">
+            <!-- <div class="dialog">
                 <h1>Dialog</h1>
                 <p id="dialog-message">Informationen</p>
-    
-            </div>
+            </div> -->
         </div>
 
 
