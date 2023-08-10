@@ -4,160 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-    <script>
-        let allPokemon = []
-        let currentPokemon;
-
-
-        async function loadAllPokemon() {
-            let j = 1
-            for (let i = j; i < j + 2; i++) {
-
-                await loadPokemon(i);
-                renderPokemonPreviewHTML(i);
-            }
-
-        }
+    <title>Pokédex</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="font.css">
 
 
-        async function loadPokemon(i) {
-            let url = 'https://pokeapi.co/api/v2/pokemon/' + i;
-            let response = await fetch(url);
-            let currentPokemon = await response.json(); // JSON 
-            allPokemon.push(currentPokemon);
-        }
-
-
-        function renderPokemonPreviewHTML(i) {
-            let pokemon = allPokemon[i - 1];
-            document.getElementById('content').innerHTML += createPreviewCardHTML(pokemon);
-        }
-
-        function createPreviewCardHTML(pokemon) {
-            let i = pokemon['id'];
-            return /*html*/ `
-            <div >#${pokemon['id']}</div>
-                <div>${pokemon['name']}</div>
-                <img onclick="openPokedex(${i})" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-        
-            `;
-        }
-
-
-        function openPokedex(i) {
-            let pokemon = allPokemon[i - 1]
-            document.getElementById('pokedex').classList.remove("d-none");
-            renderPokedex(pokemon);
-        }
-
-
-        // Name, Bild
-        function renderPokedex(pokemon) {
-            document.getElementById('pokedex').innerHTML = createPokemonCardHTML(pokemon)
-        }
-
-        function createPokemonCardHTML(pokemon) {
-
-
-
-            return /*html*/ `
-            <div class="pokedex-container">
-            <div id="pokedex-top"></div>
-            <div class="pokedex-bottom"></div>
-            </div>
-            `;
-        }
-
-
-        // function openDialog() {
-        //     document.getElementById('dialog').classList.remove('d-none');
-        // }
-
-        function closePokedex() {
-            document.getElementById('pokedex').classList.add('d-none');
-        }
-
-
-    </script>
-
-    <style>
-        body {
-            margin: 0;
-        }
-
-        .pokedex {
-            height: 50vh;
-            width: 50vw;
-            background-color: white;
-            border: 1px solid lightgray;
-            border-radius: 10px;
-            padding: 24px;
-        }
-
-        .pokedex-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        #pokedex-top {
-            min-height: 50vh;
-            background-color: rgb(255, 28, 28);
-            color: white;
-            padding-top: 1px;
-            /* BONUS */
-            border-top-left-radius: 40px;
-            border-top-right-radius: 40px;
-            width: 50vw;
-        }
-
-        #pokedex-top img {
-            min-height: 300px;
-        }
-
-        .pokedex-bottom {
-            background-color: white;
-            border-radius: 40px;
-            margin-top: -40px;
-            min-height: 400px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-bottom: 20px;
-            width: 50vw;
-
-        }
-
-
-        .dialog-bg {
-            background-color: rgba(0, 0, 0, 0.2);
-            z-index: 999;
-            position: fixed;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .dialog {
-            height: 50vh;
-            width: 50vw;
-            background-color: white;
-            border: 1px solid lightgray;
-            border-radius: 10px;
-            padding: 24px;
-        }
-
-        .d-none {
-            display: none;
-        }
-    </style>
-
+    <!-- Boostrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
 </head>
 
 <body onload="loadAllPokemon()">
