@@ -1,5 +1,6 @@
 let allPokemon = []
 let currentPokemon;
+let counter;
 
 
 async function loadAllPokemon() {
@@ -22,7 +23,7 @@ async function loadPokemon(i) {
 
 
 function renderPokemonPreviewHTML(i) {
-    let pokemon = allPokemon[i - 1];
+    let pokemon = allPokemon[i-1]; //aktuelles Pokemon -1 weil das Array mit 0 anfängt aber die Pokemon bei 1 anfängt
     document.getElementById('content').innerHTML += createPreviewCardHTML(pokemon);
 }
 
@@ -75,24 +76,56 @@ function renderPokedex(pokemon) {
     document.getElementById('pokedex').innerHTML = createPokemonCardHTML(pokemon)
 }
 
+
+function nextPokemon(pokemonId) {
+    let pokemon;
+    if (pokemonId == allPokemon.length) {
+        pokemon = allPokemon[0];
+    } else {
+       pokemon = allPokemon[pokemonId];
+    }
+
+    renderPokedex(pokemon);
+}
+
+function lastPokemon(pokemonId) { //das i was übergeben wird ist Pokemon id i --> die id fängt bei 1 an aber das allPokemon array bei 0
+    let pokemon;
+    if (pokemonId == 1) {
+        pokemon = allPokemon[allPokemon.length - 1]; //length = Anzahl der Slots (Gesamtlänge!) -- 
+        //length-1 = letzter Eintrag weil wenn er die Zahl der Gesamtlänge abrufen würde würde er undefined sagen weil array zahlen ja mit 0 anfangen 
+    } else {
+       pokemon = allPokemon[pokemonId-2];
+    }
+
+    renderPokedex(pokemon);
+}
+
 function createPokemonCardHTML(pokemon) {
     let type = findFirstType(pokemon);
     let secondType = findSecondType(pokemon);
-
+    let i = pokemon['id'];
+    // counter = i;
+    
 
     return /*html*/ `
     <div class="pokedex-container">
             <div id="pokedex-top" style = "background-color: ${findColor(pokemon, type)}">
-                <div class="arrow" onclick="closeCard()">
-                    <img src="img/left-arrow.png" alt="">
-                </div>
-                <div class="pokemonCard-id h5 mb-0">#${pokemon['id']}</div>
-                <div class="Pokemon-Name h2 d-flex w-100 text-capitalize">${pokemon['name']}</div>
+            <img onclick="closePokedex()" src="img/back.png" alt="">
+            <div class="space-between margin-top-8">
+            <div class="Pokemon-Name h2 d-flex w-100 text-capitalize">${pokemon['name']}</div>
+                <div class="pokemonCard-id h5 mb-0">#${i}</div>
+            </div>
+            
+               
                
                 <div class="pokemonCard-pokemon-type">
                     <div class="pokemon-type-tag " style = "background-color: ${findColorTag(pokemon, type)}">${type}</div>
                     ${secondType} 
                 </div> 
+                <div class="arrow">
+                    <img onclick="lastPokemon(${i})" src="img/left-arrow.png" alt="">
+                    <img onclick="nextPokemon(${i})"src="img/right-arrow.png" alt="">
+                </div>
             </div>
             
             <div class="pokedex-bottom">
