@@ -110,18 +110,18 @@ function createPokemonCardHTML(pokemon) {
     return /*html*/ `
     <div class="pokedex-container">
             <div id="pokedex-top" style = "background-color: ${findColor(pokemon, type)}">
-            <img onclick="closePokedex()" src="img/back.png" alt="">
-            <div class="space-between margin-top-8">
-            <div class="Pokemon-Name h2 d-flex w-100 text-capitalize">${pokemon['name']}</div>
-                <div class="pokemonCard-id h5 mb-0">#${i}</div>
-            </div>
-            
-               
-               
-                <div class="pokemonCard-pokemon-type">
-                    <div class="pokemon-type-tag " style = "background-color: ${findColorTag(pokemon, type)}">${type}</div>
-                    ${secondType} 
-                </div> 
+                <div>      
+                    <img onclick="closePokedex()" src="img/back.png" alt="">
+                    <div class="space-between margin-top-8">
+                        <div class="Pokemon-Name h2 d-flex w-100 text-capitalize">${pokemon['name']}</div>
+                        <div class="pokemonCard-id h5 mb-0">#${i}</div>
+                    </div>
+                    <div class="pokemonCard-pokemon-type">
+                        <div class="pokemon-type-tag " style = "background-color: ${findColorTag(pokemon, type)}">${type}</div>
+                        ${secondType} 
+                    </div> 
+                </div>
+
                 <div class="arrow">
                     <img onclick="lastPokemon(${i})" src="img/left-arrow.png" alt="">
                     <img onclick="nextPokemon(${i})"src="img/right-arrow.png" alt="">
