@@ -23,7 +23,7 @@ async function loadPokemon(i) {
 
 
 function renderPokemonPreviewHTML(i) {
-    let pokemon = allPokemon[i-1]; //aktuelles Pokemon -1 weil das Array mit 0 anfängt aber die Pokemon bei 1 anfängt
+    let pokemon = allPokemon[i - 1]; //aktuelles Pokemon -1 weil das Array mit 0 anfängt aber die Pokemon bei 1 anfängt
     document.getElementById('content').innerHTML += createPreviewCardHTML(pokemon);
 }
 
@@ -82,7 +82,7 @@ function nextPokemon(pokemonId) {
     if (pokemonId == allPokemon.length) {
         pokemon = allPokemon[0];
     } else {
-       pokemon = allPokemon[pokemonId];
+        pokemon = allPokemon[pokemonId];
     }
 
     renderPokedex(pokemon);
@@ -94,7 +94,7 @@ function lastPokemon(pokemonId) { //das i was übergeben wird ist Pokemon id i -
         pokemon = allPokemon[allPokemon.length - 1]; //length = Anzahl der Slots (Gesamtlänge!) -- 
         //length-1 = letzter Eintrag weil wenn er die Zahl der Gesamtlänge abrufen würde würde er undefined sagen weil array zahlen ja mit 0 anfangen 
     } else {
-       pokemon = allPokemon[pokemonId-2];
+        pokemon = allPokemon[pokemonId - 2];
     }
 
     renderPokedex(pokemon);
@@ -105,52 +105,48 @@ function createPokemonCardHTML(pokemon) {
     let secondType = findSecondType(pokemon);
     let i = pokemon['id'];
     // counter = i;
-    
+
 
     return /*html*/ `
-    <div class="pokedex-container">
-            <div id="pokedex-top" style = "background-color: ${findColor(pokemon, type)}">
-                <div>      
-                    <img class="arrowImg" onclick="closePokedex()" src="img/back.png" alt="">
-                    <div class="space-between margin-top-8">
-                        <div class="Pokemon-Name h2 d-flex w-100 text-capitalize">${pokemon['name']}</div>
-                        <div class="pokemonCard-id h5 mb-0">#${i}</div>
-                    </div>
-                    <div class="pokemonCard-pokemon-type">
+    <div class="detail" style = "background-color: ${findColor(pokemon, type)}">
+            
+                    
+                
+                <div class="detail-header">
+                    <div class="pokemonCard-id h5">#${i}</div>
+
+
+
+                    <div class="Pokemon-Name h2 text-capitalize">${pokemon['name']}</div>
                         <div class="pokemon-type-tag " style = "background-color: ${findColorTag(pokemon, type)}">${type}</div>
                         ${secondType} 
                     </div> 
-                </div>
-
-                <div class="arrow">
                 
-                    <img class="arrowImg" onclick="lastPokemon(${i})" src="img/left-arrow.png" alt="">
+
                     <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-                    <img class="arrowImg" onclick="nextPokemon(${i})"src="img/right-arrow.png" alt="">
-                </div>
-            </div>
-            
-            <div class="pokedex-bottom">
-               
-                <nav class="info-nav">
+                <div>
+
+                <nav style="background-color: white" >
                     <b><a style= "color: ${findColor(pokemon, type)};">About</a></b> 
                     <b><a style= "color: ${findColor(pokemon, type)};">Base Stats</a></b>
                     <b><a style= "color: ${findColor(pokemon, type)};">Evolution</a></b>
                     <b><a style= "color: ${findColor(pokemon, type)};">Moves</a></b>
                 </nav>
-              
-                <div class="info-content">   
-                    <div class="stats-container">
-                        ${pokemon['stats'].map(s => `
-                        <div class="stats"><span class="stat-name">${s['stat']['name']}</span>
-                            <span class="stat-value">${s['base_stat']}</span>
-                            <div class="progress bar-height-width" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: ${s['base_stat']}%; height=20px; background-color: ${findColor(pokemon, type)};"></div>
-                            </div>
-                        </div>`).join(' ')}
-                    </div>       
-                </div>  
-            </div>   
+                <div>
+                    <img class="arrowImg" onclick="lastPokemon(${i})" src="img/left-arrow.png" alt="">
+                    <img class="arrowImg" onclick="nextPokemon(${i})"src="img/right-arrow.png" alt="">    
+                </div>
+                   
+                <div class="stats-container">
+                    ${pokemon['stats'].map(s => `
+                    <div class="stats"><span class="stat-name">${s['stat']['name']}</span>
+                        <span class="stat-value">${s['base_stat']}</span>
+                        <div class="progress bar-height-width" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar" style="width: ${s['base_stat']}%; height=20px; background-color: ${findColor(pokemon, type)};"></div>
+                        </div>
+                    </div>`).join(' ')}
+                </div>       
+
 
     </div>
             
