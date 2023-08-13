@@ -109,8 +109,7 @@ body {
     justify-content: space-between;
 
 }
-
-#pokedex-top img {
+.arrowImg {
     height: 32px;
     width: 32px;
 }
@@ -137,9 +136,10 @@ body {
 
 .arrow {
     width: 100%;
+    height: 100%;
     display: flex;
     justify-content: space-between;
-
+    align-items: center;
 
 }
 
@@ -190,7 +190,7 @@ body {
 
 .pokemonImage {
     height: 350px;
-    margin-top: -270px;
+    width: 250px;
 }
 
 .remove-scrolling {
@@ -301,7 +301,7 @@ body {
 
     .pokemonImage {
         height: 300px;
-        margin-top: -200px;
+        
     }
 
     .pokedex-container {
@@ -325,13 +325,10 @@ body {
 
     .pokemonImage {
         height: 200px;
-        margin-top: -150px;
+       
     }
 
-    #pokedex-top img {
-        height: 16px;
-        width: 16px;
-    }
+
 
     .info-nav {
         width: 200px;

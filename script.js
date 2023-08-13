@@ -111,7 +111,7 @@ function createPokemonCardHTML(pokemon) {
     <div class="pokedex-container">
             <div id="pokedex-top" style = "background-color: ${findColor(pokemon, type)}">
                 <div>      
-                    <img onclick="closePokedex()" src="img/back.png" alt="">
+                    <img class="arrowImg" onclick="closePokedex()" src="img/back.png" alt="">
                     <div class="space-between margin-top-8">
                         <div class="Pokemon-Name h2 d-flex w-100 text-capitalize">${pokemon['name']}</div>
                         <div class="pokemonCard-id h5 mb-0">#${i}</div>
@@ -123,13 +123,15 @@ function createPokemonCardHTML(pokemon) {
                 </div>
 
                 <div class="arrow">
-                    <img onclick="lastPokemon(${i})" src="img/left-arrow.png" alt="">
-                    <img onclick="nextPokemon(${i})"src="img/right-arrow.png" alt="">
+                
+                    <img class="arrowImg" onclick="lastPokemon(${i})" src="img/left-arrow.png" alt="">
+                    <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
+                    <img class="arrowImg" onclick="nextPokemon(${i})"src="img/right-arrow.png" alt="">
                 </div>
             </div>
             
             <div class="pokedex-bottom">
-                <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
+               
                 <nav class="info-nav">
                     <b><a style= "color: ${findColor(pokemon, type)};">About</a></b> 
                     <b><a style= "color: ${findColor(pokemon, type)};">Base Stats</a></b>
