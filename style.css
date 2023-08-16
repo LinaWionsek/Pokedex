@@ -46,7 +46,7 @@ body {
 
 .Pokemon-Name {
     font-size: x-large;
-    color: white !important;
+   
 }
 
 .previewCard-details {
@@ -58,13 +58,15 @@ body {
 }
 
 .pokemon-type-tag {
-    border: 1px solid;
+    border: 2px solid;
     border-radius: 5px;
+    border-color: black;
     width: 80px;
     text-align: center;
     padding: 2px;
     font-size: 14px;
     color: white;
+    
 }
 
 .pokemon-type-tag::first-letter {
@@ -84,7 +86,7 @@ body {
     overflow-y: scroll;
     max-height: 100%;
     height: 89vh;
-    padding: 20px;
+    padding: 25px;
     border-radius: 20px;
 }
 
@@ -98,6 +100,9 @@ body {
     justify-content: flex-start;
     flex-direction: column;
     width: 100%;
+    background-color: white;
+    border-radius: 20px;
+    padding: 8px;
 }
 
 .detail-footer {
@@ -124,7 +129,7 @@ body {
     justify-content: center;
     height: 250px;
     width: 250px;
-    border: 1px solid;
+    border: 4px solid;
     border-radius: 10px;
 }
 
@@ -175,12 +180,14 @@ body {
     align-items: center;
     width: 100%;
     background-color: white;
-    padding-bottom: 8px;
-    padding-top: 8px;
+    padding: 8px;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 }
 
+.navigation-container a {
+    font-weight: 500;
+}
 
 
 .stats-container {
@@ -209,11 +216,15 @@ body {
 .stat-name:first-letter {
     text-transform: uppercase !important;
 }
+.dropdown-menu {
+    --bs-dropdown-link-active-bg: #ced4da !important;
+    --bs-dropdown-link-hover-bg: #e9ecef !important;
+}
 
 .stat-value {
     text-align: right;
     gap: 8px;
-    width: 35px;
+    width: 45px;
     color: #666666;
 }
 
