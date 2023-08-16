@@ -108,33 +108,42 @@ function createPokemonCardHTML(pokemon) {
 
 
     return /*html*/ `
+
     <div class="detail" style = "background-color: ${findColor(pokemon, type)}">
-            
+           
                     
                 
                 <div class="detail-header">
+                    <div class="close-card">
+                        <svg class="arrow" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/></svg>
+                    </div>
                     <div class="pokemonCard-id h5">#${i}</div>
+                    <div class="Pokemon-Name h3 text-capitalize">${pokemon['name']}</div>
+                    <div class="types-container">
+                    <div class="pokemon-type-tag " style = "background-color: ${findColorTag(pokemon, type)}">${type}</div>
+                    ${secondType}  
+                    </div>
+                    
+                </div>
+                <div class="pokemonImage-container">
+                        <div class="pokemonImage-background" style = "background-color: ${findColorTag(pokemon, type)}">
+                            <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
+                        </div>
+            </div>
 
-
-
-                    <div class="Pokemon-Name h2 text-capitalize">${pokemon['name']}</div>
-                        <div class="pokemon-type-tag " style = "background-color: ${findColorTag(pokemon, type)}">${type}</div>
-                        ${secondType} 
-                    </div> 
+            <div class="detail-footer">
+            
+                <div class="navigation-container">
+                    <svg class="arrow" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m10.978 14.999v3.251c0 .412-.335.75-.752.75-.188 0-.375-.071-.518-.206-1.775-1.685-4.945-4.692-6.396-6.069-.2-.189-.312-.452-.312-.725 0-.274.112-.536.312-.725 1.451-1.377 4.621-4.385 6.396-6.068.143-.136.33-.207.518-.207.417 0 .752.337.752.75v3.251h9.02c.531 0 1.002.47 1.002 1v3.998c0 .53-.471 1-1.002 1zm-1.5-7.506-4.751 4.507 4.751 4.507v-3.008h10.022v-2.998h-10.022z" fill-rule="nonzero"/></svg>
                 
-
-                    <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-                <div>
-
-                <nav style="background-color: white" >
-                    <b><a style= "color: ${findColor(pokemon, type)};">About</a></b> 
-                    <b><a style= "color: ${findColor(pokemon, type)};">Base Stats</a></b>
-                    <b><a style= "color: ${findColor(pokemon, type)};">Evolution</a></b>
-                    <b><a style= "color: ${findColor(pokemon, type)};">Moves</a></b>
-                </nav>
-                <div>
-                    <img class="arrowImg" onclick="lastPokemon(${i})" src="img/left-arrow.png" alt="">
-                    <img class="arrowImg" onclick="nextPokemon(${i})"src="img/right-arrow.png" alt="">    
+                    
+                        <b><a style= "color: ${findColor(pokemon, type)};">About</a></b> 
+                        <b><a style= "color: ${findColor(pokemon, type)};">Base Stats</a></b>
+                        <b><a style= "color: ${findColor(pokemon, type)};">Evolution</a></b>
+                        <b><a style= "color: ${findColor(pokemon, type)};">Moves</a></b>
+            
+                    
+                    <svg class="arrow" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m13.022 14.999v3.251c0 .412.335.75.752.75.188 0 .375-.071.518-.206 1.775-1.685 4.945-4.692 6.396-6.069.2-.189.312-.452.312-.725 0-.274-.112-.536-.312-.725-1.451-1.377-4.621-4.385-6.396-6.068-.143-.136-.33-.207-.518-.207-.417 0-.752.337-.752.75v3.251h-9.02c-.531 0-1.002.47-1.002 1v3.998c0 .53.471 1 1.002 1z" fill-rule="nonzero"/></svg>    
                 </div>
                    
                 <div class="stats-container">
@@ -145,9 +154,10 @@ function createPokemonCardHTML(pokemon) {
                             <div class="progress-bar" style="width: ${s['base_stat']}%; height=20px; background-color: ${findColor(pokemon, type)};"></div>
                         </div>
                     </div>`).join(' ')}
-                </div>       
+                </div>    
 
-
+            </div> 
+            
     </div>
             
            
