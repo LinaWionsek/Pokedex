@@ -46,7 +46,7 @@ body {
 
 .Pokemon-Name {
     font-size: x-large;
-   
+
 }
 
 .previewCard-details {
@@ -66,7 +66,7 @@ body {
     padding: 2px;
     font-size: 14px;
     color: white;
-    
+
 }
 
 .pokemon-type-tag::first-letter {
@@ -104,10 +104,8 @@ body {
     border-radius: 20px;
     padding: 8px;
 }
+ 
 
-.detail-footer {
-    border-bottom-right-radius: 20px !important;
-}
 
 .pokemonCard-name {
     display: flex;
@@ -136,7 +134,7 @@ body {
 .pokemonImage-container {
     display: flex;
     justify-content: center;
-    padding: 20px;
+    padding: 8px;
 }
 
 .pokemonImage {
@@ -146,9 +144,6 @@ body {
 
 
 /* --------------------------------------DETAIL_FOOTER------------------------------------------ */
-
-
-
 
 
 .remove-scrolling {
@@ -171,7 +166,6 @@ body {
 .arrow {
     height: 32px;
     width: 32px;
-    /* fill: white; */
 }
 
 .navigation-container {
@@ -180,15 +174,23 @@ body {
     align-items: center;
     width: 100%;
     background-color: white;
-    padding: 8px;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    padding: 0px 8px 0px 8px;
+    
 }
 
 .navigation-container a {
     font-weight: 500;
 }
 
+.back-forward {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding: 8px;
+    
+}
 
 .stats-container {
     display: flex;
@@ -216,6 +218,7 @@ body {
 .stat-name:first-letter {
     text-transform: uppercase !important;
 }
+
 .dropdown-menu {
     --bs-dropdown-link-active-bg: #ced4da !important;
     --bs-dropdown-link-hover-bg: #e9ecef !important;
@@ -271,6 +274,7 @@ body {
 }
 
 @media (max-width: 768px) {
+
     /* Stilregeln für größere Mobiltelefone und Tablets im Hochformat hier */
     .detail {
         width: 100vw;
@@ -279,12 +283,35 @@ body {
 }
 
 @media (max-width: 360px) {
+
     /* Stilregeln für kleine Mobiltelefone hier */
-    .navigation-container {
-       padding: 2px;
-       font-size: 14px;
+    .detail {
+        height: 70vh;
+        padding: 10px;
     }
 
+    .detail-header {
+        padding: 5px;
+    }
+    .pokemonImage-background {
+        height: 150px;
+        width: 150px;
+    }
+    .pokemonImage {
+        height: 150px;
+        width: 150px;
+    }
+
+    .navigation-container {
+        padding: 0px 5px 0px 5px;
+        font-size: 14px;
+    }
+    .back-forward{
+        padding: 5px;
+    }
+    .stats-container {
+        padding: 5px;
+    }
     .arrow {
         height: 16px;
         width: 16px;
