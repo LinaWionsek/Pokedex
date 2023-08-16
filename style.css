@@ -269,3 +269,24 @@ body {
 .d-none {
     display: none;
 }
+
+@media (max-width: 768px) {
+    /* Stilregeln für größere Mobiltelefone und Tablets im Hochformat hier */
+    .detail {
+        width: 100vw;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 360px) {
+    /* Stilregeln für kleine Mobiltelefone hier */
+    .navigation-container {
+       padding: 2px;
+       font-size: 14px;
+    }
+
+    .arrow {
+        height: 16px;
+        width: 16px;
+    }
+}
