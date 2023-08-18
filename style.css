@@ -167,6 +167,9 @@ body {
     height: 32px;
     width: 32px;
 }
+.arrow:hover{
+    cursor: pointer;
+}
 
 .navigation-container {
     display: flex;
