@@ -1,5 +1,6 @@
 let allPokemon = []
 let currentPokemon;
+let allChar = []
 let counter;
 
 window.addEventListener('mouseup', function (event) {
@@ -15,9 +16,18 @@ async function loadAllPokemon() {
     for (let i = j; i < j + 15; i++) {
 
         await loadPokemon(i);
+        loadCharacteristic(i);
         renderPokemonPreviewHTML(i);
     }
 
+}
+async function loadCharacteristic(i) {
+    let url = 'https://pokeapi.co/api/v2/characteristic/' + i;
+    let response = await fetch(url);
+    let currentCharacteristic = await response.json(); // JSON 
+    // console.log(currentCharacteristic);
+    allChar.push(currentCharacteristic);
+    console.log(allChar)
 }
 
 
@@ -27,6 +37,7 @@ async function loadPokemon(i) {
     let currentPokemon = await response.json(); // JSON 
     allPokemon.push(currentPokemon);
 }
+
 
 
 function renderPokemonPreviewHTML(i) {
@@ -77,24 +88,25 @@ function findSecondType(pokemon) {
 function openPokedex(i) {
     let pokemon = allPokemon[i - 1]
     document.getElementById('pokedex').classList.remove("d-none");
-    renderPokedex(pokemon);
+   renderPokedex(pokemon);
+   
 }
 
 
 function renderPokedex(pokemon) {
-    document.getElementById('pokedex').innerHTML = createPokemonCardHTML(pokemon)
+    let i = pokemon['id'];
+    document.getElementById('pokedex').innerHTML = createPokemonCardHTML(pokemon);
+    renderStats(i);
 
 }
 
 
 function createPokemonCardHTML(pokemon) {
-
+   
     let type = findFirstType(pokemon);
     let secondType = findSecondType(pokemon);
     let i = pokemon['id'];
     // counter = i;
-
-
     return /*html*/ `
         <div class="detail" id="detailID" style = "background-color: ${findColor(pokemon, type)}">              
             <!--  DETAIL HEADER   -->   
@@ -121,8 +133,8 @@ function createPokemonCardHTML(pokemon) {
                     <svg onclick="lastPokemon(${i})" class="arrow" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m13.022 14.999v3.251c0 .412.335.75.752.75.188 0 .375-.071.518-.206 1.775-1.685 4.945-4.692 6.396-6.069.2-.189.312-.452.312-.725 0-.274-.112-.536-.312-.725-1.451-1.377-4.621-4.385-6.396-6.068-.143-.136-.33-.207-.518-.207-.417 0-.752.337-.752.75v3.251h-9.02c-.531 0-1.002.47-1.002 1v3.998c0 .53.471 1 1.002 1z" fill-rule="nonzero"/></svg>    
                 </div>
                 <div class="navigation-container">  
-                    <a style= "color: ${findColor(pokemon, type)};">About</a>
-                    <a style= "color: ${findColor(pokemon, type)};">Base&nbspStats</a>
+                    <a onclick="renderAbout(${i})" style= "color: ${findColor(pokemon, type)};">About</a>
+                    <a onclick="renderStats(${i})" style= "color: ${findColor(pokemon, type)};">Base&nbspStats</a>
                     <div class="dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style= "color: ${findColor(pokemon, type)};">
                             More
@@ -134,25 +146,46 @@ function createPokemonCardHTML(pokemon) {
                         </ul>
                     </div> 
                 </div>
-                    
-                <div class="stats-container">
-                    ${pokemon['stats'].map(s => `
+                <!--  INFORMATIONS   -->
+                <div id="informationContainer"></div>
+            </div> 
+    </div>     
+    `;
+     
+}
+
+function renderStats(i){
+    let pokemon = allPokemon[i - 1]
+    document.getElementById('informationContainer').innerHTML = createStatsHTML(pokemon)
+}
+function createStatsHTML(pokemon) {
+    let type = findFirstType(pokemon);
+    let secondType = findSecondType(pokemon);
+    return /*html*/ `
+    ${pokemon['stats'].map(s => `
                     <div id="statID" class="stats"><span class="stat-name">${s['stat']['name']}</span>
                         <span class="stat-value">${s['base_stat']}</span>
                         <div class="progress-hide progress bar-height-width" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
                             <div class="progress-bar" style="width: ${s['base_stat']}%; height=20px; background-color: ${findColor(pokemon, type)};"></div>
                         </div>
                     </div>`).join(' ')}
-                </div>
-            </div> 
+    
+   `
+}
 
-            <!--     -->
+function renderAbout(i){
+    let pokemon = allPokemon[i - 1]
+    document.getElementById('informationContainer').innerHTML = createAboutHTML(pokemon)
 
+}
 
-
-    </div>     
+function createAboutHTML(i) {
+    let char = allChar[i - 1]
+    return /*html*/ `Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui animi iusto fugit sequi quas quidem, sit aperiam ratione est exercitationem minus repellendus vero blanditiis soluta ab libero, illo repellat consequatur!
+    ${char['description']}
     `;
 }
+
 
 
 function closePokedex() {
