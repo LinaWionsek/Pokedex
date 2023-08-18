@@ -27,8 +27,25 @@ async function loadCharacteristic(i) {
     let currentCharacteristic = await response.json(); // JSON 
     // console.log(currentCharacteristic);
     allChar.push(currentCharacteristic);
-    console.log(allChar)
 }
+
+
+function renderAbout(i){
+    let char = allChar[i - 1]
+    // console.log(char)
+    document.getElementById('informationContainer').innerHTML = createAboutHTML(char)
+
+}
+
+function createAboutHTML(char) {
+    console.log(char)
+    
+    return /*html*/ `
+    ${char['descriptions'][7]['description']}
+    `;
+}
+
+
 
 
 async function loadPokemon(i) {
@@ -42,6 +59,7 @@ async function loadPokemon(i) {
 
 function renderPokemonPreviewHTML(i) {
     let pokemon = allPokemon[i - 1]; //aktuelles Pokemon -1 weil das Array mit 0 anfängt aber die Pokemon bei 1 anfängt
+    console.log(allPokemon)
     document.getElementById('content').innerHTML += createPreviewCardHTML(pokemon);
 }
 
@@ -173,18 +191,7 @@ function createStatsHTML(pokemon) {
    `
 }
 
-function renderAbout(i){
-    let pokemon = allPokemon[i - 1]
-    document.getElementById('informationContainer').innerHTML = createAboutHTML(pokemon)
 
-}
-
-function createAboutHTML(i) {
-    let char = allChar[i - 1]
-    return /*html*/ `Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui animi iusto fugit sequi quas quidem, sit aperiam ratione est exercitationem minus repellendus vero blanditiis soluta ab libero, illo repellat consequatur!
-    ${char['description']}
-    `;
-}
 
 
 
