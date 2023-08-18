@@ -74,6 +74,7 @@ function openPokedex(i) {
 // Name, Bild
 function renderPokedex(pokemon) {
     document.getElementById('pokedex').innerHTML = createPokemonCardHTML(pokemon)
+   
 }
 
 
@@ -101,6 +102,7 @@ function lastPokemon(pokemonId) { //das i was übergeben wird ist Pokemon id i -
 }
 
 function createPokemonCardHTML(pokemon) {
+    
     let type = findFirstType(pokemon);
     let secondType = findSecondType(pokemon);
     let i = pokemon['id'];
@@ -154,9 +156,9 @@ function createPokemonCardHTML(pokemon) {
                    
                 <div class="stats-container">
                     ${pokemon['stats'].map(s => `
-                    <div class="stats"><span class="stat-name">${s['stat']['name']}</span>
+                    <div id="statID" class="stats"><span class="stat-name">${s['stat']['name']}</span>
                         <span class="stat-value">${s['base_stat']}</span>
-                        <div class="progress bar-height-width" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-hide progress bar-height-width" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
                             <div class="progress-bar" style="width: ${s['base_stat']}%; height=20px; background-color: ${findColor(pokemon, type)};"></div>
                         </div>
                     </div>`).join(' ')}
@@ -164,10 +166,12 @@ function createPokemonCardHTML(pokemon) {
             </div> 
     </div>
             
-           
+  
           
             `;
 }
+
+
 
 
 // function openDialog() {

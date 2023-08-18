@@ -204,6 +204,7 @@ body {
 .stats {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     width: 100%;
     gap: 16px;
 }
@@ -315,5 +316,11 @@ body {
     .arrow {
         height: 16px;
         width: 16px;
+    }
+    .progress-hide{
+        display: none !important;
+    }
+    .dropdown-menu {
+        font-size: 14px !important;
     }
 }
