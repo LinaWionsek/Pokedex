@@ -31,17 +31,20 @@ async function loadCharacteristic(i) {
 
 
 function renderAbout(i){
+    let pokemon = allPokemon[i - 1]
     let char = allChar[i - 1]
     // console.log(char)
-    document.getElementById('informationContainer').innerHTML = createAboutHTML(char)
+    document.getElementById('informationContainer').innerHTML = createAboutHTML(char, pokemon)
 
 }
 
-function createAboutHTML(char) {
+function createAboutHTML(char, pokemon) {
     console.log(char)
     
     return /*html*/ `
-    ${char['descriptions'][7]['description']}
+    Description${char['descriptions'][7]['description']}
+    Height${pokemon['height']}
+    Weight${pokemon['weight']}
     `;
 }
 
@@ -133,10 +136,10 @@ function createPokemonCardHTML(pokemon) {
                     <svg class="arrow" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/></svg>
                 </div>
                 <div class="pokemonCard-id h5">#${i}</div>
-                <div class="Pokemon-Name h3 text-capitalize">${pokemon['name']}</div>
                 <div class="types-container">
-                <div class="pokemon-type-tag " style = "background-color: ${findColorTag(pokemon, type)}">${type}</div>
-                ${secondType}  
+                    <div class="Pokemon-Name h3 text-capitalize">${pokemon['name']}</div>
+                    <div class="pokemon-type-tag " style = "background-color: ${findColorTag(pokemon, type)}">${type}</div>
+                    ${secondType}  
                 </div>
                 <div class="pokemonImage-container">
                     <div class="pokemonImage-background" style = "background-color: ${findColorTag(pokemon, type)}">
