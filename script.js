@@ -58,7 +58,7 @@ function createPreviewCardHTML(pokemon) {
             
             <div class="d-flex w-100">
                 <div class="previewCard-details">
-                <div class="Pokemon-Name text-capitalize h5">${pokemon['name']}</div>
+                <div class="Pokemon-Name h5">${pokemon['name']}</div>
                     <div class="pokemon-type-tag" style = "background-color: ${findColorTag(pokemon, type)}">${type}</div> 
                     ${secondType}
                 </div> 
@@ -79,7 +79,7 @@ function findSecondType(pokemon) {
     let types = pokemon['types'];
     let secondType = '';
     if (types[1]) {
-        secondType = `<div class="pokemon-type-tag secondType" style = "background-color: ${findColorTag(pokemon, types[1]['type']['name'])}">${types[1]['type']['name']}</div>`;
+        secondType = `<div class="pokemon-type-tag" style = "background-color: ${findColorTag(pokemon, types[1]['type']['name'])}">${types[1]['type']['name']}</div>`;
     }
     return secondType;
 }
@@ -113,7 +113,7 @@ function createPokemonCardHTML(pokemon) {
                 </div>
                 <div class="pokemonCard-id h5">#${i}</div>
                 <div class="types-container">
-                    <div class="Pokemon-Name h3 text-capitalize">${pokemon['name']}</div>
+                    <div class="Pokemon-Name h3">${pokemon['name']}</div>
                     <div class="pokemon-type-tag " style = "background-color: ${findColorTag(pokemon, type)}">${type}</div>
                     ${secondType}  
                 </div>
@@ -124,7 +124,7 @@ function createPokemonCardHTML(pokemon) {
                 </div>
             </div>
             <!--  DETAIL FOOTER   -->
-            <div class="detail-footer">
+            <div>
                 <div class="back-forward">
                     <svg onclick="nextPokemon(${i})" class="arrow" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m10.978 14.999v3.251c0 .412-.335.75-.752.75-.188 0-.375-.071-.518-.206-1.775-1.685-4.945-4.692-6.396-6.069-.2-.189-.312-.452-.312-.725 0-.274.112-.536.312-.725 1.451-1.377 4.621-4.385 6.396-6.068.143-.136.33-.207.518-.207.417 0 .752.337.752.75v3.251h9.02c.531 0 1.002.47 1.002 1v3.998c0 .53-.471 1-1.002 1z" fill-rule="nonzero"/></svg>
                     <svg onclick="lastPokemon(${i})" class="arrow" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m13.022 14.999v3.251c0 .412.335.75.752.75.188 0 .375-.071.518-.206 1.775-1.685 4.945-4.692 6.396-6.069.2-.189.312-.452.312-.725 0-.274-.112-.536-.312-.725-1.451-1.377-4.621-4.385-6.396-6.068-.143-.136-.33-.207-.518-.207-.417 0-.752.337-.752.75v3.251h-9.02c-.531 0-1.002.47-1.002 1v3.998c0 .53.471 1 1.002 1z" fill-rule="nonzero"/></svg>    
@@ -228,7 +228,7 @@ function findSecondAbility(pokemon) {
     let abilities = pokemon['abilities'];
     let secondAbility = '';
     if (abilities[1]) {
-        secondAbility = `<div class="ability2"> ,&nbsp;${abilities[1]['ability']['name']}</div>`;
+        secondAbility = `<div> ,&nbsp;${abilities[1]['ability']['name']}</div>`;
     }
     return secondAbility;
 }
