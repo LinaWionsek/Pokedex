@@ -1,7 +1,8 @@
-let allPokemon = []
-let currentPokemon;
-let allChar = []
+let allPokemon = [];
+let allChar = [];
+let allSpecies = [];
 let counter;
+let currentPokemon;
 
 
 window.addEventListener('mouseup', function (event) {
@@ -15,10 +16,12 @@ window.addEventListener('mouseup', function (event) {
 
 async function loadAllPokemon() {
     let j = 1
-    for (let i = j; i < j + 15; i++) {
+    for (let i = j; i < j + 30; i++) {
         await loadPokemon(i);
-        loadCharacteristic(i);
+
         renderPokemonPreviewHTML(i);
+        loadCharacteristic(i);
+        loadSpecies(i);
     }
 }
 
@@ -27,7 +30,6 @@ async function loadCharacteristic(i) {
     let url = 'https://pokeapi.co/api/v2/characteristic/' + i;
     let response = await fetch(url);
     let currentCharacteristic = await response.json(); // JSON 
-    // console.log(currentCharacteristic);
     allChar.push(currentCharacteristic);
 }
 
@@ -40,9 +42,16 @@ async function loadPokemon(i) {
 }
 
 
+async function loadSpecies(i) {
+    let url = 'https://pokeapi.co/api/v2/pokemon-species/' + i;
+    let response = await fetch(url);
+    let currentSpecies = await response.json(); // JSON 
+    allSpecies.push(currentSpecies);
+}
+
+
 function renderPokemonPreviewHTML(i) {
     let pokemon = allPokemon[i - 1]; //aktuelles Pokemon -1 weil das Array mit 0 anfängt aber die Pokemon bei 1 anfängt
-    console.log(allPokemon)
     document.getElementById('content').innerHTML += createPreviewCardHTML(pokemon);
 }
 
@@ -137,7 +146,7 @@ function createPokemonCardHTML(pokemon) {
                             More
                             </a>
                         <ul class="dropdown-menu">
-                            <li><button class="dropdown-item" type="button" style= "color: ${findColor(pokemon, type)};">Evolution</button></li>
+                            <li><button onclick="renderEvolutionchain(${i})" class="dropdown-item" type="button" style= "color: ${findColor(pokemon, type)};">Evolution</button></li>
                             <li><button class="dropdown-item" type="button" style= "color: ${findColor(pokemon, type)};">Moves</button></li>
                             <li><button class="dropdown-item" type="button" style= "color: ${findColor(pokemon, type)};">Something else here</button></li>
                         </ul>
@@ -148,7 +157,7 @@ function createPokemonCardHTML(pokemon) {
             </div> 
     </div>     
     `;
-     
+
 }
 
 
@@ -159,7 +168,6 @@ function nextPokemon(pokemonId) {
     } else {
         pokemon = allPokemon[pokemonId];
     }
-
     renderPokedex(pokemon);
 }
 
@@ -177,12 +185,22 @@ function lastPokemon(pokemonId) { //das i was übergeben wird ist Pokemon id i -
 }
 
 
-function renderAbout(i){
+function renderAbout(i) {
     let pokemon = allPokemon[i - 1]
     let char = allChar[i - 1]
     // console.log(char)
     document.getElementById('informationContainer').innerHTML = createAboutHTML(char, pokemon)
 }
+
+// function renderEvolutionchain(i) {
+//     let chain = allEvolutionchain[i-1]
+//     document.getElementById('informationContainer').innerHTML = createEvolutionchainHTML(chain)
+// }
+
+// function createEvolutionchainHTML(chain) {
+//     let nextPokemonevolution = chain['chain']['evolves_to']['0']['species']['name'];
+//     return /*html*/ `${nextPokemonevolution}`
+// }
 
 
 function createAboutHTML(char, pokemon) {
@@ -219,8 +237,8 @@ function fixNumber(nr) {
 }
 
 
-function findFirstAbility(pokemon){
-    return  pokemon['abilities']['0']['ability']['name'];
+function findFirstAbility(pokemon) {
+    return pokemon['abilities']['0']['ability']['name'];
 }
 
 
@@ -234,7 +252,7 @@ function findSecondAbility(pokemon) {
 }
 
 
-function renderStats(i){
+function renderStats(i) {
     let pokemon = allPokemon[i - 1]
     document.getElementById('informationContainer').innerHTML = createStatsHTML(pokemon)
 }
