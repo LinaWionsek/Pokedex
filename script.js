@@ -3,6 +3,7 @@ let currentPokemon;
 let allChar = []
 let counter;
 
+
 window.addEventListener('mouseup', function (event) {
     var detail = document.getElementById('detailID');
     if (!(event.target.closest("#detailID"))) {
@@ -11,63 +12,23 @@ window.addEventListener('mouseup', function (event) {
     }
 });
 
+
 async function loadAllPokemon() {
     let j = 1
     for (let i = j; i < j + 15; i++) {
-
         await loadPokemon(i);
         loadCharacteristic(i);
         renderPokemonPreviewHTML(i);
     }
-
 }
+
+
 async function loadCharacteristic(i) {
     let url = 'https://pokeapi.co/api/v2/characteristic/' + i;
     let response = await fetch(url);
     let currentCharacteristic = await response.json(); // JSON 
     // console.log(currentCharacteristic);
     allChar.push(currentCharacteristic);
-}
-
-
-function renderAbout(i){
-    let pokemon = allPokemon[i - 1]
-    let char = allChar[i - 1]
-    // console.log(char)
-    document.getElementById('informationContainer').innerHTML = createAboutHTML(char, pokemon)
-
-}
-
-function createAboutHTML(char, pokemon) {
-    let type = findFirstType(pokemon);
-    let height = pokemon['height'] * 0.1;
-    let weight = pokemon['weight'] * 0.1;
-
-    return /*html*/ `
-    <div class="about">
-        <div class="description"> ${char['descriptions'][7]['description']}</div>
-        <div class="about-section">
-            <div class="font-weight500"> Height</div>
-            <div>${fixNumber(height)}m</div>
-        </div>
-        <div class="about-section">   
-            <div class="font-weight500"> Weight</div>
-            <div> ${fixNumber(weight)}kg</div>
-        </div>
-        
-        <div class="font-weight500">Abilities</div>
-        <div class="abilities">
-            <div>${findFirstAbility(pokemon)}</div> 
-                ${findSecondAbility(pokemon)}
-        </div>
-    </div>
-   
-    `;
-}
-
-function fixNumber(nr) {
-    let fix = nr.toFixed(2);
-    return fix;
 }
 
 
@@ -79,18 +40,16 @@ async function loadPokemon(i) {
 }
 
 
-
 function renderPokemonPreviewHTML(i) {
     let pokemon = allPokemon[i - 1]; //aktuelles Pokemon -1 weil das Array mit 0 anfängt aber die Pokemon bei 1 anfängt
     console.log(allPokemon)
     document.getElementById('content').innerHTML += createPreviewCardHTML(pokemon);
 }
 
-function createPreviewCardHTML(pokemon) {
 
+function createPreviewCardHTML(pokemon) {
     let type = findFirstType(pokemon);
     let secondType = findSecondType(pokemon);
-
     let i = pokemon['id'];
     return /*html*/ `
         <div onclick="openPokedex(${i})" class="previewCard" style = "background-color: ${findColor(pokemon, type)}">
@@ -111,13 +70,25 @@ function createPreviewCardHTML(pokemon) {
 }
 
 
+function findFirstType(pokemon) {
+    return pokemon['types'][0]['type']['name'];
+}
+
+
+function findSecondType(pokemon) {
+    let types = pokemon['types'];
+    let secondType = '';
+    if (types[1]) {
+        secondType = `<div class="pokemon-type-tag secondType" style = "background-color: ${findColorTag(pokemon, types[1]['type']['name'])}">${types[1]['type']['name']}</div>`;
+    }
+    return secondType;
+}
 
 
 function openPokedex(i) {
     let pokemon = allPokemon[i - 1]
     document.getElementById('pokedex').classList.remove("d-none");
-   renderPokedex(pokemon);
-   
+    renderPokedex(pokemon);
 }
 
 
@@ -125,12 +96,10 @@ function renderPokedex(pokemon) {
     let i = pokemon['id'];
     document.getElementById('pokedex').innerHTML = createPokemonCardHTML(pokemon);
     renderAbout(i);
-
 }
 
 
 function createPokemonCardHTML(pokemon) {
-   
     let type = findFirstType(pokemon);
     let secondType = findSecondType(pokemon);
     let i = pokemon['id'];
@@ -183,33 +152,6 @@ function createPokemonCardHTML(pokemon) {
 }
 
 
-function renderStats(i){
-    let pokemon = allPokemon[i - 1]
-    document.getElementById('informationContainer').innerHTML = createStatsHTML(pokemon)
-}
-
-
-function createStatsHTML(pokemon) {
-    let type = findFirstType(pokemon);
-    let secondType = findSecondType(pokemon);
-    return /*html*/ `
-    ${pokemon['stats'].map(s => `
-                    <div id="statID" class="stats"><span class="stat-name">${s['stat']['name']}</span>
-                        <span class="stat-value">${s['base_stat']}</span>
-                        <div class="progress-hide progress bar-height-width" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar" style="width: ${s['base_stat']}%; height=20px; background-color: ${findColor(pokemon, type)};"></div>
-                        </div>
-                    </div>`).join(' ')}
-    
-   `
-}
-
-
-function closePokedex() {
-    document.getElementById('pokedex').classList.add('d-none');
-}
-
-
 function nextPokemon(pokemonId) {
     let pokemon;
     if (pokemonId == allPokemon.length) {
@@ -235,6 +177,48 @@ function lastPokemon(pokemonId) { //das i was übergeben wird ist Pokemon id i -
 }
 
 
+function renderAbout(i){
+    let pokemon = allPokemon[i - 1]
+    let char = allChar[i - 1]
+    // console.log(char)
+    document.getElementById('informationContainer').innerHTML = createAboutHTML(char, pokemon)
+}
+
+
+function createAboutHTML(char, pokemon) {
+    let type = findFirstType(pokemon);
+    let height = pokemon['height'] * 0.1;
+    let weight = pokemon['weight'] * 0.1;
+
+    return /*html*/ `
+    <div class="about">
+        <div class="description"> ${char['descriptions'][7]['description']}</div>
+        <div class="about-section">
+            <div class="font-weight500"> Height</div>
+            <div>${fixNumber(height)}m</div>
+        </div>
+        <div class="about-section">   
+            <div class="font-weight500"> Weight</div>
+            <div> ${fixNumber(weight)}kg</div>
+        </div>
+        
+        <div class="font-weight500">Abilities</div>
+        <div class="abilities">
+            <div>${findFirstAbility(pokemon)}</div> 
+                ${findSecondAbility(pokemon)}
+        </div>
+    </div>
+   
+    `;
+}
+
+
+function fixNumber(nr) {
+    let fix = nr.toFixed(2);
+    return fix;
+}
+
+
 function findFirstAbility(pokemon){
     return  pokemon['abilities']['0']['ability']['name'];
 }
@@ -249,16 +233,29 @@ function findSecondAbility(pokemon) {
     return secondAbility;
 }
 
-function findFirstType(pokemon) {
-    return pokemon['types'][0]['type']['name'];
+
+function renderStats(i){
+    let pokemon = allPokemon[i - 1]
+    document.getElementById('informationContainer').innerHTML = createStatsHTML(pokemon)
 }
 
 
-function findSecondType(pokemon) {
-    let types = pokemon['types'];
-    let secondType = '';
-    if (types[1]) {
-        secondType = `<div class="pokemon-type-tag secondType" style = "background-color: ${findColorTag(pokemon, types[1]['type']['name'])}">${types[1]['type']['name']}</div>`;
-    }
-    return secondType;
+function createStatsHTML(pokemon) {
+    let type = findFirstType(pokemon);
+    let secondType = findSecondType(pokemon);
+    return /*html*/ `
+    ${pokemon['stats'].map(s => `
+                    <div id="statID" class="stats"><span class="stat-name">${s['stat']['name']}</span>
+                        <span class="stat-value">${s['base_stat']}</span>
+                        <div class="progress-hide progress bar-height-width" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar" style="width: ${s['base_stat']}%; height=20px; background-color: ${findColor(pokemon, type)};"></div>
+                        </div>
+                    </div>`).join(' ')}
+    
+   `
+}
+
+
+function closePokedex() {
+    document.getElementById('pokedex').classList.add('d-none');
 }
