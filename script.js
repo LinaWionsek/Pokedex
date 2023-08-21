@@ -1,6 +1,5 @@
 let allPokemon = [];
 let allChar = [];
-let allSpecies = [];
 let counter;
 let currentPokemon;
 
@@ -8,7 +7,6 @@ let currentPokemon;
 window.addEventListener('mouseup', function (event) {
     var detail = document.getElementById('detailID');
     if (!(event.target.closest("#detailID"))) {
-        detail.style.display = 'none';
         closePokedex();
     }
 });
@@ -21,7 +19,6 @@ async function loadAllPokemon() {
 
         renderPokemonPreviewHTML(i);
         loadCharacteristic(i);
-        loadSpecies(i);
     }
 }
 
@@ -41,13 +38,6 @@ async function loadPokemon(i) {
     allPokemon.push(currentPokemon);
 }
 
-
-async function loadSpecies(i) {
-    let url = 'https://pokeapi.co/api/v2/pokemon-species/' + i;
-    let response = await fetch(url);
-    let currentSpecies = await response.json(); // JSON 
-    allSpecies.push(currentSpecies);
-}
 
 
 function renderPokemonPreviewHTML(i) {
@@ -193,16 +183,6 @@ function renderAbout(i) {
     document.getElementById('informationContainer').innerHTML = createAboutHTML(char, pokemon)
 }
 
-// function renderEvolutionchain(i) {
-//     let chain = allEvolutionchain[i-1]
-//     document.getElementById('informationContainer').innerHTML = createEvolutionchainHTML(chain)
-// }
-
-// function createEvolutionchainHTML(chain) {
-//     let nextPokemonevolution = chain['chain']['evolves_to']['0']['species']['name'];
-//     return /*html*/ `${nextPokemonevolution}`
-// }
-
 
 function createAboutHTML(char, pokemon) {
     let type = findFirstType(pokemon);
@@ -220,11 +200,12 @@ function createAboutHTML(char, pokemon) {
             <div class="font-weight500"> Weight</div>
             <div> ${fixNumber(weight)}kg</div>
         </div>
-        
-        <div class="font-weight500">Abilities</div>
-        <div class="abilities">
-            <div>${findFirstAbility(pokemon)}</div> 
-                ${findSecondAbility(pokemon)}
+        <div class="about-section">
+            <div class="font-weight500">Abilities</div>
+            <div class="abilities">
+                <div>${findFirstAbility(pokemon)}</div> 
+                    ${findSecondAbility(pokemon)}
+            </div>
         </div>
     </div>
    
@@ -247,7 +228,7 @@ function findSecondAbility(pokemon) {
     let abilities = pokemon['abilities'];
     let secondAbility = '';
     if (abilities[1]) {
-        secondAbility = `<div> ,&nbsp;${abilities[1]['ability']['name']}</div>`;
+        secondAbility = `<div> &nbsp;${abilities[1]['ability']['name']}</div>`;
     }
     return secondAbility;
 }
