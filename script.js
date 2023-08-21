@@ -43,8 +43,11 @@ function createAboutHTML(char, pokemon) {
     
     return /*html*/ `
     Description${char['descriptions'][7]['description']}
-    Height${pokemon['height']}
-    Weight${pokemon['weight']}
+    Height${pokemon['height']}m
+    Weight${pokemon['weight']}kg
+    Abilities
+    ${findFirstAbility(pokemon)}
+    ${findSecondAbility(pokemon)}
     `;
 }
 
@@ -89,7 +92,19 @@ function createPreviewCardHTML(pokemon) {
 
     `;
 }
+function findFirstAbility(pokemon){
+    return  pokemon['abilities']['0']['ability']['name'];
+}
 
+
+function findSecondAbility(pokemon) {
+    let abilities = pokemon['abilities'];
+    let secondAbility = '';
+    if (abilities[1]) {
+        secondAbility = `<div>${abilities[1]['ability']['name']}</div>`;
+    }
+    return secondAbility;
+}
 
 function findFirstType(pokemon) {
     return pokemon['types'][0]['type']['name'];
