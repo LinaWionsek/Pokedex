@@ -39,19 +39,36 @@ function renderAbout(i){
 }
 
 function createAboutHTML(char, pokemon) {
-    console.log(char)
-    
+    let type = findFirstType(pokemon);
+    let height = pokemon['height'] * 0.1;
+    let weight = pokemon['weight'] * 0.1;
+
     return /*html*/ `
-    Description${char['descriptions'][7]['description']}
-    Height${pokemon['height']}m
-    Weight${pokemon['weight']}kg
-    Abilities
-    ${findFirstAbility(pokemon)}
-    ${findSecondAbility(pokemon)}
+    <div class="about">
+        <div class="description"> ${char['descriptions'][7]['description']}</div>
+        <div class="about-section">
+            <div class="font-weight500"> Height</div>
+            <div>${fixNumber(height)}m</div>
+        </div>
+        <div class="about-section">   
+            <div class="font-weight500"> Weight</div>
+            <div> ${fixNumber(weight)}kg</div>
+        </div>
+        
+        <div class="font-weight500">Abilities</div>
+        <div class="abilities">
+            <div>${findFirstAbility(pokemon)}</div> 
+                ${findSecondAbility(pokemon)}
+        </div>
+    </div>
+   
     `;
 }
 
-
+function fixNumber(nr) {
+    let fix = nr.toFixed(2);
+    return fix;
+}
 
 
 async function loadPokemon(i) {
@@ -92,33 +109,8 @@ function createPreviewCardHTML(pokemon) {
 
     `;
 }
-function findFirstAbility(pokemon){
-    return  pokemon['abilities']['0']['ability']['name'];
-}
 
 
-function findSecondAbility(pokemon) {
-    let abilities = pokemon['abilities'];
-    let secondAbility = '';
-    if (abilities[1]) {
-        secondAbility = `<div>${abilities[1]['ability']['name']}</div>`;
-    }
-    return secondAbility;
-}
-
-function findFirstType(pokemon) {
-    return pokemon['types'][0]['type']['name'];
-}
-
-
-function findSecondType(pokemon) {
-    let types = pokemon['types'];
-    let secondType = '';
-    if (types[1]) {
-        secondType = `<div class="pokemon-type-tag secondType" style = "background-color: ${findColorTag(pokemon, types[1]['type']['name'])}">${types[1]['type']['name']}</div>`;
-    }
-    return secondType;
-}
 
 
 function openPokedex(i) {
@@ -132,7 +124,7 @@ function openPokedex(i) {
 function renderPokedex(pokemon) {
     let i = pokemon['id'];
     document.getElementById('pokedex').innerHTML = createPokemonCardHTML(pokemon);
-    renderStats(i);
+    renderAbout(i);
 
 }
 
@@ -190,10 +182,13 @@ function createPokemonCardHTML(pokemon) {
      
 }
 
+
 function renderStats(i){
     let pokemon = allPokemon[i - 1]
     document.getElementById('informationContainer').innerHTML = createStatsHTML(pokemon)
 }
+
+
 function createStatsHTML(pokemon) {
     let type = findFirstType(pokemon);
     let secondType = findSecondType(pokemon);
@@ -208,9 +203,6 @@ function createStatsHTML(pokemon) {
     
    `
 }
-
-
-
 
 
 function closePokedex() {
@@ -240,4 +232,33 @@ function lastPokemon(pokemonId) { //das i was übergeben wird ist Pokemon id i -
     }
 
     renderPokedex(pokemon);
+}
+
+
+function findFirstAbility(pokemon){
+    return  pokemon['abilities']['0']['ability']['name'];
+}
+
+
+function findSecondAbility(pokemon) {
+    let abilities = pokemon['abilities'];
+    let secondAbility = '';
+    if (abilities[1]) {
+        secondAbility = `<div class="ability2"> ,&nbsp;${abilities[1]['ability']['name']}</div>`;
+    }
+    return secondAbility;
+}
+
+function findFirstType(pokemon) {
+    return pokemon['types'][0]['type']['name'];
+}
+
+
+function findSecondType(pokemon) {
+    let types = pokemon['types'];
+    let secondType = '';
+    if (types[1]) {
+        secondType = `<div class="pokemon-type-tag secondType" style = "background-color: ${findColorTag(pokemon, types[1]['type']['name'])}">${types[1]['type']['name']}</div>`;
+    }
+    return secondType;
 }

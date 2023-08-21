@@ -73,7 +73,6 @@ html {
     padding: 2px;
     font-size: 14px;
     color: white;
-
 }
 
 .pokemon-type-tag::first-letter {
@@ -208,6 +207,8 @@ html {
     display: flex;
     flex-direction: column;
     background-color: white;
+    height: 170px;
+    font-size: 15px;
     /* height: 180px; */
     padding: 8px;
     border-bottom-right-radius: 20px;
@@ -226,7 +227,7 @@ html {
     width: 200px;
     gap: 8px;
     font-weight: 550;
-    font-size: 14px;
+    /* font-size: 14px; */
 }
 
 .stat-name:first-letter {
@@ -287,12 +288,33 @@ html {
     display: none;
 }
 
+
+.description {
+    font-style: italic;
+    margin-bottom: 8px;
+    width: 150px;
+    background-color: #e9ecef;
+    border-radius: 8px;
+}
+
+.abilities {
+    display: flex;
+}
+
+.about-section {
+    display: flex;
+    justify-content: space-between;
+    width: 150px;
+    margin-bottom: 6px;
+}
+.font-weight500 {
+    font-weight: 500;
+}
+
 a:hover {
     cursor: pointer;
 }
-.detail-footer {
-  
-}
+
 /* .detail  height: 82vh; */
 
 @media (min-height: 901px) {
