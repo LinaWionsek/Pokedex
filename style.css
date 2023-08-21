@@ -197,9 +197,9 @@ a:hover {
     padding: 0px 8px 0px 8px;
 }
 
-.navigation-container a {
+/* .navigation-container a {
     font-weight: 500;
-}
+} */
 
 .dropdown-menu {
     --bs-dropdown-link-active-bg: #ced4da !important;
