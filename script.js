@@ -4,12 +4,17 @@ let counter;
 let currentPokemon;
 let newPokemon
 let offsetNumber = 0
-let limitNumber = 10
+let limitNumber = 20
 let nextUrl;
 
-async function loadPokemon(url) {
+async function loadOnePokemon(url) {
     let response = await fetch(url);
     let currentPokemon = await response.json(); // JSON 
+    return currentPokemon;
+}
+
+async function loadPokemon(url) {
+    let currentPokemon = await loadOnePokemon(url); // JSON 
     // kein let vor nextUrl deshalb wird die globale Variable benutzt!
     nextUrl = currentPokemon['next'] 
     return currentPokemon;
@@ -19,14 +24,12 @@ async function loadPokemon(url) {
 async function getURL() {
     let url = 'https://pokeapi.co/api/v2/pokemon/?offset=' + offsetNumber + '0&limit=' + limitNumber;
     let currentPokemon =  await loadPokemon(url)
-
-    
     let getPokemonApiURLs = currentPokemon['results']
  
     for (let i = 0; i < getPokemonApiURLs.length; i++) {
         const getPokemonApiURL = getPokemonApiURLs[i]['url']; 
-        // console.log(getPokemonApiURL)
-        loadPokemonAsJSON(getPokemonApiURL)
+        console.log(getPokemonApiURL)
+        await loadPokemonAsJSON(getPokemonApiURL)
     }
 }
 
@@ -35,7 +38,7 @@ async function loadPokemonAsJSON(getPokemonApiURL) {
     let currentPokemon = await response.json(); // JSON 
     let pokemon = currentPokemon
     // console.log(pokemon)
-    renderPokemonPreviewCard(pokemon);
+     renderPokemonPreviewCard(pokemon);
     // for (let i = 0; i < pokemon.length; i++) {
     //     const onePokemon = pokemon[i];
     // }
@@ -49,23 +52,25 @@ function renderPokemonPreviewCard(pokemon){
 function createPreviewCardHTML(pokemon) {
     let type = findFirstType(pokemon);
     let secondType = findSecondType(pokemon);
+    let i = pokemon['id']
    
-   
-  
-    return /*html*/ `
-         
-            <div onclick="openPokedex(${pokemon['id']})" class="previewCard" style = "background-color: ${findColor(pokemon, type)}">
-            <div class="previewCard-Pokemon-Id h5">#${pokemon['id']}</div>
-            <div class="d-flex w-100">
-                <div class="previewCard-details">
-                <div class="Pokemon-Name h5">${pokemon['name']}</div>
-                    <div class="pokemon-type-tag" style = "background-color: ${findColorTag(pokemon, type)}">${type}</div> 
-                    ${secondType}
-                </div> 
-                <img src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-            </div>
-        </div>
-    `;
+  console.log(pokemon)
+  return /*html*/ `
+  <div onclick="openPokedex(${i})" class="previewCard" style = "background-color: ${findColor(pokemon, type)}">
+      <div class="previewCard-Pokemon-Id h5">#${pokemon['id']}</div>
+      
+      
+      <div class="d-flex w-100">
+          <div class="previewCard-details">
+          <div class="Pokemon-Name h5">${pokemon['name']}</div>
+              <div class="pokemon-type-tag" style = "background-color: ${findColorTag(pokemon, type)}">${type}</div> 
+              ${secondType}
+          </div> 
+          <img src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
+      </div>
+  </div>
+
+`;
 }
 
 function findFirstType(pokemon) {
@@ -84,7 +89,7 @@ function findSecondType(pokemon) {
 
 
 async function openPokedex(i) {
-    let pokemon = await loadPokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)
+    let pokemon = await loadOnePokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)
     console.log("openPokedex", pokemon)
     document.getElementById('pokedex').classList.remove("d-none");
     renderPokedex(pokemon);
