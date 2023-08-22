@@ -16,26 +16,23 @@ async function loadAllPokemon() {
     let j = 1
     for (let i = j; i < j + 30; i++) {
         await loadPokemon(i);
-
         renderPokemonPreviewHTML(i);
         loadCharacteristic(i);
     }
 }
-
-
-async function loadCharacteristic(i) {
-    let url = 'https://pokeapi.co/api/v2/characteristic/' + i;
-    let response = await fetch(url);
-    let currentCharacteristic = await response.json(); // JSON 
-    allChar.push(currentCharacteristic);
-}
-
 
 async function loadPokemon(i) {
     let url = 'https://pokeapi.co/api/v2/pokemon/' + i;
     let response = await fetch(url);
     let currentPokemon = await response.json(); // JSON 
     allPokemon.push(currentPokemon);
+}
+
+async function loadCharacteristic(i) {
+    let url = 'https://pokeapi.co/api/v2/characteristic/' + i;
+    let response = await fetch(url);
+    let currentCharacteristic = await response.json(); // JSON 
+    allChar.push(currentCharacteristic);
 }
 
 
