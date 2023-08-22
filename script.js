@@ -7,27 +7,34 @@ let offsetNumber = 0
 let limitNumber = 20
 let nextUrl;
 
-async function loadOnePokemon(url) {
+async function loadPokemon(url) {
     let response = await fetch(url);
     let currentPokemon = await response.json(); // JSON 
     return currentPokemon;
 }
 
-async function loadPokemon(url) {
-    let currentPokemon = await loadOnePokemon(url); // JSON 
+// wenn trigger zb button lade die nächsten pokemon mit loadPokemonWithNextURL(nextUrl) danach renderallcards 
+async function loadPokemonWithNextURL(url) { 
+    let currentPokemon = await loadPokemon(url); // genauso wie await response.json();
     // kein let vor nextUrl deshalb wird die globale Variable benutzt!
-    nextUrl = currentPokemon['next'] 
+    // nextUrl wird erst gefüllt wenn loadPokemonWithNextURL ausgeführt wird
+    nextUrl = currentPokemon['next'] //nextURL mit neuem offset 
     return currentPokemon;
 }
 
 // offsetNumber change um 20 - 20 40 60 80 100
 async function getURL() {
     let url = 'https://pokeapi.co/api/v2/pokemon/?offset=' + offsetNumber + '0&limit=' + limitNumber;
-    let currentPokemon =  await loadPokemon(url)
+    let currentPokemon = await loadPokemonWithNextURL(url)
+
+    await renderAllCards(currentPokemon);
+
+}
+
+async function renderAllCards(currentPokemon) {
     let getPokemonApiURLs = currentPokemon['results']
- 
     for (let i = 0; i < getPokemonApiURLs.length; i++) {
-        const getPokemonApiURL = getPokemonApiURLs[i]['url']; 
+        const getPokemonApiURL = getPokemonApiURLs[i]['url'];
         console.log(getPokemonApiURL)
         await loadPokemonAsJSON(getPokemonApiURL)
     }
@@ -38,24 +45,24 @@ async function loadPokemonAsJSON(getPokemonApiURL) {
     let currentPokemon = await response.json(); // JSON 
     let pokemon = currentPokemon
     // console.log(pokemon)
-     renderPokemonPreviewCard(pokemon);
+    renderPokemonPreviewCard(pokemon);
     // for (let i = 0; i < pokemon.length; i++) {
     //     const onePokemon = pokemon[i];
     // }
 }
 
-function renderPokemonPreviewCard(pokemon){
+function renderPokemonPreviewCard(pokemon) {
     document.getElementById('content').innerHTML += createPreviewCardHTML(pokemon);
-    
+
 }
 
 function createPreviewCardHTML(pokemon) {
     let type = findFirstType(pokemon);
     let secondType = findSecondType(pokemon);
     let i = pokemon['id']
-   
-  console.log(pokemon)
-  return /*html*/ `
+
+    console.log(pokemon)
+    return /*html*/ `
   <div onclick="openPokedex(${i})" class="previewCard" style = "background-color: ${findColor(pokemon, type)}">
       <div class="previewCard-Pokemon-Id h5">#${pokemon['id']}</div>
       
@@ -89,7 +96,7 @@ function findSecondType(pokemon) {
 
 
 async function openPokedex(i) {
-    let pokemon = await loadOnePokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)
+    let pokemon = await loadPokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)
     console.log("openPokedex", pokemon)
     document.getElementById('pokedex').classList.remove("d-none");
     renderPokedex(pokemon);
