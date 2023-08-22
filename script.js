@@ -1,15 +1,25 @@
-let allPokemon = []
+let allPokemon = [];
+let allChar = [];
+let counter;
 let currentPokemon;
-// 9 oder 19 durchlauefe bei 152 pokemon j
+
+
+window.addEventListener('mouseup', function (event) {
+    var detail = document.getElementById('detailID');
+    if (!(event.target.closest("#detailID"))) {
+        closePokedex();
+    }
+});
+
+
 async function loadAllPokemon() {
     let j = 1
-    for (let i = j; i < j + 20; i++) {
-
+    for (let i = j; i < j + 30; i++) {
         await loadPokemon(i);
         renderPokemonPreviewHTML(i);
+        loadCharacteristic(i);
     }
 }
-
 
 async function loadPokemon(i) {
     let url = 'https://pokeapi.co/api/v2/pokemon/' + i;
@@ -18,32 +28,40 @@ async function loadPokemon(i) {
     allPokemon.push(currentPokemon);
 }
 
+async function loadCharacteristic(i) {
+    let url = 'https://pokeapi.co/api/v2/characteristic/' + i;
+    let response = await fetch(url);
+    let currentCharacteristic = await response.json(); // JSON 
+    allChar.push(currentCharacteristic);
+}
+
+
 
 function renderPokemonPreviewHTML(i) {
-    let pokemon = allPokemon[i - 1];
-    document.getElementById('pokedex').innerHTML += createPreviewCardHTML(pokemon);
+    let pokemon = allPokemon[i - 1]; //aktuelles Pokemon -1 weil das Array mit 0 anfängt aber die Pokemon bei 1 anfängt
+    document.getElementById('content').innerHTML += createPreviewCardHTML(pokemon);
 }
 
 
 function createPreviewCardHTML(pokemon) {
-
     let type = findFirstType(pokemon);
     let secondType = findSecondType(pokemon);
-
     let i = pokemon['id'];
-    return /*html*/ `<div onclick="openPokemonCard(${i})" class="previewCard" style = "background-color: ${findColor(pokemon, type)}">
-                <div class="previewCard-Pokemon-Id h5">#${pokemon['id']}</div>
-               
-                
-                <div class="d-flex w-100">
-                    <div class="previewCard-details">
-                    <div class="Pokemon-Name text-capitalize h5">${pokemon['name']}</div>
-                        <div class="pokemon-type-tag" style = "background-color: ${findColorTag(pokemon, type)}">${type}</div> 
-                        ${secondType}
-                    </div> 
-                    <img src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-                </div>
+    return /*html*/ `
+        <div onclick="openPokedex(${i})" class="previewCard" style = "background-color: ${findColor(pokemon, type)}">
+            <div class="previewCard-Pokemon-Id h5">#${pokemon['id']}</div>
+            
+            
+            <div class="d-flex w-100">
+                <div class="previewCard-details">
+                <div class="Pokemon-Name h5">${pokemon['name']}</div>
+                    <div class="pokemon-type-tag" style = "background-color: ${findColorTag(pokemon, type)}">${type}</div> 
+                    ${secondType}
+                </div> 
+                <img src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
             </div>
+        </div>
+
     `;
 }
 
@@ -57,175 +75,184 @@ function findSecondType(pokemon) {
     let types = pokemon['types'];
     let secondType = '';
     if (types[1]) {
-        secondType = `<div class="pokemon-type-tag secondType" style = "background-color: ${findColorTag(pokemon, types[1]['type']['name'])}">${types[1]['type']['name']}</div>`;
+        secondType = `<div class="pokemon-type-tag" style = "background-color: ${findColorTag(pokemon, types[1]['type']['name'])}">${types[1]['type']['name']}</div>`;
     }
     return secondType;
 }
 
 
-function openPokemonCard(i) {
+function openPokedex(i) {
     let pokemon = allPokemon[i - 1]
-    document.getElementById('hide_pokemon_card').classList.remove("d-none");
-    renderPokemonCard(pokemon)
-    valueBar(pokemon)
-    disableScroll();
+    document.getElementById('pokedex').classList.remove("d-none");
+    renderPokedex(pokemon);
 }
 
 
-function renderPokemonCard(pokemon) {
-    document.getElementById('pokemonCard').innerHTML = createPokemonCardHTML(pokemon)
+function renderPokedex(pokemon) {
+    let i = pokemon['id'];
+    document.getElementById('pokedex').innerHTML = createPokemonCardHTML(pokemon);
+    renderAbout(i);
 }
 
 
 function createPokemonCardHTML(pokemon) {
-
     let type = findFirstType(pokemon);
     let secondType = findSecondType(pokemon);
+    let i = pokemon['id'];
+    // counter = i;
+    return /*html*/ `
+        <div class="detail" id="detailID" style = "background-color: ${findColor(pokemon, type)}">              
+            <!--  DETAIL HEADER   -->   
+            <div class="detail-header">
+                <div onclick="closePokedex()" class="close-card">
+                    <svg class="arrow" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/></svg>
+                </div>
+                <div class="pokemonCard-id h5">#${i}</div>
+                <div class="types-container">
+                    <div class="Pokemon-Name h3">${pokemon['name']}</div>
+                    <div class="pokemon-type-tag " style = "background-color: ${findColorTag(pokemon, type)}">${type}</div>
+                    ${secondType}  
+                </div>
+                <div class="pokemonImage-container">
+                    <div class="pokemonImage-background" style = "background-color: ${findColorTag(pokemon, type)}">
+                        <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
+                    </div>
+                </div>
+            </div>
+            <!--  DETAIL FOOTER   -->
+            <div>
+                <div class="back-forward">                    
+                    <div onclick="lastPokemon(${i})"><img class="arrow" src="./img/left.png"></div>
+                    <div onclick="nextPokemon(${i})"><img class="arrow" src="./img/right.png"></div>
+                </div>
+                            
+                <div class="navigation-container">  
+                    <a onclick="renderAbout(${i})" style= "color: ${findColor(pokemon, type)};">About</a>
+                    <a onclick="renderStats(${i})" style= "color: ${findColor(pokemon, type)};">Base&nbspStats</a>
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style= "color: ${findColor(pokemon, type)};">
+                            More
+                            </a>
+                        <ul class="dropdown-menu">
+                            <li><button onclick="renderEvolutionchain(${i})" class="dropdown-item" type="button" style= "color: ${findColor(pokemon, type)};">Evolution</button></li>
+                            <li><button class="dropdown-item" type="button" style= "color: ${findColor(pokemon, type)};">Moves</button></li>
+                            <li><button class="dropdown-item" type="button" style= "color: ${findColor(pokemon, type)};">Something else here</button></li>
+                        </ul>
+                    </div> 
+                </div>
+                <!--  INFORMATIONS   -->
+                <div id="informationContainer"></div>
+            </div> 
+    </div>     
+    `;
+
+}
+
+
+function nextPokemon(pokemonId) {
+    let pokemon;
+    if (pokemonId == allPokemon.length) {
+        pokemon = allPokemon[0];
+    } else {
+        pokemon = allPokemon[pokemonId];
+    }
+    renderPokedex(pokemon);
+}
+
+
+function lastPokemon(pokemonId) { //das i was übergeben wird ist Pokemon id i --> die id fängt bei 1 an aber das allPokemon array bei 0
+    let pokemon;
+    if (pokemonId == 1) {
+        pokemon = allPokemon[allPokemon.length - 1]; //length = Anzahl der Slots (Gesamtlänge!) -- 
+        //length-1 = letzter Eintrag weil wenn er die Zahl der Gesamtlänge abrufen würde würde er undefined sagen weil array zahlen ja mit 0 anfangen 
+    } else {
+        pokemon = allPokemon[pokemonId - 2];
+    }
+
+    renderPokedex(pokemon);
+}
+
+
+function renderAbout(i) {
+    let pokemon = allPokemon[i - 1]
+    let char = allChar[i - 1]
+    // console.log(char)
+    document.getElementById('informationContainer').innerHTML = createAboutHTML(char, pokemon)
+}
+
+
+function createAboutHTML(char, pokemon) {
+    let type = findFirstType(pokemon);
+    let height = pokemon['height'] * 0.1;
+    let weight = pokemon['weight'] * 0.1;
 
     return /*html*/ `
-            <div id="pokemon" style = "background-color: ${findColor(pokemon, type)}">
-                <div class="arrow" onclick="closeCard()">
-                    <img class="arrow" src="img/left-arrow.png" alt="">
-                </div>
-                <div class="pokemonCard-id h5 mb-0">#${pokemon['id']}</div>
-                <div class="Pokemon-Name h2 d-flex w-100 text-capitalize">${pokemon['name']}</div>
-               
-                <div class="pokemonCard-pokemon-type">
-                    <div class="pokemon-type-tag " style = "background-color: ${findColorTag(pokemon, type)}">${type}</div>
-                    ${secondType} 
-                </div> 
+    <div class="about">
+        <div class="description"> ${char['descriptions'][7]['description']}</div>
+        <div class="about-section">
+            <div class="font-weight500"> Height</div>
+            <div>${fixNumber(height)}m</div>
+        </div>
+        <div class="about-section">   
+            <div class="font-weight500"> Weight</div>
+            <div> ${fixNumber(weight)}kg</div>
+        </div>
+        <div class="about-section">
+            <div class="font-weight500">Abilities</div>
+            <div class="abilities">
+                <div>${findFirstAbility(pokemon)}</div> 
+                    ${findSecondAbility(pokemon)}
             </div>
-            
-            <div class="info-container">
-                <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-                <nav class="info-nav">
-                    <b><a style= "color: ${findColor(pokemon, type)};">About</a></b> 
-                    <b><a style= "color: ${findColor(pokemon, type)};">Base Stats</a></b>
-                    <b><a style= "color: ${findColor(pokemon, type)};">Evolution</a></b>
-                    <b><a style= "color: ${findColor(pokemon, type)};">Moves</a></b>
-                </nav>
-              
-                <div class="info-content">   
-                    <div class="stats-container">
-                        ${pokemon['stats'].map(s => `
-                        <div class="stats"><span class="stat-name">${s['stat']['name']}</span>
-                            <span class="stat-value">${s['base_stat']}</span>
-                            <div class="progress bar-height-width" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: ${s['base_stat']}%; height=20px; background-color: ${findColor(pokemon, type)};"></div>
-                            </div>
-                        </div>`).join(' ')}
-                    </div>       
-                </div>  
-            </div>   
+        </div>
+    </div>
+   
     `;
 }
 
 
-function closeCard() {
-    document.getElementById('hide_pokemon_card').classList.add("d-none");
-    enableScroll();
+function fixNumber(nr) {
+    let fix = nr.toFixed(2);
+    return fix;
 }
 
 
-function disableScroll() {
-    document.body.classList.add("remove-scrolling");
+function findFirstAbility(pokemon) {
+    return pokemon['abilities']['0']['ability']['name'];
 }
 
 
-function enableScroll() {
-    document.body.classList.remove("remove-scrolling");
-}
-
-
-function findColor(pokemon, type) {
-    // let type = allPokemon[i - 1]['types'][0]['type']['name'];
-    switch (type) {
-        case 'normal':
-            return '#9fa0a8'
-        case 'fire':
-            return '#fe8128'
-        case 'water':
-            return '#448dd7'
-        case 'electric':
-            return '#eed432'
-        case 'grass':
-            return '#5fb854'
-        case 'ice':
-            return '#5fcdc0'
-        case 'fighting':
-            return '#d04164'
-        case 'poison':
-            return '#a653cc'
-        case 'ground':
-            return '#dc7843'
-        case 'flying':
-            return '#7590c8'
-        case 'psychic':
-            return '#e95b5d'
-        case 'bug':
-            return '#8eb335'
-        case 'rock':
-            return '#baa781'
-        case 'ghost':
-            return '#5066ab'
-        case 'dragon':
-            return '#0c68bf'
-        case 'dark':
-            return '#57565a'
-        case 'steel':
-            return '#448097'
-        case 'fairy':
-            return '#ee6ec8'
-
-
-        default:
-            // console.log(type)
-            return '#767676'
+function findSecondAbility(pokemon) {
+    let abilities = pokemon['abilities'];
+    let secondAbility = '';
+    if (abilities[1]) {
+        secondAbility = `<div> &nbsp;${abilities[1]['ability']['name']}</div>`;
     }
+    return secondAbility;
 }
 
-function findColorTag(pokemon, type) {
-    // let type = allPokemon[i - 1]['types'][0]['type']['name'];
-    switch (type) {
-        case 'normal':
-            return '#8d8e96';
-        case 'fire':
-            return '#fd6f0a';
-        case 'water':
-            return '#3d7ebf';
-        case 'electric':
-            return '#ebce17';
-        case 'grass':
-            return '#55984f';
-        case 'ice':
-            return '#55b0a9';
-        case 'fighting':
-            return '#bd3b57';
-        case 'poison':
-            return '#9750bf';
-        case 'ground':
-            return '#c56e3f';
-        case 'flying':
-            return '#6987b2';
-        case 'psychic':
-            return '#d85456';
-        case 'bug':
-            return '#7fa12f';
-        case 'rock':
-            return '#a49276';
-        case 'ghost':
-            return '#455196';
-        case 'dragon':
-            return '#0b60aa';
-        case 'dark':
-            return '#504f54';
-        case 'steel':
-            return '#3c738c';
-        case 'fairy':
-            return '#d85ebe';
-        
-        default:
-            // console.log(type)
-            return '#6b6b6b';
-    }
+
+function renderStats(i) {
+    let pokemon = allPokemon[i - 1]
+    document.getElementById('informationContainer').innerHTML = createStatsHTML(pokemon)
+}
+
+
+function createStatsHTML(pokemon) {
+    let type = findFirstType(pokemon);
+    let secondType = findSecondType(pokemon);
+    return /*html*/ `
+    ${pokemon['stats'].map(s => `
+                    <div id="statID" class="stats"><span class="stat-name">${s['stat']['name']}</span>
+                        <span class="stat-value">${s['base_stat']}</span>
+                        <div class="progress-hide progress bar-height-width" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar" style="width: ${s['base_stat']}%; height=20px; background-color: ${findColor(pokemon, type)};"></div>
+                        </div>
+                    </div>`).join(' ')}
+    
+   `
+}
+
+
+function closePokedex() {
+    document.getElementById('pokedex').classList.add('d-none');
 }

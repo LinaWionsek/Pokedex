@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokédex</title>
     <script src="script.js"></script>
+    <script src="findColors.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="font.css">
 
@@ -19,16 +20,10 @@
 </head>
 
 <body onload="loadAllPokemon()">
-    <div class="m-top80" >
-        <h1 class="headline">Pokédex</h1>
-        <div id="pokedex"></div>
-        <div id="hide_pokemon_card" class="d-none">
-            <div id="pokemonCardContainer" class="bg">
-                <div id="pokemonCard"></div>
-            </div>
-        </div>
+    <div id="content">
+        <div id="pokedex" class="dialog-bg d-none"></div>
     </div>
-
+    
 </body>
 
 </html>
