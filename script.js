@@ -4,6 +4,7 @@ let counter;
 let currentPokemon;
 let newPokemon
 let offsetNumber = 0
+let limitNumber = 10
 // window.addEventListener('mouseup', function (event) {
 //     var detail = document.getElementById('detailID');
 //     if (!(event.target.closest("#detailID"))) {
@@ -30,11 +31,12 @@ let offsetNumber = 0
 
 // offsetNumber change um 20 - 20 40 60 80 100
 async function getURL() {
-    let url = 'https://pokeapi.co/api/v2/pokemon/?offset=' + offsetNumber + '0&limit=20';
+    let url = 'https://pokeapi.co/api/v2/pokemon/?offset=' + offsetNumber + '0&limit=' + limitNumber;
     let response = await fetch(url);
     let currentPokemon = await response.json(); // JSON 
-    url = currentPokemon['next']
     console.log(url)
+    nextUrl = currentPokemon['next']
+    console.log(nextUrl)
     // loadPokemon(url)
 
     let getPokemonApiURLs = currentPokemon['results']
@@ -43,7 +45,7 @@ async function getURL() {
 
     for (let i = 0; i < getPokemonApiURLs.length; i++) {
         const getPokemonApiURL = getPokemonApiURLs[i]['url']; 
-       console.log(getPokemonApiURL)
+        console.log(getPokemonApiURL)
         loadPokemonAsJSON(getPokemonApiURL)
     }
 }
@@ -53,10 +55,11 @@ async function loadPokemonAsJSON(getPokemonApiURL) {
     let currentPokemon = await response.json(); // JSON 
     let pokemon = currentPokemon
     console.log(pokemon)
-    for (let i = 0; i < pokemon.length; i++) {
-        const onePokemon = pokemon[i];
-    }
     renderPokemonPreviewCard(pokemon);
+    // for (let i = 0; i < pokemon.length; i++) {
+    //     const onePokemon = pokemon[i];
+    // }
+   
 }
 
 
