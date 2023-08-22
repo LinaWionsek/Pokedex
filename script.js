@@ -5,47 +5,27 @@ let currentPokemon;
 let newPokemon
 let offsetNumber = 0
 let limitNumber = 10
-// window.addEventListener('mouseup', function (event) {
-//     var detail = document.getElementById('detailID');
-//     if (!(event.target.closest("#detailID"))) {
-//         closePokedex();
-//     }
-// });
+let nextUrl;
 
-
-// async function loadAllPokemon() {
-//     let j = 1
-//     for (let i = j; i < j + 30; i++) {
-//         await loadPokemon(i);
-//         renderPokemonPreviewHTML(i);
-//         loadCharacteristic(i);
-//     }
-// }
-
-// async function loadPokemon(i) {
-//     let url = 'https://pokeapi.co/api/v2/pokemon/' + i;
-//     let response = await fetch(url);
-//     let currentPokemon = await response.json(); // JSON 
-//     allPokemon.push(currentPokemon);
-// }
+async function loadPokemon(url) {
+    let response = await fetch(url);
+    let currentPokemon = await response.json(); // JSON 
+    // kein let vor nextUrl deshalb wird die globale Variable benutzt!
+    nextUrl = currentPokemon['next'] 
+    return currentPokemon;
+}
 
 // offsetNumber change um 20 - 20 40 60 80 100
 async function getURL() {
     let url = 'https://pokeapi.co/api/v2/pokemon/?offset=' + offsetNumber + '0&limit=' + limitNumber;
-    let response = await fetch(url);
-    let currentPokemon = await response.json(); // JSON 
-    console.log(url)
-    nextUrl = currentPokemon['next']
-    console.log(nextUrl)
-    // loadPokemon(url)
+    let currentPokemon =  await loadPokemon(url)
 
+    
     let getPokemonApiURLs = currentPokemon['results']
-    console.log(getPokemonApiURLs.length)
-    console.log(getPokemonApiURLs)
-
+ 
     for (let i = 0; i < getPokemonApiURLs.length; i++) {
         const getPokemonApiURL = getPokemonApiURLs[i]['url']; 
-        console.log(getPokemonApiURL)
+        // console.log(getPokemonApiURL)
         loadPokemonAsJSON(getPokemonApiURL)
     }
 }
@@ -54,55 +34,61 @@ async function loadPokemonAsJSON(getPokemonApiURL) {
     let response = await fetch(getPokemonApiURL);
     let currentPokemon = await response.json(); // JSON 
     let pokemon = currentPokemon
-    console.log(pokemon)
+    // console.log(pokemon)
     renderPokemonPreviewCard(pokemon);
     // for (let i = 0; i < pokemon.length; i++) {
     //     const onePokemon = pokemon[i];
     // }
-   
 }
-
 
 function renderPokemonPreviewCard(pokemon){
-    document.getElementById('content').innerHTML += `${pokemon['id']}`
+    document.getElementById('content').innerHTML += createPreviewCardHTML(pokemon);
+    
 }
 
-async function loadPokemon(url) {
-    let response = await fetch(url);
-    let currentPokemon = await response.json(); // JSON 
+function createPreviewCardHTML(pokemon) {
+    let type = findFirstType(pokemon);
+    let secondType = findSecondType(pokemon);
+   
+   
+  
+    return /*html*/ `
+         
+            <div onclick="openPokedex(${pokemon['id']})" class="previewCard" style = "background-color: ${findColor(pokemon, type)}">
+            <div class="previewCard-Pokemon-Id h5">#${pokemon['id']}</div>
+            <div class="d-flex w-100">
+                <div class="previewCard-details">
+                <div class="Pokemon-Name h5">${pokemon['name']}</div>
+                    <div class="pokemon-type-tag" style = "background-color: ${findColorTag(pokemon, type)}">${type}</div> 
+                    ${secondType}
+                </div> 
+                <img src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
+            </div>
+        </div>
+    `;
+}
+
+function findFirstType(pokemon) {
+    return pokemon['types'][0]['type']['name'];
 }
 
 
+function findSecondType(pokemon) {
+    let types = pokemon['types'];
+    let secondType = '';
+    if (types[1]) {
+        secondType = `<div class="pokemon-type-tag" style = "background-color: ${findColorTag(pokemon, types[1]['type']['name'])}">${types[1]['type']['name']}</div>`;
+    }
+    return secondType;
+}
 
 
-
-// async function loadCharacteristic(i) {
-//     let url = 'https://pokeapi.co/api/v2/characteristic/' + i;
-//     let response = await fetch(url);
-//     let currentCharacteristic = await response.json(); // JSON 
-//     allChar.push(currentCharacteristic);
-// }
-
-// function findFirstType(pokemon) {
-//     return pokemon['types'][0]['type']['name'];
-// }
-
-
-// function findSecondType(pokemon) {
-//     let types = pokemon['types'];
-//     let secondType = '';
-//     if (types[1]) {
-//         secondType = `<div class="pokemon-type-tag" style = "background-color: ${findColorTag(pokemon, types[1]['type']['name'])}">${types[1]['type']['name']}</div>`;
-//     }
-//     return secondType;
-// }
-
-
-// function openPokedex(i) {
-//     let pokemon = allPokemon[i - 1]
-//     document.getElementById('pokedex').classList.remove("d-none");
-//     renderPokedex(pokemon);
-// }
+async function openPokedex(i) {
+    let pokemon = await loadPokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)
+    console.log("openPokedex", pokemon)
+    document.getElementById('pokedex').classList.remove("d-none");
+    renderPokedex(pokemon);
+}
 
 
 // function renderPokedex(pokemon) {
@@ -272,4 +258,13 @@ async function loadPokemon(url) {
 
 // function closePokedex() {
 //     document.getElementById('pokedex').classList.add('d-none');
+// }
+
+
+
+// async function loadCharacteristic(i) {
+//     let url = 'https://pokeapi.co/api/v2/characteristic/' + i;
+//     let response = await fetch(url);
+//     let currentCharacteristic = await response.json(); // JSON 
+//     allChar.push(currentCharacteristic);
 // }
