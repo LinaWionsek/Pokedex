@@ -26,6 +26,7 @@ async function loadPokemon(i) {
     let response = await fetch(url);
     let currentPokemon = await response.json(); // JSON 
     allPokemon.push(currentPokemon);
+    // console.log(currentPokemon)
 }
 
 async function loadCharacteristic(i) {
@@ -39,6 +40,7 @@ async function loadCharacteristic(i) {
 
 function renderPokemonPreviewHTML(i) {
     let pokemon = allPokemon[i - 1]; //aktuelles Pokemon -1 weil das Array mit 0 anfängt aber die Pokemon bei 1 anfängt
+    console.log(pokemon)
     document.getElementById('content').innerHTML += createPreviewCardHTML(pokemon);
 }
 
