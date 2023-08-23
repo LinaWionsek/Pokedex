@@ -189,12 +189,12 @@ function createPokemonCardHTML(pokemon) {
 // }
 
 
-// function renderAbout(i) {
-//     let pokemon = allPokemon[i - 1]
-//     let char = allChar[i - 1]
-//     // console.log(char)
-//     document.getElementById('informationContainer').innerHTML = createAboutHTML(char, pokemon)
-// }
+async function renderAbout(i) {
+    let pokemon = await loadPokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)
+    // let char = allChar[i - 1]
+    // console.log(char)
+    document.getElementById('informationContainer').innerHTML = createAboutHTML(char, pokemon)
+}
 
 
 // function createAboutHTML(char, pokemon) {
