@@ -80,20 +80,6 @@ function createPreviewCardHTML(pokemon) {
 `;
 }
 
-function findFirstType(pokemon) {
-    return pokemon['types'][0]['type']['name'];
-}
-
-
-function findSecondType(pokemon) {
-    let types = pokemon['types'];
-    let secondType = '';
-    if (types[1]) {
-        secondType = `<div class="pokemon-type-tag" style = "background-color: ${findColorTag(pokemon, types[1]['type']['name'])}">${types[1]['type']['name']}</div>`;
-    }
-    return secondType;
-}
-
 
 async function openPokedex(i) {
     let pokemon = await loadPokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)
@@ -191,55 +177,39 @@ function createPokemonCardHTML(pokemon) {
 
 async function renderAbout(i) {
     let pokemon = await loadPokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)
-    // let char = allChar[i - 1]
-    // console.log(char)
-    document.getElementById('informationContainer').innerHTML = createAboutHTML(char, pokemon)
+    let char = await loadPokemon(`https://pokeapi.co/api/v2/characteristic/${i}`)
+    console.log("char",char)
+    document.getElementById('informationContainer').innerHTML = createAboutHTML(pokemon, char)
 }
 
 
-// function createAboutHTML(char, pokemon) {
-//     let type = findFirstType(pokemon);
-//     let height = pokemon['height'] * 0.1;
-//     let weight = pokemon['weight'] * 0.1;
+function createAboutHTML(pokemon, char) {
+    let type = findFirstType(pokemon);
+    let height = pokemon['height'] * 0.1;
+    let weight = pokemon['weight'] * 0.1;
 
-//     return /*html*/ `
-//     <div class="about">
-//         <div class="description"> ${char['descriptions'][7]['description']}</div>
-//         <div class="about-section">
-//             <div class="font-weight500"> Height</div>
-//             <div>${fixNumber(height)}m</div>
-//         </div>
-//         <div class="about-section">   
-//             <div class="font-weight500"> Weight</div>
-//             <div> ${fixNumber(weight)}kg</div>
-//         </div>
-//         <div class="about-section">
-//             <div class="font-weight500">Abilities</div>
-//             <div class="abilities">
-//                 <div>${findFirstAbility(pokemon)}</div> 
-//                     ${findSecondAbility(pokemon)}
-//             </div>
-//         </div>
-//     </div>
+    return /*html*/ `
+    <div class="about">
+        <div class="description"> ${char['descriptions'][7]['description']}</div>
+        <div class="about-section">
+            <div class="font-weight500"> Height</div>
+            <div>${fixNumber(height)}m</div>
+        </div>
+        <div class="about-section">   
+            <div class="font-weight500"> Weight</div>
+            <div> ${fixNumber(weight)}kg</div>
+        </div>
+        <div class="about-section">
+            <div class="font-weight500">Abilities</div>
+            <div class="abilities">
+                <div>${findFirstAbility(pokemon)}</div> 
+                    ${findSecondAbility(pokemon)}
+            </div>
+        </div>
+    </div>
 
-//     `;
-// }
-
-
-// function findFirstAbility(pokemon) {
-//     return pokemon['abilities']['0']['ability']['name'];
-// }
-
-
-// function findSecondAbility(pokemon) {
-//     let abilities = pokemon['abilities'];
-//     let secondAbility = '';
-//     if (abilities[1]) {
-//         secondAbility = `<div> &nbsp;${abilities[1]['ability']['name']}</div>`;
-//     }
-//     return secondAbility;
-// }
-
+    `;
+}
 
 // function renderStats(i) {
 //     let pokemon = allPokemon[i - 1]
@@ -267,12 +237,3 @@ function closePokedex() {
     document.getElementById('pokedex').classList.add('d-none');
     enableScroll();
 }
-
-
-
-// async function loadCharacteristic(i) {
-//     let url = 'https://pokeapi.co/api/v2/characteristic/' + i;
-//     let response = await fetch(url);
-//     let currentCharacteristic = await response.json(); // JSON 
-//     allChar.push(currentCharacteristic);
-// }

@@ -1,3 +1,33 @@
+function findFirstType(pokemon) {
+    return pokemon['types'][0]['type']['name'];
+}
+
+
+function findSecondType(pokemon) {
+    let types = pokemon['types'];
+    let secondType = '';
+    if (types[1]) {
+        secondType = `<div class="pokemon-type-tag" style = "background-color: ${findColorTag(pokemon, types[1]['type']['name'])}">${types[1]['type']['name']}</div>`;
+    }
+    return secondType;
+}
+
+
+function findFirstAbility(pokemon) {
+    return pokemon['abilities']['0']['ability']['name'];
+}
+
+
+function findSecondAbility(pokemon) {
+    let abilities = pokemon['abilities'];
+    let secondAbility = '';
+    if (abilities[1]) {
+        secondAbility = `<div> &nbsp;${abilities[1]['ability']['name']}</div>`;
+    }
+    return secondAbility;
+}
+
+
 function findColor(pokemon, type) {
     // let type = allPokemon[i - 1]['types'][0]['type']['name'];
     switch (type) {
@@ -37,13 +67,12 @@ function findColor(pokemon, type) {
             return '#448097'
         case 'fairy':
             return '#ee6ec8'
-
-
         default:
             // console.log(type)
             return '#767676'
     }
 }
+
 
 function findColorTag(pokemon, type) {
     // let type = allPokemon[i - 1]['types'][0]['type']['name'];
@@ -84,7 +113,6 @@ function findColorTag(pokemon, type) {
             return '#3c738c';
         case 'fairy':
             return '#d85ebe';
-
         default:
             // console.log(type)
             return '#6b6b6b';
