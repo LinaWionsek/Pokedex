@@ -103,65 +103,66 @@ async function openPokedex(i) {
 }
 
 
-// function renderPokedex(pokemon) {
-//     let i = pokemon['id'];
-//     document.getElementById('pokedex').innerHTML = createPokemonCardHTML(pokemon);
-//     renderAbout(i);
-// }
+function renderPokedex(pokemon) {
+    let i = pokemon['id'];
+    document.getElementById('pokedex').innerHTML = createPokemonCardHTML(pokemon);
+    disableScroll();
+    renderAbout(i);
+}
 
 
-// function createPokemonCardHTML(pokemon) {
-//     let type = findFirstType(pokemon);
-//     let secondType = findSecondType(pokemon);
-//     let i = pokemon['id'];
-//     // counter = i;
-//     return /*html*/ `
-//         <div class="detail" id="detailID" style = "background-color: ${findColor(pokemon, type)}">              
-//             <!--  DETAIL HEADER   -->   
-//             <div class="detail-header">
-//                 <div onclick="closePokedex()" class="close-card">
-//                     <svg class="arrow" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/></svg>
-//                 </div>
-//                 <div class="pokemonCard-id h5">#${i}</div>
-//                 <div class="types-container">
-//                     <div class="Pokemon-Name h3">${pokemon['name']}</div>
-//                     <div class="pokemon-type-tag " style = "background-color: ${findColorTag(pokemon, type)}">${type}</div>
-//                     ${secondType}  
-//                 </div>
-//                 <div class="pokemonImage-container">
-//                     <div class="pokemonImage-background" style = "background-color: ${findColorTag(pokemon, type)}">
-//                         <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-//                     </div>
-//                 </div>
-//             </div>
-//             <!--  DETAIL FOOTER   -->
-//             <div>
-//                 <div class="back-forward">                    
-//                     <div onclick="lastPokemon(${i})"><img class="arrow" src="./img/left.png"></div>
-//                     <div onclick="nextPokemon(${i})"><img class="arrow" src="./img/right.png"></div>
-//                 </div>
+function createPokemonCardHTML(pokemon) {
+    let type = findFirstType(pokemon);
+    let secondType = findSecondType(pokemon);
+    let i = pokemon['id'];
+    // counter = i;
+    return /*html*/ `
+        <div class="detail" id="detailID" style = "background-color: ${findColor(pokemon, type)}">              
+            <!--  DETAIL HEADER   -->   
+            <div class="detail-header">
+                <div onclick="closePokedex()" class="close-card">
+                    <svg class="arrow" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/></svg>
+                </div>
+                <div class="pokemonCard-id h5">#${i}</div>
+                <div class="types-container">
+                    <div class="Pokemon-Name h3">${pokemon['name']}</div>
+                    <div class="pokemon-type-tag " style = "background-color: ${findColorTag(pokemon, type)}">${type}</div>
+                    ${secondType}  
+                </div>
+                <div class="pokemonImage-container">
+                    <div class="pokemonImage-background" style = "background-color: ${findColorTag(pokemon, type)}">
+                        <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
+                    </div>
+                </div>
+            </div>
+            <!--  DETAIL FOOTER   -->
+            <div>
+                <div class="back-forward">                    
+                    <div onclick="lastPokemon(${i})"><img class="arrow" src="./img/left.png"></div>
+                    <div onclick="nextPokemon(${i})"><img class="arrow" src="./img/right.png"></div>
+                </div>
 
-//                 <div class="navigation-container">  
-//                     <a onclick="renderAbout(${i})" style= "color: ${findColor(pokemon, type)};">About</a>
-//                     <a onclick="renderStats(${i})" style= "color: ${findColor(pokemon, type)};">Base&nbspStats</a>
-//                     <div class="dropdown">
-//                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style= "color: ${findColor(pokemon, type)};">
-//                             More
-//                             </a>
-//                         <ul class="dropdown-menu">
-//                             <li><button onclick="renderEvolutionchain(${i})" class="dropdown-item" type="button" style= "color: ${findColor(pokemon, type)};">Evolution</button></li>
-//                             <li><button class="dropdown-item" type="button" style= "color: ${findColor(pokemon, type)};">Moves</button></li>
-//                             <li><button class="dropdown-item" type="button" style= "color: ${findColor(pokemon, type)};">Something else here</button></li>
-//                         </ul>
-//                     </div> 
-//                 </div>
-//                 <!--  INFORMATIONS   -->
-//                 <div id="informationContainer"></div>
-//             </div> 
-//     </div>     
-//     `;
+                <div class="navigation-container">  
+                    <a onclick="renderAbout(${i})" style= "color: ${findColor(pokemon, type)};">About</a>
+                    <a onclick="renderStats(${i})" style= "color: ${findColor(pokemon, type)};">Base&nbspStats</a>
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style= "color: ${findColor(pokemon, type)};">
+                            More
+                            </a>
+                        <ul class="dropdown-menu">
+                            <li><button onclick="renderEvolutionchain(${i})" class="dropdown-item" type="button" style= "color: ${findColor(pokemon, type)};">Evolution</button></li>
+                            <li><button class="dropdown-item" type="button" style= "color: ${findColor(pokemon, type)};">Moves</button></li>
+                            <li><button class="dropdown-item" type="button" style= "color: ${findColor(pokemon, type)};">Something else here</button></li>
+                        </ul>
+                    </div> 
+                </div>
+                <!--  INFORMATIONS   -->
+                <div id="informationContainer"></div>
+            </div> 
+    </div>     
+    `;
 
-// }
+}
 
 
 // function nextPokemon(pokemonId) {
@@ -225,12 +226,6 @@ async function openPokedex(i) {
 // }
 
 
-// function fixNumber(nr) {
-//     let fix = nr.toFixed(2);
-//     return fix;
-// }
-
-
 // function findFirstAbility(pokemon) {
 //     return pokemon['abilities']['0']['ability']['name'];
 // }
@@ -268,9 +263,10 @@ async function openPokedex(i) {
 // }
 
 
-// function closePokedex() {
-//     document.getElementById('pokedex').classList.add('d-none');
-// }
+function closePokedex() {
+    document.getElementById('pokedex').classList.add('d-none');
+    enableScroll();
+}
 
 
 
