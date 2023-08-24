@@ -7,6 +7,11 @@ let offsetNumber = 0
 let limitNumber = 20
 let nextUrl;
 
+// https://pokeapi.co/api/v2/evolution-chain/528/
+// https://pokeapi.co/api/v2/generation/1/
+// https://pokeapi.co/api/v2/pokemon-species/2/ generation -> name: generation-i url:https://pokeapi.co/api/v2/generation/1/
+// evolution chain -> url: url mit link zu evolution chain
+
 async function loadPokemon(url) {
     let response = await fetch(url);
     let currentPokemon = await response.json(); // JSON 
