@@ -178,11 +178,13 @@ async function lastPokemon(i) {
 async function renderAbout(i) {
     let pokemon = await loadPokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)
     document.getElementById('informationContainer').innerHTML = createAboutHTML(pokemon)
+    document.getElementById('informationContainer').classList.remove('add-scrolling');
 }
 
 async function renderMoves(i) {
     let pokemon = await loadPokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)
-    document.getElementById('informationContainer').innerHTML = createMovesHTML(pokemon)
+    document.getElementById('informationContainer').innerHTML = createMovesHTML(pokemon);
+    document.getElementById('informationContainer').classList.add('add-scrolling');
 }
 
 function createMovesHTML(pokemon) {
@@ -237,6 +239,7 @@ function createAboutHTML(pokemon) {
 async function renderStats(i) {
     let pokemon = await loadPokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)
     document.getElementById('informationContainer').innerHTML = createStatsHTML(pokemon)
+    document.getElementById('informationContainer').classList.remove('add-scrolling');
 }
 
 
