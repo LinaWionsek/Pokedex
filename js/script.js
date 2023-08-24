@@ -134,7 +134,7 @@ function createPokemonCardHTML(pokemon) {
                             </a>
                         <ul class="dropdown-menu">
                             <li><button onclick="renderEvolutionchain(${i})" class="dropdown-item" type="button" style= "color: ${findColor(pokemon, type)};">Evolution</button></li>
-                            <li><button class="dropdown-item" type="button" style= "color: ${findColor(pokemon, type)};">Moves</button></li>
+                            <li><button onclick="renderMoves(${i})" class="dropdown-item" type="button" style= "color: ${findColor(pokemon, type)};">Moves</button></li>
                             <li><button class="dropdown-item" type="button" style= "color: ${findColor(pokemon, type)};">Something else here</button></li>
                         </ul>
                     </div> 
@@ -165,8 +165,35 @@ async function lastPokemon(i) {
 
 
 async function renderAbout(i) {
-    let pokemon = await loadPokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)   
+    let pokemon = await loadPokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)
     document.getElementById('informationContainer').innerHTML = createAboutHTML(pokemon)
+}
+
+async function renderMoves(i) {
+    let pokemon = await loadPokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)
+    document.getElementById('informationContainer').innerHTML = createMovesHTML(pokemon)
+}
+
+function createMovesHTML(pokemon) {
+    let type = findFirstType(pokemon);
+    let height = pokemon['height'] * 0.1;
+    let weight = pokemon['weight'] * 0.1;
+    let moves = pokemon['moves']
+    console.log(moves.length)
+    console.log(moves)
+
+
+    return /*html*/ `
+    <div>
+        ${moves['0']['move']['name']}
+        ${moves['1']['move']['name']}
+        ${moves['2']['move']['name']}
+        ${moves['3']['move']['name']}
+        ${moves['4']['move']['name']}
+        ${moves['5']['move']['name']}
+        ${moves['6']['move']['name']}
+    </div>
+        `;
 }
 
 
@@ -215,7 +242,8 @@ function createStatsHTML(pokemon) {
                             <div class="progress-bar" style="width: ${s['base_stat']}%; height=20px; background-color: ${findColor(pokemon, type)};"></div>
                         </div>
                     </div>`).join(' ')}
-   `;}
+   `;
+}
 
 
 function closePokedex() {
