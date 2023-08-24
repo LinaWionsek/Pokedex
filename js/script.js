@@ -175,25 +175,22 @@ async function renderMoves(i) {
 }
 
 function createMovesHTML(pokemon) {
-    let type = findFirstType(pokemon);
-    let height = pokemon['height'] * 0.1;
-    let weight = pokemon['weight'] * 0.1;
     let moves = pokemon['moves']
     let html = ""; //string
     console.log(moves.length)
     console.log(moves)
-    // console.log(moves)
+
     for (let i = 0; i < moves.length; i++) {
         let move = moves[i];
         console.log("MOVES-I", move)
         console.log("MOVES-II", move['move']['name'])
         html += /*html*/ `
-        <div>
-            ${ move['move']['name']}
-        </div>`;
+            <div>
+                ${ move['move']['name']}
+            </div>
+        `;
     }
     return html
-
 }
 
 
