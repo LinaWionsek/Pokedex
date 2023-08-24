@@ -179,22 +179,25 @@ function createMovesHTML(pokemon) {
     let height = pokemon['height'] * 0.1;
     let weight = pokemon['weight'] * 0.1;
     let moves = pokemon['moves']
+    let html = ""; //string
     console.log(moves.length)
     console.log(moves)
+    // console.log(moves)
+    for (let i = 0; i < moves.length; i++) {
+        let move = moves[i];
+        console.log("MOVES-I", move)
+        console.log("MOVES-II", move['move']['name'])
+        html += /*html*/ `
+        <div>
+            ${ move['move']['name']}
+        </div>`;
+    }
+    return html
 
-
-    return /*html*/ `
-    <div>
-        ${moves['0']['move']['name']}
-        ${moves['1']['move']['name']}
-        ${moves['2']['move']['name']}
-        ${moves['3']['move']['name']}
-        ${moves['4']['move']['name']}
-        ${moves['5']['move']['name']}
-        ${moves['6']['move']['name']}
-    </div>
-        `;
 }
+
+
+
 
 
 function createAboutHTML(pokemon) {
