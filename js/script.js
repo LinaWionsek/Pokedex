@@ -4,7 +4,7 @@ let counter;
 let currentPokemon;
 let newPokemon
 let offsetNumber = 0
-let limitNumber = 20
+let limitNumber = 10000
 let nextUrl;
 
 async function loadPokemon(url) {
@@ -14,7 +14,7 @@ async function loadPokemon(url) {
 }
 
 // wenn trigger zb button lade die nächsten pokemon mit loadPokemonWithNextURL(nextUrl) danach renderallcards 
-async function loadPokemonWithNextURL(url) { 
+async function loadPokemonWithNextURL(url) {
     let currentPokemon = await loadPokemon(url); // genauso wie await response.json();
     // kein let vor nextUrl deshalb wird die globale Variable benutzt!
     // nextUrl wird erst gefüllt wenn loadPokemonWithNextURL ausgeführt wird
@@ -26,9 +26,7 @@ async function loadPokemonWithNextURL(url) {
 async function getURL() {
     let url = 'https://pokeapi.co/api/v2/pokemon/?offset=' + offsetNumber + '0&limit=' + limitNumber;
     let currentPokemon = await loadPokemonWithNextURL(url)
-
     await renderAllCards(currentPokemon);
-
 }
 
 async function renderAllCards(currentPokemon) {
@@ -53,30 +51,24 @@ async function loadPokemonAsJSON(getPokemonApiURL) {
 
 function renderPokemonPreviewCard(pokemon) {
     document.getElementById('content').innerHTML += createPreviewCardHTML(pokemon);
-
 }
 
 function createPreviewCardHTML(pokemon) {
     let type = findFirstType(pokemon);
     let secondType = findSecondType(pokemon);
     let i = pokemon['id']
-
-    console.log(pokemon)
     return /*html*/ `
-  <div onclick="openPokedex(${i})" class="previewCard" style = "background-color: ${findColor(pokemon, type)}">
-      <div class="previewCard-Pokemon-Id h5">#${pokemon['id']}</div>
-      
-      
+    <div onclick="openPokedex(${i})" class="previewCard" style = "background-color: ${findColor(pokemon, type)}">
+      <div class="previewCard-Pokemon-Id h5">#${pokemon['id']}</div>            
       <div class="d-flex w-100">
           <div class="previewCard-details">
-          <div class="Pokemon-Name h5">${pokemon['name']}</div>
-              <div class="pokemon-type-tag" style = "background-color: ${findColorTag(pokemon, type)}">${type}</div> 
-              ${secondType}
+            <div class="Pokemon-Name h5">${pokemon['name']}</div>
+            <div class="pokemon-type-tag" style = "background-color: ${findColorTag(pokemon, type)}">${type}</div> 
+            ${secondType}
           </div> 
           <img src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
       </div>
-  </div>
-
+    </div>
 `;
 }
 
@@ -151,34 +143,25 @@ function createPokemonCardHTML(pokemon) {
 }
 
 
-// function nextPokemon(pokemonId) {
-//     let pokemon;
-//     if (pokemonId == allPokemon.length) {
-//         pokemon = allPokemon[0];
-//     } else {
-//         pokemon = allPokemon[pokemonId];
-//     }
-//     renderPokedex(pokemon);
-// }
+async function nextPokemon(i) {
+    let newI = i + 1
+    let url = `https://pokeapi.co/api/v2/pokemon/${newI}`
+    let pokemon = await loadPokemon(url)
+    renderPokedex(pokemon);
+}
 
 
-// function lastPokemon(pokemonId) { //das i was übergeben wird ist Pokemon id i --> die id fängt bei 1 an aber das allPokemon array bei 0
-//     let pokemon;
-//     if (pokemonId == 1) {
-//         pokemon = allPokemon[allPokemon.length - 1]; //length = Anzahl der Slots (Gesamtlänge!) -- 
-//         //length-1 = letzter Eintrag weil wenn er die Zahl der Gesamtlänge abrufen würde würde er undefined sagen weil array zahlen ja mit 0 anfangen 
-//     } else {
-//         pokemon = allPokemon[pokemonId - 2];
-//     }
-
-//     renderPokedex(pokemon);
-// }
+async function lastPokemon(i) {
+    let newI = i - 1
+    let url = `https://pokeapi.co/api/v2/pokemon/${newI}`
+    let pokemon = await loadPokemon(url)
+    renderPokedex(pokemon);
+}
 
 
 async function renderAbout(i) {
     let pokemon = await loadPokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)
     let char = await loadPokemon(`https://pokeapi.co/api/v2/characteristic/${i}`)
-    console.log("char",char)
     document.getElementById('informationContainer').innerHTML = createAboutHTML(pokemon, char)
 }
 
