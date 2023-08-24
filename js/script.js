@@ -4,7 +4,7 @@ let counter;
 let currentPokemon;
 let newPokemon
 let offsetNumber = 0
-let limitNumber = 10000
+let limitNumber = 20
 let nextUrl;
 
 async function loadPokemon(url) {
@@ -160,20 +160,19 @@ async function lastPokemon(i) {
 
 
 async function renderAbout(i) {
-    let pokemon = await loadPokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)
-    let char = await loadPokemon(`https://pokeapi.co/api/v2/characteristic/${i}`)
-    document.getElementById('informationContainer').innerHTML = createAboutHTML(pokemon, char)
+    let pokemon = await loadPokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)   
+    document.getElementById('informationContainer').innerHTML = createAboutHTML(pokemon)
 }
 
 
-function createAboutHTML(pokemon, char) {
+function createAboutHTML(pokemon) {
     let type = findFirstType(pokemon);
     let height = pokemon['height'] * 0.1;
     let weight = pokemon['weight'] * 0.1;
 
     return /*html*/ `
     <div class="about">
-        <div class="description"> ${char['descriptions'][7]['description']}</div>
+        <div class="description"></div>
         <div class="about-section">
             <div class="font-weight500"> Height</div>
             <div>${fixNumber(height)}m</div>
