@@ -85,6 +85,17 @@ async function openPokedex(i) {
     renderPokedex(pokemon);
 }
 
+function closePokedex() {
+    document.getElementById('pokedex').classList.add('d-none');
+    enableScroll();
+}
+
+window.addEventListener('mouseup', function (event) {
+    var detail = document.getElementById('detailID');
+    if (!(event.target.closest("#detailID"))) {
+        closePokedex();
+    }
+});
 
 function renderPokedex(pokemon) {
     let i = pokemon['id'];
@@ -182,19 +193,17 @@ function createMovesHTML(pokemon) {
 
     for (let i = 0; i < moves.length; i++) {
         let move = moves[i];
-        console.log("MOVES-I", move)
+       
         console.log("MOVES-II", move['move']['name'])
         html += /*html*/ `
             <div>
                 ${ move['move']['name']}
             </div>
         `;
+         console.log("MOVES-I", move)
     }
     return html
 }
-
-
-
 
 
 function createAboutHTML(pokemon) {
@@ -246,7 +255,3 @@ function createStatsHTML(pokemon) {
 }
 
 
-function closePokedex() {
-    document.getElementById('pokedex').classList.add('d-none');
-    enableScroll();
-}

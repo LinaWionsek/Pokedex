@@ -174,11 +174,6 @@ a:hover {
 }
 
 /* --------------------------------------DETAIL_FOOTER------------------------------------------ */
-.remove-scrolling {
-    height: 100%;
-    overflow: hidden;
-}
-
 .back-forward {
     display: flex;
     justify-content: space-between;
@@ -216,6 +211,7 @@ a:hover {
     padding: 8px;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
+    overflow-y: scroll;
 }
 
 /* ------------------ABOUT---------------- */
