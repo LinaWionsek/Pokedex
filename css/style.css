@@ -1,6 +1,6 @@
 body {
     margin: 0 !important;
-    background-image: url(/img/bg.jpg);
+    background-image: url(../img/bg.jpg);
 }
 
 
@@ -54,7 +54,7 @@ a:hover {
 .dialog-bg {
     background-color: rgba(0, 0, 0, 0.5);
     /* 0.2 org */
-    background-image: url(/img/bg.jpg);
+    background-image: url(../img/bg.jpg);
     z-index: 999;
     position: fixed;
     left: 0;
