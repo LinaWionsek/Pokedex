@@ -1,18 +1,48 @@
 body {
     margin: 0 !important;
+    background-image: url(/img/bg.jpg);
 }
 
 
 html {
     scroll-behavior: smooth !important;
     /* overflow-x: hidden; */
-    height: 100% !important; 
+    height: 100% !important;
 }
 
 a:hover {
     cursor: pointer;
 }
 
+
+/* -------------------------------------------------------------------------------- */
+.header {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 150px;
+    padding: 50px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer {
+    font-size: 14px;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 150px;
+    padding: 0px 50px 0px 50px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    flex-direction: column;
+}
+
+.footer a {
+    color: white;
+}
 /* -------------------------------------------------------------------------------- */
 #content {
     display: flex;
@@ -24,6 +54,7 @@ a:hover {
 .dialog-bg {
     background-color: rgba(0, 0, 0, 0.5);
     /* 0.2 org */
+    background-image: url(/img/bg.jpg);
     z-index: 999;
     position: fixed;
     left: 0;
@@ -38,13 +69,15 @@ a:hover {
 .d-none {
     display: none;
 }
-.previewCard-content{
+
+.previewCard-content {
     position: relative;
 }
+
 .previewCard {
     border-radius: 20px;
-    /* border: 3px solid; */
-    border-color: #f3f5fa;
+    border: 2px solid;
+    border-color: black;
     display: flex;
     flex-direction: column;
     padding: 20px;
@@ -54,6 +87,7 @@ a:hover {
     width: 300px;
     overflow: hidden;
 }
+
 /* .previewCard-images{
     position: relative;
 } */
@@ -118,6 +152,8 @@ a:hover {
     padding: 25px;
     border-radius: 20px;
     padding: 14px;
+    border: 2px solid;
+    border-color: #f3f5fa;
 }
 
 .detail::-webkit-scrollbar {
@@ -129,6 +165,7 @@ a:hover {
     justify-content: flex-start;
     flex-direction: column;
     position: relative;
+    overflow: hidden;
     width: 100%;
     background-color: white;
     border-radius: 20px;
@@ -136,7 +173,7 @@ a:hover {
 }
 
 
- 
+
 .close-card {
     display: flex;
     justify-content: flex-end;
@@ -147,7 +184,7 @@ a:hover {
     width: 32px;
 }
 
-.arrow:hover{
+.arrow:hover {
     cursor: pointer;
 }
 
@@ -184,13 +221,22 @@ a:hover {
     z-index: 1;
 }
 
-.pokeball{
-   
-    opacity: 0.5;
+.pokeball {
+    left: 162px;
+    top: -10px;
+    opacity: 0.2;
     position: absolute;
     width: 90%;
-    left: 130px;
-    top: -10px;       
+    /* left: 130px;
+    top: -10px;        */
+}
+
+.pokeball-pokedex {
+    opacity: 0.2;
+    position: absolute;
+    width: 80%;
+    left: -160px;
+    top: 120px;
 }
 
 /* --------------------------------------DETAIL_FOOTER------------------------------------------ */
@@ -221,7 +267,7 @@ a:hover {
     --bs-dropdown-link-hover-bg: #e9ecef !important;
 }
 
-#informationContainer{
+#informationContainer {
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -300,11 +346,10 @@ a:hover {
     /* .detail {
         height: 64vh;
        
-    }} */}
-
-@media (max-width: 768px) {
-
+    }} */
 }
+
+@media (max-width: 768px) {}
 
 
 
@@ -313,44 +358,51 @@ a:hover {
     /* Stilregeln für kleine Mobiltelefone hier */
     .detail {
         height: 70vh;
-        
+
     }
 
     .detail-header {
         padding: 6px;
     }
+
     .pokemon-type-tag {
         font-size: 12px;
     }
+
     .pokemonImage-background {
         height: 200px;
         width: 200px;
     }
+
     .pokemonImage {
         height: 200px;
         width: 200px;
     }
-    
+
 
     .navigation-container {
         padding: 0px 5px 0px 5px;
         font-size: 15px;
     }
 
-   
-    .back-forward{
+
+    .back-forward {
         padding: 6px;
     }
-    #informationContainer{
+
+    #informationContainer {
         padding: 6px;
     }
+
     .arrow {
         height: 20px;
         width: 20px;
     }
-    .progress-hide{
+
+    .progress-hide {
         display: none !important;
     }
+
     /* .dropdown-menu {
         font-size: 14px !important;
     } */

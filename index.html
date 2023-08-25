@@ -22,12 +22,13 @@
         crossorigin="anonymous"></script>
 </head>
 
-<body onload="getURL()">
+<body onload="includeHTML(); getURL();">
+    <div w3-include-html="templates/header.html"></div>
     <div id="content">
         <div id="pokedex" class="dialog-bg d-none"></div>
        
     </div>
-    
+    <div w3-include-html="templates/footer.html"></div>
 </body>
 
 </html>

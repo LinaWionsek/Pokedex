@@ -130,15 +130,15 @@ function createPokemonCardHTML(pokemon) {
                             ${secondType}  
                         </div>
                         <div class="pokemonImage-container">
-                            <div class="pokemonImage-background" style = "background-color: ${findColorTag(pokemon, type)}">
+                           <!-- <div class="pokemonImage-background" style = "background-color: ${findColorTag(pokemon, type)}"> -->
                                 <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
                             
-                            </div>
+                            <!-- </div> -->
                            
                         </div>
-                        <!-- <img class="pokeball" src="img/pokeball.png" alt=""> -->
+                        <img class="pokeball-pokedex" src="img/pokeball.png" alt="">
                 </div>
-
+ 
             <!--  DETAIL FOOTER   -->
             <div>
                 <div class="back-forward">                    
