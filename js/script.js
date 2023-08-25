@@ -65,14 +65,18 @@ function createPreviewCardHTML(pokemon) {
     return /*html*/ `
     <div onclick="openPokedex(${i})" class="previewCard" style = "background-color: ${findColor(pokemon, type)}">
       <div class="previewCard-Pokemon-Id h5">#${pokemon['id']}</div>            
-      <div class="d-flex w-100">
-          <div class="previewCard-details">
-            <div class="Pokemon-Name h5">${pokemon['name']}</div>
-            <div class="pokemon-type-tag" style = "background-color: ${findColorTag(pokemon, type)}">${type}</div> 
-            ${secondType}
-          </div> 
-          <img src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-      </div>
+      <div class="d-flex w-100 previewCard-content">
+            <div class="previewCard-details test:after">
+                <div class="Pokemon-Name h5">${pokemon['name']}</div>
+                <div class="pokemon-type-tag" style = "background-color: ${findColorTag(pokemon, type)}">${type}</div> 
+                ${secondType}
+            </div> 
+           
+            <img class="previewCardImg" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
+            <img class="pokeball" src="img/pokeball.png" alt="">     
+               
+           
+        </div>
     </div>
 `;
 }
@@ -113,22 +117,28 @@ function createPokemonCardHTML(pokemon) {
     return /*html*/ `
         <div class="detail" id="detailID" style = "background-color: ${findColor(pokemon, type)}">              
             <!--  DETAIL HEADER   -->   
-            <div class="detail-header">
-                <div onclick="closePokedex()" class="close-card">
-                    <svg class="arrow" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/></svg>
+            
+                <div class="detail-header">
+                    
+                        <div onclick="closePokedex()" class="close-card">
+                            <svg class="arrow" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/></svg>
+                        </div>
+                        <div class="pokemonCard-id h5">#${i}</div>
+                        <div class="types-container">
+                            <div class="Pokemon-Name h3">${pokemon['name']}</div>
+                            <div class="pokemon-type-tag " style = "background-color: ${findColorTag(pokemon, type)}">${type}</div>
+                            ${secondType}  
+                        </div>
+                        <div class="pokemonImage-container">
+                            <div class="pokemonImage-background" style = "background-color: ${findColorTag(pokemon, type)}">
+                                <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
+                            
+                            </div>
+                           
+                        </div>
+                        <!-- <img class="pokeball" src="img/pokeball.png" alt=""> -->
                 </div>
-                <div class="pokemonCard-id h5">#${i}</div>
-                <div class="types-container">
-                    <div class="Pokemon-Name h3">${pokemon['name']}</div>
-                    <div class="pokemon-type-tag " style = "background-color: ${findColorTag(pokemon, type)}">${type}</div>
-                    ${secondType}  
-                </div>
-                <div class="pokemonImage-container">
-                    <div class="pokemonImage-background" style = "background-color: ${findColorTag(pokemon, type)}">
-                        <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-                    </div>
-                </div>
-            </div>
+
             <!--  DETAIL FOOTER   -->
             <div>
                 <div class="back-forward">                    

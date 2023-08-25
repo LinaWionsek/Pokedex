@@ -38,7 +38,9 @@ a:hover {
 .d-none {
     display: none;
 }
-
+.previewCard-content{
+    position: relative;
+}
 .previewCard {
     border-radius: 20px;
     /* border: 3px solid; */
@@ -50,11 +52,15 @@ a:hover {
     color: white;
     font-size: medium;
     width: 300px;
+    overflow: hidden;
 }
-
-.previewCard img {
+/* .previewCard-images{
+    position: relative;
+} */
+.previewCardImg {
     height: 150px;
     width: 150px;
+    z-index: 2;
 }
 
 .previewCard:hover {
@@ -122,11 +128,14 @@ a:hover {
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
+    position: relative;
     width: 100%;
     background-color: white;
     border-radius: 20px;
     padding: 8px;
 }
+
+
  
 .close-card {
     display: flex;
@@ -162,6 +171,7 @@ a:hover {
 .pokemonImage-background {
     display: flex;
     justify-content: center;
+    position: relative;
     height: 230px;
     width: 230px;
     border: 4px solid;
@@ -171,6 +181,16 @@ a:hover {
 .pokemonImage {
     height: 220px;
     width: 220px;
+    z-index: 1;
+}
+
+.pokeball{
+   
+    opacity: 0.5;
+    position: absolute;
+    width: 90%;
+    left: 130px;
+    top: -10px;       
 }
 
 /* --------------------------------------DETAIL_FOOTER------------------------------------------ */
@@ -310,6 +330,7 @@ a:hover {
         height: 200px;
         width: 200px;
     }
+    
 
     .navigation-container {
         padding: 0px 5px 0px 5px;
