@@ -6,25 +6,46 @@ let newPokemon
 let offsetNumber = 0
 let limitNumber = 20
 let nextUrl;
-
+let isAlreadyLoading = false;
 // https://pokeapi.co/api/v2/evolution-chain/528/
 // https://pokeapi.co/api/v2/generation/1/
 // https://pokeapi.co/api/v2/pokemon-species/2/ generation -> name: generation-i url:https://pokeapi.co/api/v2/generation/1/
 // evolution chain -> url: url mit link zu evolution chain
 
-async function loadPokemon(url) {
+window.addEventListener('scroll', async function() {
+    console.log("event outside")
+   
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1 && !isAlreadyLoading) {
+        isAlreadyLoading = true
+        console.log("event inside")
+        await loadMorePokemon();
+        isAlreadyLoading = false
+    }
+});
+
+// Gibt Liste mit einzelenen PokemonURLs als JSON raus
+async function fetchApiReturnAsJson(url) {
     let response = await fetch(url);
     let currentPokemon = await response.json(); // JSON 
+    // console.log("erstes pokemon",currentPokemon)
     return currentPokemon;
 }
 
+
 // wenn trigger zb button lade die nächsten pokemon mit loadPokemonWithNextURL(nextUrl) danach renderallcards 
 async function loadPokemonWithNextURL(url) {
-    let currentPokemon = await loadPokemon(url); // genauso wie await response.json();
+    let currentPokemon = await fetchApiReturnAsJson(url); // genauso wie await response.json();
     // kein let vor nextUrl deshalb wird die globale Variable benutzt!
     // nextUrl wird erst gefüllt wenn loadPokemonWithNextURL ausgeführt wird
     nextUrl = currentPokemon['next'] //nextURL mit neuem offset 
+    // console.log("NextURL", currentPokemon)
     return currentPokemon;
+}
+
+async function loadMorePokemon() {
+    let currentPokemon = await loadPokemonWithNextURL(nextUrl)
+    await renderAllCards(currentPokemon);
+    
 }
 
 // offsetNumber change um 20 - 20 40 60 80 100
@@ -34,6 +55,7 @@ async function getURL() {
     await renderAllCards(currentPokemon);
 }
 
+// Nimmt die einzelnen PokemonURLs ruas und gibt sie der loadPokemonAsJSON Funktion mit
 async function renderAllCards(currentPokemon) {
     let getPokemonApiURLs = currentPokemon['results']
     for (let i = 0; i < getPokemonApiURLs.length; i++) {
@@ -42,16 +64,11 @@ async function renderAllCards(currentPokemon) {
         await loadPokemonAsJSON(getPokemonApiURL)
     }
 }
-
+// Verwandelt PokeApiUrl in JSON mit den Daten die ich haben will
 async function loadPokemonAsJSON(getPokemonApiURL) {
-    let response = await fetch(getPokemonApiURL);
-    let currentPokemon = await response.json(); // JSON 
-    let pokemon = currentPokemon
-    // console.log(pokemon)
+    let pokemon = await fetchApiReturnAsJson(getPokemonApiURL)
+    console.log("pokemon as jason",pokemon)
     renderPokemonPreviewCard(pokemon);
-    // for (let i = 0; i < pokemon.length; i++) {
-    //     const onePokemon = pokemon[i];
-    // }
 }
 
 function renderPokemonPreviewCard(pokemon) {
@@ -83,7 +100,7 @@ function createPreviewCardHTML(pokemon) {
 
 
 async function openPokedex(i) {
-    let pokemon = await loadPokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)
+    let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`)
     console.log("openPokedex", pokemon)
     document.getElementById('pokedex').classList.remove("d-none");
     renderPokedex(pokemon);
@@ -172,7 +189,7 @@ function createPokemonCardHTML(pokemon) {
 async function nextPokemon(i) {
     let newI = i + 1
     let url = `https://pokeapi.co/api/v2/pokemon/${newI}`
-    let pokemon = await loadPokemon(url)
+    let pokemon = await fetchApiReturnAsJson(url)
     renderPokedex(pokemon);
 }
 
@@ -180,19 +197,19 @@ async function nextPokemon(i) {
 async function lastPokemon(i) {
     let newI = i - 1
     let url = `https://pokeapi.co/api/v2/pokemon/${newI}`
-    let pokemon = await loadPokemon(url)
+    let pokemon = await fetchApiReturnAsJson(url)
     renderPokedex(pokemon);
 }
 
 
 async function renderAbout(i) {
-    let pokemon = await loadPokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)
+    let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`)
     document.getElementById('informationContainer').innerHTML = createAboutHTML(pokemon)
     document.getElementById('informationContainer').classList.remove('add-scrolling');
 }
 
 async function renderMoves(i) {
-    let pokemon = await loadPokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)
+    let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`)
     document.getElementById('informationContainer').innerHTML = createMovesHTML(pokemon);
     document.getElementById('informationContainer').classList.add('add-scrolling');
 }
@@ -205,14 +222,14 @@ function createMovesHTML(pokemon) {
 
     for (let i = 0; i < moves.length; i++) {
         let move = moves[i];
-       
+
         console.log("MOVES-II", move['move']['name'])
         html += /*html*/ `
             <div>
                 ${ move['move']['name']}
             </div>
         `;
-         console.log("MOVES-I", move)
+        console.log("MOVES-I", move)
     }
     return html
 }
@@ -247,7 +264,7 @@ function createAboutHTML(pokemon) {
 }
 
 async function renderStats(i) {
-    let pokemon = await loadPokemon(`https://pokeapi.co/api/v2/pokemon/${i}`)
+    let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`)
     document.getElementById('informationContainer').innerHTML = createStatsHTML(pokemon)
     document.getElementById('informationContainer').classList.remove('add-scrolling');
 }
@@ -266,5 +283,3 @@ function createStatsHTML(pokemon) {
                     </div>`).join(' ')}
    `;
 }
-
-
