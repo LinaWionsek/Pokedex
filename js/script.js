@@ -247,14 +247,20 @@ async function renderEvolutionchain(i){
 function createEvolutionchainHTML(evolutionchain){
     console.log("evolutionchain", evolutionchain)
     let pokemon1 = evolutionchain['chain']['species']['name']
-    let pokemon1URL = evolutionchain['chain']['species']['url']
-
     let pokemon2 = evolutionchain['chain']['evolves_to']['0']['species']['name']
-    let pokemon2URL = evolutionchain['chain']['evolves_to']['0']['species']['url']
-
     let pokemon3 = evolutionchain['chain']['evolves_to']['0']['evolves_to']['0']['species']['name']
+
+    let minLevel1 = evolutionchain['chain']['evolves_to']['0']['evolution_details']['0']['min_level']
+    let minLevel2 = evolutionchain['chain']['evolves_to']['0']['evolves_to']['evolution_details']['0']['min_level']
+
+    let pokemon1URL = evolutionchain['chain']['species']['url']
+    let pokemon2URL = evolutionchain['chain']['evolves_to']['0']['species']['url']
     let pokemon3URL = evolutionchain['chain']['evolves_to']['0']['evolves_to']['0']['species']['url']
 
+   
+
+
+    // let pokemon3 = evolutionchain['chain']['evolves_to']['i']['species']['name']
     console.log(pokemon1, pokemon2, pokemon3)
 }
 
