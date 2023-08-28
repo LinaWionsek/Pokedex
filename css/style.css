@@ -283,10 +283,13 @@ a:hover {
 .description {
     font-style: italic;
     margin-bottom: 8px;
-    width: 180px;
     background-color: #e9ecef;
     border-radius: 8px;
     text-align: center;
+}
+
+.about {
+    overflow-y: scroll;
 }
 
 .about-section {

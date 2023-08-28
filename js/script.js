@@ -204,7 +204,9 @@ async function lastPokemon(i) {
 
 async function renderAbout(i) {
     let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`)
-    document.getElementById('informationContainer').innerHTML = createAboutHTML(pokemon)
+    let species = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon-species/${i}`)
+    console.log("species", species)
+    document.getElementById('informationContainer').innerHTML = createAboutHTML(pokemon, species)
     document.getElementById('informationContainer').classList.remove('add-scrolling');
 }
 
@@ -235,14 +237,25 @@ function createMovesHTML(pokemon) {
 }
 
 
-function createAboutHTML(pokemon) {
+
+
+// async function loadPokemonAsJSON(getPokemonApiURL) {
+//     let pokemon = await fetchApiReturnAsJson(getPokemonApiURL)
+//     console.log("pokemon as jason",pokemon)
+//     renderPokemonPreviewCard(pokemon);
+// }
+
+
+function createAboutHTML(pokemon, species) {
     let type = findFirstType(pokemon);
     let height = pokemon['height'] * 0.1;
     let weight = pokemon['weight'] * 0.1;
-
+    let description = species['flavor_text_entries']['8']['flavor_text']
+    console.log("description", description)
+   
     return /*html*/ `
     <div class="about">
-        <div class="description"></div>
+        <div class="description">${description}</div>
         <div class="about-section">
             <div class="font-weight500"> Height</div>
             <div>${fixNumber(height)}m</div>
