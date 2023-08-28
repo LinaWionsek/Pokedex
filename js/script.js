@@ -236,8 +236,27 @@ function createMovesHTML(pokemon) {
     return html
 }
 
+async function renderEvolutionchain(i){
+    let species = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon-species/${i}`)
+    let evolutionchainURL = species['evolution_chain']['url']
+    let evolutionchain = await fetchApiReturnAsJson(evolutionchainURL)
+    console.log("evolutionchain", evolutionchain)
+    createEvolutionchainHTML(evolutionchain)
+}
 
+function createEvolutionchainHTML(evolutionchain){
+    console.log("evolutionchain", evolutionchain)
+    let pokemon1 = evolutionchain['chain']['species']['name']
+    let pokemon1URL = evolutionchain['chain']['species']['url']
 
+    let pokemon2 = evolutionchain['chain']['evolves_to']['0']['species']['name']
+    let pokemon2URL = evolutionchain['chain']['evolves_to']['0']['species']['url']
+
+    let pokemon3 = evolutionchain['chain']['evolves_to']['0']['evolves_to']['0']['species']['name']
+    let pokemon3URL = evolutionchain['chain']['evolves_to']['0']['evolves_to']['0']['species']['url']
+
+    console.log(pokemon1, pokemon2, pokemon3)
+}
 
 // async function loadPokemonAsJSON(getPokemonApiURL) {
 //     let pokemon = await fetchApiReturnAsJson(getPokemonApiURL)
