@@ -12,9 +12,9 @@ let isAlreadyLoading = false;
 // https://pokeapi.co/api/v2/pokemon-species/2/ generation -> name: generation-i url:https://pokeapi.co/api/v2/generation/1/
 // evolution chain -> url: url mit link zu evolution chain
 
-window.addEventListener('scroll', async function() {
+window.addEventListener('scroll', async function () {
     console.log("event outside")
-   
+
     if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1 && !isAlreadyLoading) {
         isAlreadyLoading = true
         console.log("event inside")
@@ -45,7 +45,7 @@ async function loadPokemonWithNextURL(url) {
 async function loadMorePokemon() {
     let currentPokemon = await loadPokemonWithNextURL(nextUrl)
     await renderAllCards(currentPokemon);
-    
+
 }
 
 // offsetNumber change um 20 - 20 40 60 80 100
@@ -67,7 +67,7 @@ async function renderAllCards(currentPokemon) {
 // Verwandelt PokeApiUrl in JSON mit den Daten die ich haben will
 async function loadPokemonAsJSON(getPokemonApiURL) {
     let pokemon = await fetchApiReturnAsJson(getPokemonApiURL)
-    console.log("pokemon as jason",pokemon)
+    console.log("pokemon as jason", pokemon)
     renderPokemonPreviewCard(pokemon);
 }
 
@@ -236,7 +236,21 @@ function createMovesHTML(pokemon) {
     return html
 }
 
-async function renderEvolutionchain(i){
+
+// -------------------------------------------- CHAIN-NOTES --------------------------------------------
+// let pokemon2URL = chain['evolves_to']['0']['species']['url']
+
+// let pokemon3 = chain['evolves_to']['0']['evolves_to']['0']['species']['name']
+// let pokemon3URL = chain['evolves_to']['0']['evolves_to']['0']['species']['url']
+
+
+// let minLevel1 = chain['evolves_to']['0']['evolution_details']['0']['min_level']
+// let minLevel2 = chain['evolves_to']['0']['evolves_to']['0']['evolution_details']['0']['min_level']
+
+// let pokemon1 = chain['species']['name']
+// let pokemon1URL = chain['species']['url']
+// -------------------------------------------- CHAIN-NOTES --------------------------------------------
+async function renderEvolutionchain(i) {
     let species = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon-species/${i}`)
     let evolutionchainURL = species['evolution_chain']['url']
     let evolutionchain = await fetchApiReturnAsJson(evolutionchainURL)
@@ -244,24 +258,51 @@ async function renderEvolutionchain(i){
     createEvolutionchainHTML(evolutionchain)
 }
 
-function createEvolutionchainHTML(evolutionchain){
+function createEvolutionchainHTML(evolutionchain) {
     console.log("evolutionchain", evolutionchain)
-    let pokemon1 = evolutionchain['chain']['species']['name']
-    let pokemon2 = evolutionchain['chain']['evolves_to']['0']['species']['name']
-    let pokemon3 = evolutionchain['chain']['evolves_to']['0']['evolves_to']['0']['species']['name']
+    let chain = evolutionchain['chain']
+    findChain(chain);
+}
 
-    let minLevel1 = evolutionchain['chain']['evolves_to']['0']['evolution_details']['0']['min_level']
-    let minLevel2 = evolutionchain['chain']['evolves_to']['0']['evolves_to']['evolution_details']['0']['min_level']
+function findChain(chain) {
 
-    let pokemon1URL = evolutionchain['chain']['species']['url']
-    let pokemon2URL = evolutionchain['chain']['evolves_to']['0']['species']['url']
-    let pokemon3URL = evolutionchain['chain']['evolves_to']['0']['evolves_to']['0']['species']['url']
+    //1. POKEMON
+    console.log("Pokemon1", chain['species']['name'])
 
-   
+    //PROOF IF 2. POKEMON EXISTS
+    if (chain['evolves_to']) {
 
+        for (let i = 0; i < chain['evolves_to'].length; i++) {
+            const chainArr = chain['evolves_to'][i];
 
-    // let pokemon3 = evolutionchain['chain']['evolves_to']['i']['species']['name']
-    console.log(pokemon1, pokemon2, pokemon3)
+            chainArr['species']['name'];
+
+            console.log("Pokemon2", chainArr['species']['name'])
+
+            //PROOF IF MIN_LV FOR POKEMON2 EXISTS
+            if (chainArr['evolution_details']['0']['min_level']) {
+                console.log("minlv1", chainArr['evolution_details']['0']['min_level']);
+            } else {
+                alert("kein lvl");
+            }
+            //PROOF IF 3. POKEMON EXISTS
+            if (chainArr['evolves_to'].length != 0) {
+                console.log("Pokemon3", chainArr['evolves_to']['0']['species']['name']);
+
+                //PROOF IF MIN_LV FOR POKEMON3 EXISTS
+                if (chainArr['evolves_to']['0']['evolution_details']['0']['min_level']) {
+                    console.log(chainArr['evolves_to']['0']['evolution_details']['0']['min_level']);
+                } else {
+                    alert("kein 2. lvl!");
+                }
+            } else {
+                alert("kein3. pokemon");
+            }
+        }
+
+    } else {
+        console.log("only1", chain['species']['name'])
+    }
 }
 
 // async function loadPokemonAsJSON(getPokemonApiURL) {
@@ -277,7 +318,7 @@ function createAboutHTML(pokemon, species) {
     let weight = pokemon['weight'] * 0.1;
     let description = species['flavor_text_entries']['8']['flavor_text']
     console.log("description", description)
-   
+
     return /*html*/ `
     <div class="about">
         <div class="description">${description}</div>
