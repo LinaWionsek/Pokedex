@@ -60,14 +60,14 @@ async function renderAllCards(currentPokemon) {
     let getPokemonApiURLs = currentPokemon['results']
     for (let i = 0; i < getPokemonApiURLs.length; i++) {
         const getPokemonApiURL = getPokemonApiURLs[i]['url'];
-        console.log(getPokemonApiURL)
+        // console.log(getPokemonApiURL)
         await loadPokemonAsJSON(getPokemonApiURL)
     }
 }
 // Verwandelt PokeApiUrl in JSON mit den Daten die ich haben will
 async function loadPokemonAsJSON(getPokemonApiURL) {
     let pokemon = await fetchApiReturnAsJson(getPokemonApiURL)
-    console.log("pokemon as jason", pokemon)
+    // console.log("pokemon as jason", pokemon)
     renderPokemonPreviewCard(pokemon);
 }
 
@@ -101,7 +101,7 @@ function createPreviewCardHTML(pokemon) {
 
 async function openPokedex(i) {
     let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`)
-    console.log("openPokedex", pokemon)
+    // console.log("openPokedex", pokemon)
     document.getElementById('pokedex').classList.remove("d-none");
     renderPokedex(pokemon);
 }
@@ -255,18 +255,22 @@ async function renderEvolutionchain(i) {
     let evolutionchainURL = species['evolution_chain']['url']
     let evolutionchain = await fetchApiReturnAsJson(evolutionchainURL)
     console.log("evolutionchain", evolutionchain)
-    createEvolutionchainHTML(evolutionchain)
+    findChain(evolutionchain)
 }
 
-function createEvolutionchainHTML(evolutionchain) {
+let pokemon = "";
+let pokemon1 = "";
+let pokemon2 = "";
+let pokemon3 = "";
+let lvl1 = "";
+let lvl2 = "";
+
+function findChain(evolutionchain) {
     console.log("evolutionchain", evolutionchain)
     let chain = evolutionchain['chain']
-    findChain(chain);
-}
-
-function findChain(chain) {
 
     //1. POKEMON
+    pokemon1 = chain['species']['name']
     console.log("Pokemon1", chain['species']['name'])
 
     //PROOF IF 2. POKEMON EXISTS
@@ -275,36 +279,56 @@ function findChain(chain) {
         for (let i = 0; i < chain['evolves_to'].length; i++) {
             const chainArr = chain['evolves_to'][i];
 
-            chainArr['species']['name'];
-
             console.log("Pokemon2", chainArr['species']['name'])
+            pokemon2 = chainArr['species']['name'];
+
 
             //PROOF IF MIN_LV FOR POKEMON2 EXISTS
             if (chainArr['evolution_details']['0']['min_level']) {
-                console.log("minlv1", chainArr['evolution_details']['0']['min_level']);
+                lv1 = chainArr['evolution_details']['0']['min_level'];
             } else {
-                alert("kein lvl");
+                alert("no 1 lvl")
+                let lv1 = "-"
             }
             //PROOF IF 3. POKEMON EXISTS
             if (chainArr['evolves_to'].length != 0) {
+                pokemon3 = chainArr['evolves_to']['0']['species']['name']
                 console.log("Pokemon3", chainArr['evolves_to']['0']['species']['name']);
 
                 //PROOF IF MIN_LV FOR POKEMON3 EXISTS
                 if (chainArr['evolves_to']['0']['evolution_details']['0']['min_level']) {
-                    console.log(chainArr['evolves_to']['0']['evolution_details']['0']['min_level']);
+                    lvl2 = chainArr['evolves_to']['0']['evolution_details']['0']['min_level'];
                 } else {
-                    alert("kein 2. lvl!");
+                    alert("no 2 lvl")
+                    lvl2 = "-";
                 }
             } else {
-                alert("kein3. pokemon");
+                alert("no 3 pokemon")
+                pokemon3 = "no Pokemon";
             }
         }
 
     } else {
-        console.log("only1", chain['species']['name'])
+        let pokemon2 = "-";
+        let pokemon3 = "-";
+        console.log("only1 Pokemon!", chain['species']['name'])
     }
+    console.log("end",pokemon3)
+
+    document.getElementById('informationContainer').innerHTML = createChainHTML(evolutionchain, pokemon1, pokemon2, pokemon3, lvl1, lvl2);
 }
 
+
+function createChainHTML(evolutionchain, pokemon1, pokemon2, pokemon3, lvl1, lvl2) {
+    let chain = evolutionchain['chain']
+    
+    console.log("HTMLPokemon1",pokemon1)
+    console.log("HTMLPokemon2",pokemon2)
+    console.log("HTMLPokemon3",pokemon3)
+    return /*html*/ `
+    ${pokemon1}${ pokemon2}${pokemon3}${lvl1}${lvl2}
+    `;
+}
 // async function loadPokemonAsJSON(getPokemonApiURL) {
 //     let pokemon = await fetchApiReturnAsJson(getPokemonApiURL)
 //     console.log("pokemon as jason",pokemon)
