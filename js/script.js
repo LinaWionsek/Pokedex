@@ -262,7 +262,7 @@ async function renderEvolutionchain(i) {
   let evolutionchainURL = species['evolution_chain']['url']
   let evolutionchain = await fetchApiReturnAsJson(evolutionchainURL)
   console.log("evolutionchain", evolutionchain);
-  
+
   findChain(evolutionchain);
 }
 
@@ -284,8 +284,8 @@ async function findChain(evolutionchain) {
     for (let i = 0; i < chain['evolves_to'].length; i++) {
       const chainArr = chain['evolves_to'][i];
       console.log("chainARR", chainArr)
-      await findSecondPokemonForChain(evolutionchain, chainArr);
-      await findMoreThanTwoPokemonForChain(evolutionchain, chainArr);
+      await findSecondPokemonForChain(chainArr);
+      await findMoreThanTwoPokemonForChain(chainArr);
     }
   } else {
     pokemon2 = "";
@@ -293,19 +293,13 @@ async function findChain(evolutionchain) {
     // alert("only 1 pokemon!");
   }
   document.getElementById('informationContainer').innerHTML = createChainHTML(pokemon1, pokemon2, pokemon3);
-  // einzelne Teile
-
-
-  
 }
 
-async function findSecondPokemonForChain(evolutionchain, chainArr) {
+async function findSecondPokemonForChain(chainArr) {
   //2. Pokemon
   //PROOF IF MIN_LV FOR POKEMON2 EXISTS
-  
   lvl1 = chainArr['evolution_details']['0']['min_level'];
   if (!lvl1) {
-    // alert("no 1 lvl")
     lvl1 = "-"
   }
   let img2 = await loadPokemon2IMG(chainArr);
@@ -317,9 +311,7 @@ async function findSecondPokemonForChain(evolutionchain, chainArr) {
 `;
 }
 
-async function findMoreThanTwoPokemonForChain(evolutionchain, chainArr) {
- 
-
+async function findMoreThanTwoPokemonForChain(chainArr) {
   //PROOF IF 3. POKEMON EXISTS
   if (chainArr['evolves_to'].length != 0) {
     //PROOF IF MIN_LV FOR POKEMON3 EXISTS
@@ -334,7 +326,6 @@ async function findMoreThanTwoPokemonForChain(evolutionchain, chainArr) {
       <div class="pokemon">${chainArr['evolves_to']['0']['species']['name']}</div>
     </div>
     `;
-
   } else {
     pokemon3 = "";
   }
@@ -343,29 +334,28 @@ async function findMoreThanTwoPokemonForChain(evolutionchain, chainArr) {
 
 async function loadPokemon1IMG(evolutionchain) {
   let chain = evolutionchain['chain']
-  let pokemon1link = await fetchApiReturnAsJson(chain['species']['url']);
-  let pokemon = await fetchApiReturnAsJson(pokemon1link['varieties']['0']['pokemon']['url']);
-  return /*html*/ `
-   <img class="pokemonchain-img" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-   `;
+  let pokemonlink = await fetchApiReturnAsJson(chain['species']['url']);
+  return loadPokemonIMG(pokemonlink)
 }
 
 async function loadPokemon2IMG(chainArr) {
-  let pokemon2link = await fetchApiReturnAsJson(chainArr['species']['url']);
-  let pokemon = await fetchApiReturnAsJson(pokemon2link['varieties']['0']['pokemon']['url']);
-  return /*html*/ `
-   <img class="pokemonchain-img" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-   `;
+  let pokemonlink = await fetchApiReturnAsJson(chainArr['species']['url']);
+  return loadPokemonIMG(pokemonlink)
 }
 
 async function loadPokemon3IMG(chainArr) {
-  let pokemon3link = await fetchApiReturnAsJson(chainArr['evolves_to']['0']['species']['url']);
-  let pokemon = await fetchApiReturnAsJson(pokemon3link['varieties']['0']['pokemon']['url']);
-  return /*html*/ `
-   <img class="pokemonchain-img" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-   `;
+  let pokemonlink = await fetchApiReturnAsJson(chainArr['evolves_to']['0']['species']['url']);
+  return loadPokemonIMG(pokemonlink)
 }
 
+async function loadPokemonIMG(pokemonlink) {
+  let pokemon = await fetchApiReturnAsJson(pokemonlink['varieties']['0']['pokemon']['url']);
+  
+  let i = pokemon['id'];
+  return /*html*/ `
+   <img onclick="openPokedex(${i})" class="pokemonchain-img" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
+   `;
+}
 
 function createChainHTML(pokemon1, pokemon2, pokemon3) {
   return /*html*/ `
