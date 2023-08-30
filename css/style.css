@@ -343,6 +343,28 @@ a:hover {
     width: 100%;
 }
 
+/* ------------------EVOLUTIONCHAIN---------------- */
+
+.chain-container {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+}
+.chain {
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    overflow-y: scroll;
+}
+
+.pokemonchain-detail {
+    margin: 8px 0 8px 0;
+}
+
+.pokemonchain-img{
+    height: 80px;
+    width: 80px;
+}
 
 /* --------------------------------------RESPONSIVE------------------------------------------ */
 @media (min-height: 901px) {

@@ -128,7 +128,8 @@ function renderPokedex(pokemon) {
   let i = pokemon['id'];
   document.getElementById('pokedex').innerHTML = createPokemonCardHTML(pokemon);
   disableScroll();
-  renderAbout(i);
+  // renderAbout(i);
+  renderEvolutionchain(i)
 }
 
 
@@ -282,9 +283,12 @@ function findChain(evolutionchain) {
     alert("only 1 pokemon!");
   }
   document.getElementById('informationContainer').innerHTML = createChainHTML(evolutionchain, pokemon1, pokemon2, pokemon3, lvl1, lvl2);
+  loadPokemon1IMG(evolutionchain);
+  loadPokemon2IMG(evolutionchain);
+  loadPokemon3IMG(evolutionchain);
 }
 
-function findSecondPokemonForChain(chainArr){
+function findSecondPokemonForChain(chainArr) {
   //2. Pokemon
   pokemon2 = chainArr['species']['name'];
   //PROOF IF MIN_LV FOR POKEMON2 EXISTS
@@ -314,14 +318,69 @@ function findMoreThanTwoPokemonForChain(chainArr) {
   }
 }
 
+
+async function loadPokemon1IMG(evolutionchain) {
+  let chain = evolutionchain['chain']
+  let pokemon1link = await fetchApiReturnAsJson(chain['species']['url']);
+  let pokemon = await fetchApiReturnAsJson(pokemon1link['varieties']['0']['pokemon']['url']);
+  document.getElementById("pokemon1IMG").innerHTML = /*html*/ `
+   <img class="pokemonchain-img" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
+   `;
+}
+
+async function loadPokemon2IMG(evolutionchain) {
+  let chain = evolutionchain['chain']
+  let pokemon2link = await fetchApiReturnAsJson(chain['evolves_to']['0']['species']['url']);
+  let pokemon = await fetchApiReturnAsJson(pokemon2link['varieties']['0']['pokemon']['url']);
+  document.getElementById("pokemon2IMG").innerHTML = /*html*/ `
+   <img class="pokemonchain-img" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
+   `;
+}
+
+async function loadPokemon3IMG(evolutionchain) {
+  let chain = evolutionchain['chain']
+  let pokemon3link = await fetchApiReturnAsJson(chain['evolves_to']['0']['evolves_to']['0']['species']['url']);
+  let pokemon = await fetchApiReturnAsJson(pokemon3link['varieties']['0']['pokemon']['url']);
+  document.getElementById("pokemon3IMG").innerHTML = /*html*/ `
+   <img class="pokemonchain-img" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
+   `;
+}
+
+
 function createChainHTML(evolutionchain, pokemon1, pokemon2, pokemon3, lvl1, lvl2) {
   let chain = evolutionchain['chain']
+  if (pokemon3 === ""){
 
-  console.log("HTMLPokemon1", pokemon1)
-  console.log("HTMLPokemon2", pokemon2)
-  console.log("HTMLPokemon3", pokemon3)
+  }
   return /*html*/ `
-    ${pokemon1}${ pokemon2}${pokemon3}${lvl1}${lvl2}
+  <div class="chain-container">
+    <h5>Evolution</h5>
+    <div class="chain">
+      
+      <div class="pokemonchain-detail">
+        <div id="pokemon1IMG"></div>
+        <div class="pokemon1">${pokemon1}</div>
+      </div>
+
+      <img src="" alt="">
+      <div>Level ${lvl1}</div>
+
+      <div class="pokemonchain-detail">
+        <div id="pokemon2IMG"></div>
+        <div class="pokemon2">${pokemon2}</div>
+      </div>
+
+      <img src="" alt="">
+      <div>Level ${lvl2}</div>
+
+      <div class="pokemonchain-detail">
+        <div id="pokemon3IMG"></div>
+        <div class="pokemon3">${pokemon3}</div>
+      </div>
+      
+    </div>
+  </div>
+   
     `;
 }
 // async function loadPokemonAsJSON(getPokemonApiURL) {
