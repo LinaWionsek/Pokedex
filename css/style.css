@@ -349,14 +349,19 @@ a:hover {
  display: flex;
  flex-direction: column;
  align-items: center;
+ overflow-y: scroll;
 }
+
 .chain {
     display: flex;
     /* flex-direction: column; */
+    flex-wrap: wrap;
     align-items: center;
-    overflow-y: scroll;
+    
 }
-
+.pokemon{
+    text-align: center;
+}
 .pokemonchain-detail {
     margin: 8px 0 8px 0;
 }

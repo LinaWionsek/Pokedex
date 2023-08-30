@@ -28,8 +28,7 @@ function findSecondAbility(pokemon) {
 }
 
 
-function findColor(pokemon, type) {
-    // let type = allPokemon[i - 1]['types'][0]['type']['name'];
+function findColor(type) {
     switch (type) {
         case 'normal':
             return '#9fa0a8'
@@ -74,8 +73,7 @@ function findColor(pokemon, type) {
 }
 
 
-function findColorTag(pokemon, type) {
-    // let type = allPokemon[i - 1]['types'][0]['type']['name'];
+function findColorTag(type) {
     switch (type) {
         case 'normal':
             return '#8d8e96';

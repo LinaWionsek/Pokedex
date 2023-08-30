@@ -1,18 +1,18 @@
-let allPokemon = [];
-let allChar = [];
-let counter;
-let currentPokemon;
-let newPokemon
+// let allChar = [];
+// let counter;
+// let currentPokemon;
+// let newPokemon
 let offsetNumber = 0
 let limitNumber = 20
 let nextUrl;
 let isAlreadyLoading = false;
-let pokemon = "";
+// let pokemon = "";
 let pokemon1 = "";
 let pokemon2 = "";
 let pokemon3 = "";
 let lvl1 = "";
 let lvl2 = "";
+
 // https://pokeapi.co/api/v2/evolution-chain/528/
 // https://pokeapi.co/api/v2/generation/1/
 // https://pokeapi.co/api/v2/pokemon-species/2/ generation -> name: generation-i url:https://pokeapi.co/api/v2/generation/1/
@@ -86,12 +86,12 @@ function createPreviewCardHTML(pokemon) {
   let secondType = findSecondType(pokemon);
   let i = pokemon['id']
   return /*html*/ `
-    <div onclick="openPokedex(${i})" class="previewCard" style = "background-color: ${findColor(pokemon, type)}">
+    <div onclick="openPokedex(${i})" class="previewCard" style = "background-color: ${findColor(type)}">
       <div class="previewCard-Pokemon-Id h5">#${pokemon['id']}</div>            
       <div class="d-flex w-100 previewCard-content">
             <div class="previewCard-details test:after">
                 <div class="Pokemon-Name h5">${pokemon['name']}</div>
-                <div class="pokemon-type-tag" style = "background-color: ${findColorTag(pokemon, type)}">${type}</div> 
+                <div class="pokemon-type-tag" style = "background-color: ${findColorTag(type)}">${type}</div> 
                 ${secondType}
             </div> 
            
@@ -139,7 +139,7 @@ function createPokemonCardHTML(pokemon) {
   let i = pokemon['id'];
   // counter = i;
   return /*html*/ `
-        <div class="detail" id="detailID" style = "background-color: ${findColor(pokemon, type)}">              
+        <div class="detail" id="detailID" style = "background-color: ${findColor(type)}">              
             <!--  DETAIL HEADER   -->   
             
                 <div class="detail-header">
@@ -150,11 +150,11 @@ function createPokemonCardHTML(pokemon) {
                         <div class="pokemonCard-id h5">#${i}</div>
                         <div class="types-container">
                             <div class="Pokemon-Name h3">${pokemon['name']}</div>
-                            <div class="pokemon-type-tag " style = "background-color: ${findColorTag(pokemon, type)}">${type}</div>
+                            <div class="pokemon-type-tag " style = "background-color: ${findColorTag(type)}">${type}</div>
                             ${secondType}  
                         </div>
                         <div class="pokemonImage-container">
-                           <!-- <div class="pokemonImage-background" style = "background-color: ${findColorTag(pokemon, type)}"> -->
+                           <!-- <div class="pokemonImage-background" style = "background-color: ${findColorTag(type)}"> -->
                                 <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
                             
                             <!-- </div> -->
@@ -171,16 +171,16 @@ function createPokemonCardHTML(pokemon) {
                 </div>
 
                 <div class="navigation-container">  
-                    <a onclick="renderAbout(${i})" style= "color: ${findColor(pokemon, type)};">About</a>
-                    <a onclick="renderStats(${i})" style= "color: ${findColor(pokemon, type)};">Base&nbspStats</a>
+                    <a onclick="renderAbout(${i})" style= "color: ${findColor(type)};">About</a>
+                    <a onclick="renderStats(${i})" style= "color: ${findColor(type)};">Base&nbspStats</a>
                     <div class="dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style= "color: ${findColor(pokemon, type)};">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style= "color: ${findColor(type)};">
                             More
                             </a>
                         <ul class="dropdown-menu">
-                            <li><button onclick="renderEvolutionchain(${i})" class="dropdown-item" type="button" style= "color: ${findColor(pokemon, type)};">Evolution</button></li>
-                            <li><button onclick="renderMoves(${i})" class="dropdown-item" type="button" style= "color: ${findColor(pokemon, type)};">Moves</button></li>
-                            <li><button class="dropdown-item" type="button" style= "color: ${findColor(pokemon, type)};">Something else here</button></li>
+                            <li><button onclick="renderEvolutionchain(${i})" class="dropdown-item" type="button" style= "color: ${findColor(type)};">Evolution</button></li>
+                            <li><button onclick="renderMoves(${i})" class="dropdown-item" type="button" style= "color: ${findColor(type)};">Moves</button></li>
+                            <li><button class="dropdown-item" type="button" style= "color: ${findColor(type)};">Something else here</button></li>
                         </ul>
                     </div> 
                 </div>
@@ -261,59 +261,81 @@ async function renderEvolutionchain(i) {
   let species = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon-species/${i}`)
   let evolutionchainURL = species['evolution_chain']['url']
   let evolutionchain = await fetchApiReturnAsJson(evolutionchainURL)
-  console.log("evolutionchain", evolutionchain)
-  findChain(evolutionchain)
+  console.log("evolutionchain", evolutionchain);
+  
+  findChain(evolutionchain);
 }
 
 
-function findChain(evolutionchain) {
+async function findChain(evolutionchain) {
   let chain = evolutionchain['chain']
+  pokemon3 = "";
   //1. POKEMON
-  pokemon1 = chain['species']['name']
+  let img1 = await loadPokemon1IMG(evolutionchain);
+  pokemon1 = ` 
+  <div class="pokemonchain-detail">
+  <div id="pokemon1IMG">${img1}</div>
+  <div class="pokemon">${chain['species']['name']}</div>
+  </div>
+`;
   //PROOF IF 2. POKEMON EXISTS
-  if (chain['evolves_to']) {
+  if (chain['evolves_to'].length != 0) {
+    pokemon2 = ""
     for (let i = 0; i < chain['evolves_to'].length; i++) {
       const chainArr = chain['evolves_to'][i];
-      findSecondPokemonForChain(chainArr);
-      findMoreThanTwoPokemonForChain(chainArr);
+      console.log("chainARR", chainArr)
+      await findSecondPokemonForChain(evolutionchain, chainArr);
+      await findMoreThanTwoPokemonForChain(evolutionchain, chainArr);
     }
   } else {
-    // let pokemon2 = "-";
-    // let pokemon3 = "-";
-    alert("only 1 pokemon!");
+    pokemon2 = "";
+    pokemon3 = "";
+    // alert("only 1 pokemon!");
   }
-  document.getElementById('informationContainer').innerHTML = createChainHTML(evolutionchain, pokemon1, pokemon2, pokemon3, lvl1, lvl2);
-  loadPokemon1IMG(evolutionchain);
-  loadPokemon2IMG(evolutionchain);
-  loadPokemon3IMG(evolutionchain);
+  document.getElementById('informationContainer').innerHTML = createChainHTML(pokemon1, pokemon2, pokemon3);
+  // einzelne Teile
+
+
+  
 }
 
-function findSecondPokemonForChain(chainArr) {
+async function findSecondPokemonForChain(evolutionchain, chainArr) {
   //2. Pokemon
-  pokemon2 = chainArr['species']['name'];
   //PROOF IF MIN_LV FOR POKEMON2 EXISTS
-  if (chainArr['evolution_details']['0']['min_level']) {
-    lvl1 = chainArr['evolution_details']['0']['min_level'];
-  } else {
-    alert("no 1 lvl")
+  
+  lvl1 = chainArr['evolution_details']['0']['min_level'];
+  if (!lvl1) {
+    // alert("no 1 lvl")
     lvl1 = "-"
   }
+  let img2 = await loadPokemon2IMG(chainArr);
+  pokemon2 += ` <div>Level ${lvl1}</div>
+  <div class="pokemonchain-detail">
+  <div>${img2}</div>
+  <div class="pokemon">${chainArr['species']['name']}</div>
+  </div>
+`;
 }
 
-function findMoreThanTwoPokemonForChain(chainArr) {
-  console.log("chainARR", chainArr);
+async function findMoreThanTwoPokemonForChain(evolutionchain, chainArr) {
+ 
+
   //PROOF IF 3. POKEMON EXISTS
   if (chainArr['evolves_to'].length != 0) {
-    pokemon3 = chainArr['evolves_to']['0']['species']['name']
     //PROOF IF MIN_LV FOR POKEMON3 EXISTS
-    if (chainArr['evolves_to']['0']['evolution_details']['0']['min_level']) {
-      lvl2 = chainArr['evolves_to']['0']['evolution_details']['0']['min_level'];
-    } else {
-      alert("no 2 lvl")
+    lvl2 = chainArr['evolves_to']['0']['evolution_details']['0']['min_level'];
+    if (!lvl2) {
       lvl2 = "-";
     }
+    let img3 = await loadPokemon3IMG(chainArr);
+    pokemon3 = `<div>Level ${lvl2}</div>
+    <div class="pokemonchain-detail">
+      <div>${img3}</div>
+      <div class="pokemon">${chainArr['evolves_to']['0']['species']['name']}</div>
+    </div>
+    `;
+
   } else {
-    alert("no 3 pokemon")
     pokemon3 = "";
   }
 }
@@ -323,66 +345,42 @@ async function loadPokemon1IMG(evolutionchain) {
   let chain = evolutionchain['chain']
   let pokemon1link = await fetchApiReturnAsJson(chain['species']['url']);
   let pokemon = await fetchApiReturnAsJson(pokemon1link['varieties']['0']['pokemon']['url']);
-  document.getElementById("pokemon1IMG").innerHTML = /*html*/ `
+  return /*html*/ `
    <img class="pokemonchain-img" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
    `;
 }
 
-async function loadPokemon2IMG(evolutionchain) {
-  let chain = evolutionchain['chain']
-  let pokemon2link = await fetchApiReturnAsJson(chain['evolves_to']['0']['species']['url']);
+async function loadPokemon2IMG(chainArr) {
+  let pokemon2link = await fetchApiReturnAsJson(chainArr['species']['url']);
   let pokemon = await fetchApiReturnAsJson(pokemon2link['varieties']['0']['pokemon']['url']);
-  document.getElementById("pokemon2IMG").innerHTML = /*html*/ `
+  return /*html*/ `
    <img class="pokemonchain-img" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
    `;
 }
 
-async function loadPokemon3IMG(evolutionchain) {
-  let chain = evolutionchain['chain']
-  let pokemon3link = await fetchApiReturnAsJson(chain['evolves_to']['0']['evolves_to']['0']['species']['url']);
+async function loadPokemon3IMG(chainArr) {
+  let pokemon3link = await fetchApiReturnAsJson(chainArr['evolves_to']['0']['species']['url']);
   let pokemon = await fetchApiReturnAsJson(pokemon3link['varieties']['0']['pokemon']['url']);
-  document.getElementById("pokemon3IMG").innerHTML = /*html*/ `
+  return /*html*/ `
    <img class="pokemonchain-img" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
    `;
 }
 
 
-function createChainHTML(evolutionchain, pokemon1, pokemon2, pokemon3, lvl1, lvl2) {
-  let chain = evolutionchain['chain']
-  if (pokemon3 === ""){
-
-  }
+function createChainHTML(pokemon1, pokemon2, pokemon3) {
   return /*html*/ `
   <div class="chain-container">
     <h5>Evolution</h5>
     <div class="chain">
-      
-      <div class="pokemonchain-detail">
-        <div id="pokemon1IMG"></div>
-        <div class="pokemon1">${pokemon1}</div>
-      </div>
-
-      <img src="" alt="">
-      <div>Level ${lvl1}</div>
-
-      <div class="pokemonchain-detail">
-        <div id="pokemon2IMG"></div>
-        <div class="pokemon2">${pokemon2}</div>
-      </div>
-
-      <img src="" alt="">
-      <div>Level ${lvl2}</div>
-
-      <div class="pokemonchain-detail">
-        <div id="pokemon3IMG"></div>
-        <div class="pokemon3">${pokemon3}</div>
-      </div>
-      
+      ${pokemon1}
+      ${pokemon2}
+      ${pokemon3}
     </div>
   </div>
-   
     `;
 }
+
+
 // async function loadPokemonAsJSON(getPokemonApiURL) {
 //     let pokemon = await fetchApiReturnAsJson(getPokemonApiURL)
 //     console.log("pokemon as jason",pokemon)
@@ -433,7 +431,7 @@ function createStatsHTML(pokemon) {
                     <div id="statID" class="stats"><span class="stat-name">${s['stat']['name']}</span>
                         <span class="stat-value">${s['base_stat']}</span>
                         <div class="progress-hide progress bar-height-width" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar" style="width: ${s['base_stat']}%; height=20px; background-color: ${findColor(pokemon, type)};"></div>
+                            <div class="progress-bar" style="width: ${s['base_stat']}%; height=20px; background-color: ${findColor(type)};"></div>
                         </div>
                     </div>`).join(' ')}
    `;
