@@ -7,6 +7,12 @@ let offsetNumber = 0
 let limitNumber = 20
 let nextUrl;
 let isAlreadyLoading = false;
+let pokemon = "";
+let pokemon1 = "";
+let pokemon2 = "";
+let pokemon3 = "";
+let lvl1 = "";
+let lvl2 = "";
 // https://pokeapi.co/api/v2/evolution-chain/528/
 // https://pokeapi.co/api/v2/generation/1/
 // https://pokeapi.co/api/v2/pokemon-species/2/ generation -> name: generation-i url:https://pokeapi.co/api/v2/generation/1/
@@ -258,66 +264,55 @@ async function renderEvolutionchain(i) {
   findChain(evolutionchain)
 }
 
-let pokemon = "";
-let pokemon1 = "";
-let pokemon2 = "";
-let pokemon3 = "";
-let lvl1 = "";
-let lvl2 = "";
 
 function findChain(evolutionchain) {
-  console.log("evolutionchain", evolutionchain)
   let chain = evolutionchain['chain']
-
   //1. POKEMON
   pokemon1 = chain['species']['name']
-  console.log("Pokemon1", chain['species']['name'])
-
   //PROOF IF 2. POKEMON EXISTS
   if (chain['evolves_to']) {
-
     for (let i = 0; i < chain['evolves_to'].length; i++) {
       const chainArr = chain['evolves_to'][i];
-
-      console.log("Pokemon2", chainArr['species']['name'])
-      pokemon2 = chainArr['species']['name'];
-
-
-      //PROOF IF MIN_LV FOR POKEMON2 EXISTS
-      if (chainArr['evolution_details']['0']['min_level']) {
-        lvl1 = chainArr['evolution_details']['0']['min_level'];
-      } else {
-        alert("no 1 lvl")
-         lvl1 = "-"
-      }
-      //PROOF IF 3. POKEMON EXISTS
-      if (chainArr['evolves_to'].length != 0) {
-        pokemon3 = chainArr['evolves_to']['0']['species']['name']
-        console.log("Pokemon3", chainArr['evolves_to']['0']['species']['name']);
-
-        //PROOF IF MIN_LV FOR POKEMON3 EXISTS
-        if (chainArr['evolves_to']['0']['evolution_details']['0']['min_level']) {
-          lvl2 = chainArr['evolves_to']['0']['evolution_details']['0']['min_level'];
-        } else {
-          alert("no 2 lvl")
-          lvl2 = "-";
-        }
-      } else {
-        alert("no 3 pokemon")
-        pokemon3 = "no Pokemon";
-      }
+      findSecondPokemonForChain(chainArr);
+      findMoreThanTwoPokemonForChain(chainArr);
     }
-
   } else {
-    let pokemon2 = "-";
-    let pokemon3 = "-";
-    console.log("only1 Pokemon!", chain['species']['name'])
+    // let pokemon2 = "-";
+    // let pokemon3 = "-";
+    alert("only 1 pokemon!");
   }
-  console.log("end", pokemon3)
-
   document.getElementById('informationContainer').innerHTML = createChainHTML(evolutionchain, pokemon1, pokemon2, pokemon3, lvl1, lvl2);
 }
 
+function findSecondPokemonForChain(chainArr){
+  //2. Pokemon
+  pokemon2 = chainArr['species']['name'];
+  //PROOF IF MIN_LV FOR POKEMON2 EXISTS
+  if (chainArr['evolution_details']['0']['min_level']) {
+    lvl1 = chainArr['evolution_details']['0']['min_level'];
+  } else {
+    alert("no 1 lvl")
+    lvl1 = "-"
+  }
+}
+
+function findMoreThanTwoPokemonForChain(chainArr) {
+  console.log("chainARR", chainArr);
+  //PROOF IF 3. POKEMON EXISTS
+  if (chainArr['evolves_to'].length != 0) {
+    pokemon3 = chainArr['evolves_to']['0']['species']['name']
+    //PROOF IF MIN_LV FOR POKEMON3 EXISTS
+    if (chainArr['evolves_to']['0']['evolution_details']['0']['min_level']) {
+      lvl2 = chainArr['evolves_to']['0']['evolution_details']['0']['min_level'];
+    } else {
+      alert("no 2 lvl")
+      lvl2 = "-";
+    }
+  } else {
+    alert("no 3 pokemon")
+    pokemon3 = "";
+  }
+}
 
 function createChainHTML(evolutionchain, pokemon1, pokemon2, pokemon3, lvl1, lvl2) {
   let chain = evolutionchain['chain']
