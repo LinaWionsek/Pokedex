@@ -340,7 +340,8 @@ function createAboutHTML(pokemon, species) {
     let type = findFirstType(pokemon);
     let height = pokemon['height'] * 0.1;
     let weight = pokemon['weight'] * 0.1;
-    let description = species['flavor_text_entries']['8']['flavor_text']
+    let description = species['flavor_text_entries']['12']['flavor_text'];
+    description = description.replace(/[^a-zA-Z,0-9.]/g,' ');
     console.log("description", description)
 
     return /*html*/ `
@@ -362,7 +363,6 @@ function createAboutHTML(pokemon, species) {
             </div>
         </div>
     </div>
-
     `;
 }
 

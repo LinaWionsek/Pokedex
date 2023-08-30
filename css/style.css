@@ -288,9 +288,9 @@ a:hover {
     text-align: center;
 }
 
-.about {
+/* .about {
     overflow-y: scroll;
-}
+} */
 
 .about-section {
     display: flex;
