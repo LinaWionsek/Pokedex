@@ -392,6 +392,20 @@ a:hover {
 @media (max-width: 768px) {}
 
 @media (max-width: 420px) {
+    .pokemonchain-img {
+        height: 70px;
+        width: 70px;
+    }
+}
+
+
+@media (max-width: 360px) {
+    .pokemonchain-img {
+        cursor: pointer;
+        height: 85px;
+        width: 85px;
+    }
+
     .chain-container {
         overflow-y: scroll;
     }
@@ -403,10 +417,7 @@ a:hover {
     .pokemonchain-detail{
         margin: 24px 0 24px 0;
     }
-}
 
-
-@media (max-width: 360px) {
     .pokeball-pokedex {
         width: 100%;
     }
