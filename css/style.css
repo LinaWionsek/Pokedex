@@ -5,7 +5,6 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-    background-color: #464646;
 }
 
 
@@ -63,8 +62,14 @@ a:hover {
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    /* -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover; */
     background-size: cover;
-    background-color: #464646;
+    background-color: black;
+
+
     z-index: 999;
     position: fixed;
     left: 0;
@@ -392,9 +397,26 @@ a:hover {
 @media (max-width: 768px) {}
 
 @media (max-width: 420px) {
+
+    body {
+        background-repeat: repeat;
+        background-size: 250vw;
+        background-position: 50% 130%;
+        }
+
+    .dialog-bg {
+        background-repeat: repeat;
+        background-size: 180vw;
+        background-position: 50% 130%;
+    }
+
     .pokemonchain-img {
         height: 70px;
         width: 70px;
+    }
+
+    .about {
+        overflow-y: scroll;
     }
 }
 
@@ -414,13 +436,14 @@ a:hover {
         flex-direction: column;
     }
 
-    .pokemonchain-detail{
+    .pokemonchain-detail {
         margin: 24px 0 24px 0;
     }
 
     .pokeball-pokedex {
         width: 100%;
     }
+
     /* Stilregeln für kleine Mobiltelefone hier */
     .detail {
         height: 70vh;
