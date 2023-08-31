@@ -350,7 +350,7 @@ a:hover {
  display: flex;
  flex-direction: column;
  align-items: center;
- overflow-y: scroll;
+ /* overflow-y: scroll; */
 }
 
 .chain {
@@ -363,14 +363,11 @@ a:hover {
 .pokemon{
     text-align: center;
 }
-.pokemonchain-detail {
-    margin: 8px 0 8px 0;
-}
 
 .pokemonchain-img{
     cursor: pointer;
-    height: 80px;
-    width: 80px;
+    height: 85px;
+    width: 85px;
 }
 
 /* --------------------------------------RESPONSIVE------------------------------------------ */
@@ -386,7 +383,12 @@ a:hover {
 
 
 @media (max-width: 360px) {
-
+    .chain-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow-y: scroll;
+       }
     /* Stilregeln für kleine Mobiltelefone hier */
     .detail {
         height: 70vh;

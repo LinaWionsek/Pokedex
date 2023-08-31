@@ -45,6 +45,7 @@ async function renderEvolutionchain(i) {
       // alert("only 1 pokemon!");
     }
     document.getElementById('informationContainer').innerHTML = createChainHTML(pokemon1, pokemon2, pokemon3);
+    document.getElementById('informationContainer').classList.remove('add-scrolling');
   }
   
   

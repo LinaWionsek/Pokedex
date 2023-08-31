@@ -239,6 +239,7 @@ function createMovesHTML(pokemon) {
   return html
 }
 
+
 async function createMoveDetails(move) {
   let url = move['moves']['0']['move']['url']
   let moveDetails = await fetchApiReturnAsJson(url)
@@ -280,7 +281,6 @@ function createAboutHTML(pokemon, species) {
 async function renderStats(i) {
   let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`)
   document.getElementById('informationContainer').innerHTML = createStatsHTML(pokemon)
-  document.getElementById('informationContainer').classList.remove('add-scrolling');
 }
 
 
