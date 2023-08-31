@@ -129,7 +129,7 @@ function renderPokedex(pokemon) {
   document.getElementById('pokedex').innerHTML = createPokemonCardHTML(pokemon);
   disableScroll();
   // renderAbout(i);
-  renderEvolutionchain(i)
+  renderMoves(i)
 }
 
 
@@ -139,51 +139,58 @@ function createPokemonCardHTML(pokemon) {
   let i = pokemon['id'];
   // counter = i;
   return /*html*/ `
-        <div class="detail" id="detailID" style = "background-color: ${findColor(type)}">              
-            <!--  DETAIL HEADER   -->               
-          <div class="detail-header">                    
-            <div onclick="closePokedex()" class="close-card">
-                <svg class="arrow" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/></svg>
-            </div>
-            <div class="pokemonCard-id h5">#${i}</div>
-              <div class="types-container">
-                  <div class="Pokemon-Name h3">${pokemon['name']}</div>
-                  <div class="pokemon-type-tag " style = "background-color: ${findColorTag(type)}">${type}</div>
-                  ${secondType}  
-              </div>
-              <div class="pokemonImage-container">                    
-                <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>                                                                
-              </div>
-              <img class="pokeball-pokedex" src="img/pokeball.png" alt="">
-            </div> 
-              <!--  DETAIL FOOTER   -->
-            <div>
-              <div class="back-forward">                    
-                <div onclick="lastPokemon(${i})"><img class="arrow" src="./img/left.png"></div>
-                <div onclick="nextPokemon(${i})"><img class="arrow" src="./img/right.png"></div>
-              </div>
+  <div class="detail" id="detailID" style="background-color: ${findColor(type)}">
+    <!--  DETAIL HEADER   -->
+    <div class="detail-header">
+      <div onclick="closePokedex()" class="close-card">
+        <svg class="arrow" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"
+          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z" />
+          </svg>
+      </div>
+      <div class="pokemonCard-id h5">#${i}</div>
+      <div class="types-container">
+        <div class="Pokemon-Name h3">${pokemon['name']}</div>
+        <div class="pokemon-type-tag " style="background-color: ${findColorTag(type)}">${type}</div>
+        ${secondType}
+      </div>
+      <div class="pokemonImage-container">
+        <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}" />
+      </div>
+      <img class="pokeball-pokedex" src="img/pokeball.png" alt="">
+    </div>
+    <!--  DETAIL FOOTER   -->
+    <div>
+      <div class="back-forward">
+        <div onclick="lastPokemon(${i})"><img class="arrow" src="./img/left.png"></div>
+        <div onclick="nextPokemon(${i})"><img class="arrow" src="./img/right.png"></div>
+      </div>
 
-              <div class="navigation-container">  
-                <a onclick="renderAbout(${i})" style= "color: ${findColor(type)};">About</a>
-                <a onclick="renderStats(${i})" style= "color: ${findColor(type)};">Base&nbspStats</a>
-                <div class="dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style= "color: ${findColor(type)};">
-                        More
-                        </a>
-                    <ul class="dropdown-menu">
-                        <li><button onclick="renderEvolutionchain(${i})" class="dropdown-item" type="button" style= "color: ${findColor(type)};">Evolution</button></li>
-                        <li><button onclick="renderMoves(${i})" class="dropdown-item" type="button" style= "color: ${findColor(type)};">Moves</button></li>
-                        <li><button class="dropdown-item" type="button" style= "color: ${findColor(type)};">Something else here</button></li>
-                    </ul>
-                </div> 
-            </div>
-              <!--  INFORMATIONS   -->
-              <div id="informationContainer"></div>
-        </div> 
-      </div>     
+      <div class="navigation-container">
+        <a onclick="renderAbout(${i})" style="color: ${findColor(type)};">About</a>
+        <a onclick="renderStats(${i})" style="color: ${findColor(type)};">Base&nbspStats</a>
+        <div class="dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+            style="color: ${findColor(type)};">
+            More
+          </a>
+          <ul class="dropdown-menu">
+            <li><button onclick="renderEvolutionchain(${i})" class="dropdown-item" type="button"
+                style="color: ${findColor(type)};">Evolution</button></li>
+            <li><button onclick="renderMoves(${i})" class="dropdown-item" type="button"
+                style="color: ${findColor(type)};">Moves</button></li>
+            <li><button class="dropdown-item" type="button" style="color: ${findColor(type)};">Something else
+                here</button></li>
+          </ul>
+        </div>
+      </div>
+      <!--  INFORMATIONS   -->
+      <div id="informationContainer"></div>
+    </div>
+  </div>
   `;
-  }
-
+}
 
 async function nextPokemon(i) {
   let newI = i + 1
@@ -213,6 +220,7 @@ async function renderAbout(i) {
 async function renderMoves(i) {
   let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`)
   document.getElementById('informationContainer').innerHTML = createMovesHTML(pokemon);
+  createMoveDetails(pokemon);
   document.getElementById('informationContainer').classList.add('add-scrolling');
 }
 
@@ -222,15 +230,23 @@ function createMovesHTML(pokemon) {
   let html = ""; //string
   for (let i = 0; i < moves.length; i++) {
     let move = moves[i];
-    let url = moves[i]['move']['url'];
-    console.log(url)
     html += /*html*/ `
-            <div>
+            <div onclick="createMoveDetails(${move})">
                 ${ move['move']['name']}
             </div>
         `;
   }
   return html
+}
+
+async function createMoveDetails(move) {
+  let url = move['moves']['0']['move']['url']
+  let moveDetails = await fetchApiReturnAsJson(url)
+  console.log(moveDetails)
+  let moveDescription = moveDetails['flavor_text_entries']['2']['flavor_text']
+  let moveType =  moveDetails['type']['name']
+  let name = moveDetails['name']
+  console.log(name, moveType, moveDescription)
 }
 
 
