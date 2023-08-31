@@ -7,7 +7,7 @@ function findSecondType(pokemon) {
     let types = pokemon['types'];
     let secondType = '';
     if (types[1]) {
-        secondType = `<div class="pokemon-type-tag" style = "background-color: ${findColorTag(pokemon, types[1]['type']['name'])}">${types[1]['type']['name']}</div>`;
+        secondType = `<div class="pokemon-type-tag" style = "background-color: ${findColorTag(types[1]['type']['name'])}">${types[1]['type']['name']}</div>`;
     }
     return secondType;
 }
@@ -67,7 +67,6 @@ function findColor(type) {
         case 'fairy':
             return '#ee6ec8'
         default:
-            // console.log(type)
             return '#767676'
     }
 }
@@ -112,7 +111,6 @@ function findColorTag(type) {
         case 'fairy':
             return '#d85ebe';
         default:
-            // console.log(type)
             return '#6b6b6b';
     }
 }

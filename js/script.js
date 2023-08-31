@@ -116,12 +116,12 @@ function closePokedex() {
 }
 
 
-window.addEventListener('mouseup', function (event) {
-  document.getElementById('detailID');
-  if (!(event.target.closest("#detailID"))) {
-    closePokedex();
-  }
-});
+// window.addEventListener('mouseup', function (event) {
+//   document.getElementById('detailID');
+//   if (!(event.target.closest("#detailID"))) {
+//     closePokedex();
+//   }
+// });
 
 
 function renderPokedex(pokemon) {
@@ -230,10 +230,21 @@ function createMovesHTML(pokemon) {
   let html = ""; //string
   for (let i = 0; i < moves.length; i++) {
     let move = moves[i];
+
     html += /*html*/ `
-            <div onclick="createMoveDetails(${move})">
-                ${ move['move']['name']}
-            </div>
+            <!-- <div onclick="createMoveDetails(${move})"> -->
+              <div id="movedetails"></div>   
+              <div class="collapse" id="collapseExample">
+              <div class="card card-body">
+              Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+              </div>
+              </div>
+              
+              <a href="#collapseExample" role="button" data-bs-toggle="collapse"> ${move['move']['name']}</a>      
+                   
+              </div>
+
+
         `;
   }
   return html
@@ -242,12 +253,13 @@ function createMovesHTML(pokemon) {
 
 async function createMoveDetails(move) {
   let url = move['moves']['0']['move']['url']
+  let level = move['moves']['0']['version_group_details']['0']['level_learned_at']
   let moveDetails = await fetchApiReturnAsJson(url)
   console.log(moveDetails)
   let moveDescription = moveDetails['flavor_text_entries']['2']['flavor_text']
-  let moveType =  moveDetails['type']['name']
+  let moveType = moveDetails['type']['name']
   let name = moveDetails['name']
-  console.log(name, moveType, moveDescription)
+  console.log(name, level, moveType, moveDescription)
 }
 
 

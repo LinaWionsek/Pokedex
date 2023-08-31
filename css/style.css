@@ -91,7 +91,7 @@ a:hover {
 
 .previewCard {
     border-radius: 20px;
-    box-shadow: 3px 3px 8px 5px rgba(55, 55, 55, 0.5);
+    box-shadow: 1px 1px 8px 5px #737373;
     border: 2px solid;
     border-color: white;
     display: flex;
@@ -170,7 +170,7 @@ a:hover {
     padding: 14px;
     border: 2px solid;
     border-color: #f3f5fa;
-    box-shadow: 3px 3px 8px 5px rgba(55,55,55,0.8); /* #f8f9fa42 */
+    box-shadow: 1px 1px 8px 5px #737373;
 }
 
 
@@ -361,6 +361,9 @@ a:hover {
     height: 20px !important;
     width: 100%;
 }
+
+/* ------------------MOVES---------------- */
+
 
 /* ------------------EVOLUTIONCHAIN---------------- */
 
