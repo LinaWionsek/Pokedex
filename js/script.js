@@ -1,12 +1,7 @@
-// let allChar = [];
-// let counter;
-// let currentPokemon;
-// let newPokemon
 let offsetNumber = 0
 let limitNumber = 20
 let nextUrl;
 let isAlreadyLoading = false;
-// let pokemon = "";
 let pokemon1 = "";
 let pokemon2 = "";
 let pokemon3 = "";
@@ -19,11 +14,8 @@ let lvl2 = "";
 // evolution chain -> url: url mit link zu evolution chain
 
 window.addEventListener('scroll', async function () {
-  console.log("event outside")
-
   if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1 && !isAlreadyLoading) {
     isAlreadyLoading = true
-    console.log("event inside")
     await loadMorePokemon();
     isAlreadyLoading = false
   }
@@ -48,10 +40,10 @@ async function loadPokemonWithNextURL(url) {
   return currentPokemon;
 }
 
+
 async function loadMorePokemon() {
   let currentPokemon = await loadPokemonWithNextURL(nextUrl)
   await renderAllCards(currentPokemon);
-
 }
 
 // offsetNumber change um 20 - 20 40 60 80 100
@@ -60,6 +52,7 @@ async function getURL() {
   let currentPokemon = await loadPokemonWithNextURL(url)
   await renderAllCards(currentPokemon);
 }
+
 
 // Nimmt die einzelnen PokemonURLs ruas und gibt sie der loadPokemonAsJSON Funktion mit
 async function renderAllCards(currentPokemon) {
@@ -70,6 +63,8 @@ async function renderAllCards(currentPokemon) {
     await loadPokemonAsJSON(getPokemonApiURL)
   }
 }
+
+
 // Verwandelt PokeApiUrl in JSON mit den Daten die ich haben will
 async function loadPokemonAsJSON(getPokemonApiURL) {
   let pokemon = await fetchApiReturnAsJson(getPokemonApiURL)
@@ -77,9 +72,11 @@ async function loadPokemonAsJSON(getPokemonApiURL) {
   renderPokemonPreviewCard(pokemon);
 }
 
+
 function renderPokemonPreviewCard(pokemon) {
   document.getElementById('content').innerHTML += createPreviewCardHTML(pokemon);
 }
+
 
 function createPreviewCardHTML(pokemon) {
   let type = findFirstType(pokemon);
@@ -112,10 +109,12 @@ async function openPokedex(i) {
   renderPokedex(pokemon);
 }
 
+
 function closePokedex() {
   document.getElementById('pokedex').classList.add('d-none');
   enableScroll();
 }
+
 
 window.addEventListener('mouseup', function (event) {
   document.getElementById('detailID');
@@ -123,6 +122,7 @@ window.addEventListener('mouseup', function (event) {
     closePokedex();
   }
 });
+
 
 function renderPokedex(pokemon) {
   let i = pokemon['id'];
@@ -140,57 +140,49 @@ function createPokemonCardHTML(pokemon) {
   // counter = i;
   return /*html*/ `
         <div class="detail" id="detailID" style = "background-color: ${findColor(type)}">              
-            <!--  DETAIL HEADER   -->   
-            
-                <div class="detail-header">
-                    
-                        <div onclick="closePokedex()" class="close-card">
-                            <svg class="arrow" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/></svg>
-                        </div>
-                        <div class="pokemonCard-id h5">#${i}</div>
-                        <div class="types-container">
-                            <div class="Pokemon-Name h3">${pokemon['name']}</div>
-                            <div class="pokemon-type-tag " style = "background-color: ${findColorTag(type)}">${type}</div>
-                            ${secondType}  
-                        </div>
-                        <div class="pokemonImage-container">
-                           <!-- <div class="pokemonImage-background" style = "background-color: ${findColorTag(type)}"> -->
-                                <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-                            
-                            <!-- </div> -->
-                           
-                        </div>
-                        <img class="pokeball-pokedex" src="img/pokeball.png" alt="">
-                </div>
- 
-            <!--  DETAIL FOOTER   -->
-            <div>
-                <div class="back-forward">                    
-                    <div onclick="lastPokemon(${i})"><img class="arrow" src="./img/left.png"></div>
-                    <div onclick="nextPokemon(${i})"><img class="arrow" src="./img/right.png"></div>
-                </div>
-
-                <div class="navigation-container">  
-                    <a onclick="renderAbout(${i})" style= "color: ${findColor(type)};">About</a>
-                    <a onclick="renderStats(${i})" style= "color: ${findColor(type)};">Base&nbspStats</a>
-                    <div class="dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style= "color: ${findColor(type)};">
-                            More
-                            </a>
-                        <ul class="dropdown-menu">
-                            <li><button onclick="renderEvolutionchain(${i})" class="dropdown-item" type="button" style= "color: ${findColor(type)};">Evolution</button></li>
-                            <li><button onclick="renderMoves(${i})" class="dropdown-item" type="button" style= "color: ${findColor(type)};">Moves</button></li>
-                            <li><button class="dropdown-item" type="button" style= "color: ${findColor(type)};">Something else here</button></li>
-                        </ul>
-                    </div> 
-                </div>
-                <!--  INFORMATIONS   -->
-                <div id="informationContainer"></div>
+            <!--  DETAIL HEADER   -->               
+          <div class="detail-header">                    
+            <div onclick="closePokedex()" class="close-card">
+                <svg class="arrow" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/></svg>
+            </div>
+            <div class="pokemonCard-id h5">#${i}</div>
+              <div class="types-container">
+                  <div class="Pokemon-Name h3">${pokemon['name']}</div>
+                  <div class="pokemon-type-tag " style = "background-color: ${findColorTag(type)}">${type}</div>
+                  ${secondType}  
+              </div>
+              <div class="pokemonImage-container">                    
+                <img class="pokemonImage" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>                                                                
+              </div>
+              <img class="pokeball-pokedex" src="img/pokeball.png" alt="">
             </div> 
-    </div>     
-    `;
+              <!--  DETAIL FOOTER   -->
+            <div>
+              <div class="back-forward">                    
+                <div onclick="lastPokemon(${i})"><img class="arrow" src="./img/left.png"></div>
+                <div onclick="nextPokemon(${i})"><img class="arrow" src="./img/right.png"></div>
+              </div>
 
-}
+              <div class="navigation-container">  
+                <a onclick="renderAbout(${i})" style= "color: ${findColor(type)};">About</a>
+                <a onclick="renderStats(${i})" style= "color: ${findColor(type)};">Base&nbspStats</a>
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style= "color: ${findColor(type)};">
+                        More
+                        </a>
+                    <ul class="dropdown-menu">
+                        <li><button onclick="renderEvolutionchain(${i})" class="dropdown-item" type="button" style= "color: ${findColor(type)};">Evolution</button></li>
+                        <li><button onclick="renderMoves(${i})" class="dropdown-item" type="button" style= "color: ${findColor(type)};">Moves</button></li>
+                        <li><button class="dropdown-item" type="button" style= "color: ${findColor(type)};">Something else here</button></li>
+                    </ul>
+                </div> 
+            </div>
+              <!--  INFORMATIONS   -->
+              <div id="informationContainer"></div>
+        </div> 
+      </div>     
+  `;
+  }
 
 
 async function nextPokemon(i) {
@@ -217,165 +209,29 @@ async function renderAbout(i) {
   document.getElementById('informationContainer').classList.remove('add-scrolling');
 }
 
+
 async function renderMoves(i) {
   let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`)
   document.getElementById('informationContainer').innerHTML = createMovesHTML(pokemon);
   document.getElementById('informationContainer').classList.add('add-scrolling');
 }
 
+// -----------------------------------------------------------------------------------------------------------------
 function createMovesHTML(pokemon) {
   let moves = pokemon['moves']
   let html = ""; //string
-  console.log(moves.length)
-  console.log(moves)
-
   for (let i = 0; i < moves.length; i++) {
     let move = moves[i];
-
-    console.log("MOVES-II", move['move']['name'])
+    let url = moves[i]['move']['url'];
+    console.log(url)
     html += /*html*/ `
             <div>
                 ${ move['move']['name']}
             </div>
         `;
-    console.log("MOVES-I", move)
   }
   return html
 }
-
-
-// -------------------------------------------- CHAIN-NOTES --------------------------------------------
-// let pokemon2URL = chain['evolves_to']['0']['species']['url']
-
-// let pokemon3 = chain['evolves_to']['0']['evolves_to']['0']['species']['name']
-// let pokemon3URL = chain['evolves_to']['0']['evolves_to']['0']['species']['url']
-
-
-// let minLevel1 = chain['evolves_to']['0']['evolution_details']['0']['min_level']
-// let minLevel2 = chain['evolves_to']['0']['evolves_to']['0']['evolution_details']['0']['min_level']
-
-// let pokemon1 = chain['species']['name']
-// let pokemon1URL = chain['species']['url']
-// -------------------------------------------- CHAIN-NOTES --------------------------------------------
-async function renderEvolutionchain(i) {
-  let species = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon-species/${i}`)
-  let evolutionchainURL = species['evolution_chain']['url']
-  let evolutionchain = await fetchApiReturnAsJson(evolutionchainURL)
-  console.log("evolutionchain", evolutionchain);
-
-  findChain(evolutionchain);
-}
-
-
-async function findChain(evolutionchain) {
-  let chain = evolutionchain['chain']
-  pokemon3 = "";
-  //1. POKEMON
-  let img1 = await loadPokemon1IMG(evolutionchain);
-  pokemon1 = ` 
-  <div class="pokemonchain-detail">
-  <div id="pokemon1IMG">${img1}</div>
-  <div class="pokemon">${chain['species']['name']}</div>
-  </div>
-`;
-  //PROOF IF 2. POKEMON EXISTS
-  if (chain['evolves_to'].length != 0) {
-    pokemon2 = ""
-    for (let i = 0; i < chain['evolves_to'].length; i++) {
-      const chainArr = chain['evolves_to'][i];
-      console.log("chainARR", chainArr)
-      await findSecondPokemonForChain(chainArr);
-      await findMoreThanTwoPokemonForChain(chainArr);
-    }
-  } else {
-    pokemon2 = "";
-    pokemon3 = "";
-    // alert("only 1 pokemon!");
-  }
-  document.getElementById('informationContainer').innerHTML = createChainHTML(pokemon1, pokemon2, pokemon3);
-}
-
-async function findSecondPokemonForChain(chainArr) {
-  //2. Pokemon
-  //PROOF IF MIN_LV FOR POKEMON2 EXISTS
-  lvl1 = chainArr['evolution_details']['0']['min_level'];
-  if (!lvl1) {
-    lvl1 = "-"
-  }
-  let img2 = await loadPokemon2IMG(chainArr);
-  pokemon2 += ` <div>Level ${lvl1}</div>
-  <div class="pokemonchain-detail">
-  <div>${img2}</div>
-  <div class="pokemon">${chainArr['species']['name']}</div>
-  </div>
-`;
-}
-
-async function findMoreThanTwoPokemonForChain(chainArr) {
-  //PROOF IF 3. POKEMON EXISTS
-  if (chainArr['evolves_to'].length != 0) {
-    //PROOF IF MIN_LV FOR POKEMON3 EXISTS
-    lvl2 = chainArr['evolves_to']['0']['evolution_details']['0']['min_level'];
-    if (!lvl2) {
-      lvl2 = "-";
-    }
-    let img3 = await loadPokemon3IMG(chainArr);
-    pokemon3 = `<div>Level ${lvl2}</div>
-    <div class="pokemonchain-detail">
-      <div>${img3}</div>
-      <div class="pokemon">${chainArr['evolves_to']['0']['species']['name']}</div>
-    </div>
-    `;
-  } else {
-    pokemon3 = "";
-  }
-}
-
-
-async function loadPokemon1IMG(evolutionchain) {
-  let chain = evolutionchain['chain']
-  let pokemonlink = await fetchApiReturnAsJson(chain['species']['url']);
-  return loadPokemonIMG(pokemonlink)
-}
-
-async function loadPokemon2IMG(chainArr) {
-  let pokemonlink = await fetchApiReturnAsJson(chainArr['species']['url']);
-  return loadPokemonIMG(pokemonlink)
-}
-
-async function loadPokemon3IMG(chainArr) {
-  let pokemonlink = await fetchApiReturnAsJson(chainArr['evolves_to']['0']['species']['url']);
-  return loadPokemonIMG(pokemonlink)
-}
-
-async function loadPokemonIMG(pokemonlink) {
-  let pokemon = await fetchApiReturnAsJson(pokemonlink['varieties']['0']['pokemon']['url']);
-  
-  let i = pokemon['id'];
-  return /*html*/ `
-   <img onclick="openPokedex(${i})" class="pokemonchain-img" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-   `;
-}
-
-function createChainHTML(pokemon1, pokemon2, pokemon3) {
-  return /*html*/ `
-  <div class="chain-container">
-    <h5>Evolution</h5>
-    <div class="chain">
-      ${pokemon1}
-      ${pokemon2}
-      ${pokemon3}
-    </div>
-  </div>
-    `;
-}
-
-
-// async function loadPokemonAsJSON(getPokemonApiURL) {
-//     let pokemon = await fetchApiReturnAsJson(getPokemonApiURL)
-//     console.log("pokemon as jason",pokemon)
-//     renderPokemonPreviewCard(pokemon);
-// }
 
 
 function createAboutHTML(pokemon, species) {
@@ -383,8 +239,6 @@ function createAboutHTML(pokemon, species) {
   let weight = pokemon['weight'] * 0.1;
   let description = species['flavor_text_entries']['12']['flavor_text'];
   description = description.replace(/[^a-zA-Z,0-9.]/g, ' ');
-  console.log("description", description)
-
   return /*html*/ `
     <div class="about">
         <div class="description">${description}</div>

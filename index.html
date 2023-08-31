@@ -7,6 +7,7 @@
     <title>Pokédex</title>
     <script src="./js/script.js"></script>
     <script src="./js/finding-functions.js"></script>
+    <script src="./js/evolutionchain.js"></script>
     <script src="./js/helping-functions.js"></script>
     <script src="./scrolling/scrolling.js"></script>
     <link rel="stylesheet" href="./css/style.css">
@@ -24,10 +25,8 @@
 
 <body onload="includeHTML(); getURL();">
     <div w3-include-html="templates/header.html"></div>
-    <!-- <button onclick="loadMorePokemon()">MORE</button> -->
     <div id="content">
-        <div id="pokedex" class="dialog-bg d-none"></div>
-       
+        <div id="pokedex" class="dialog-bg d-none"></div>       
     </div>
     <div w3-include-html="templates/footer.html"></div>
 </body>
