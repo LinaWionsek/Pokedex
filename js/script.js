@@ -91,11 +91,8 @@ function createPreviewCardHTML(pokemon) {
                 <div class="pokemon-type-tag" style = "background-color: ${findColorTag(type)}">${type}</div> 
                 ${secondType}
             </div> 
-           
             <img class="previewCardImg" src="${pokemon['sprites']['other']['official-artwork']['front_default']}"/>
-            <img class="pokeball" src="img/pokeball.png" alt="">     
-               
-           
+            <img class="pokeball" src="img/pokeball.png" alt="">          
         </div>
     </div>
 `;
@@ -220,7 +217,7 @@ async function renderAbout(i) {
 async function renderMoves(i) {
   let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`)
   createMoveDetails(pokemon);
-  document.getElementById('informationContainer').classList.add('add-scrolling');
+  document.getElementById('informationContainer').innerHTML = ` <div id="movecontainer"></div>`
 }
 
 // -----------------------------------------------------------------------------------------------------------------
@@ -231,40 +228,37 @@ async function createMoveDetails(pokemon) {
     let level = move['version_group_details']['0']['level_learned_at'];
     let url = move['move']['url'];
     let moveDetails = await fetchApiReturnAsJson(url)
-    // console.log(moveDetails)
+    console.log(moveDetails)
     let moveDescription = "-"
+
     if (moveDetails['effect_entries'].length != 0) {
-      moveDescription = moveDetails['effect_entries']['0']['effect']
+      moveDescription = moveDetails['effect_entries']['0']['short_effect'].replace('$effect_chance', '')
+      console.log(moveDescription)
     }
     let moveType = moveDetails['type']['name'];
     let allDetails = `
     <div class="move-details">    
     <div>${moveDescription}</div>
-    <div>Movetype ${moveType}</div>
+    <div>movetype ${moveType}</div>
     <div>learned at level ${level}</div>
     </div>`;
-   createMovesHTML(move, allDetails)
+    createMovesHTML(move, allDetails)
+    if (i === moves.length - 1) {
+      document.getElementById('movecontainer').innerHTML += `<div class="bottom-placeholder"></div>`
+    }
+
   }
 }
 
-function createMovesHTML(move, allDetails){
-  document.getElementById('informationContainer').innerHTML += `
+
+function createMovesHTML(move, allDetails) {
+  document.getElementById('movecontainer').innerHTML += `
             <div class="move">
                 ${move['move']['name']}
              </div>
-            ${allDetails}
+             ${allDetails}
             `;
 }
-// function createMovesHTML(pokemon){
-//   html += /*html*/ `
-//             <div class="move">
-//                 ${ move['move']['name']}
-//             </div>
-//             <div class="move-details">${allDetails}</div>
-//         `;
-// return html
-// }
-
 
 // async function createMoveDetails(move) {
 //   let url = move['moves']['0']['move']['url']
@@ -277,7 +271,6 @@ function createMovesHTML(move, allDetails){
 //   console.log(name, level, moveType, moveDescription)
 //   document.getElementById('informationContainer').innerHTML = createMovesHTML(pokemon);
 // }
-
 
 
 function createAboutHTML(pokemon, species) {
