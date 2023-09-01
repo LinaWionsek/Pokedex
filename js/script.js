@@ -219,48 +219,66 @@ async function renderAbout(i) {
 
 async function renderMoves(i) {
   let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`)
-  document.getElementById('informationContainer').innerHTML = createMovesHTML(pokemon);
   createMoveDetails(pokemon);
   document.getElementById('informationContainer').classList.add('add-scrolling');
 }
-
+let allDetails = "";
 // -----------------------------------------------------------------------------------------------------------------
-function createMovesHTML(pokemon) {
+async function createMoveDetails(pokemon) {
   let moves = pokemon['moves']
   let html = ""; //string
   for (let i = 0; i < moves.length; i++) {
     let move = moves[i];
-
-    html += /*html*/ `
-            <!-- <div onclick="createMoveDetails(${move})"> -->
-              <div id="movedetails"></div>   
-              <div class="collapse" id="collapseExample">
-              <div class="card card-body">
-              Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
-              </div>
-              </div>
-              
-              <a href="#collapseExample" role="button" data-bs-toggle="collapse"> ${move['move']['name']}</a>      
-                   
-              </div>
-
-
-        `;
+    let level = move['version_group_details']['0']['level_learned_at'];
+    let url = move['move']['url'];
+    let moveDetails = await fetchApiReturnAsJson(url)
+    // let moveDescription = moveDetails['flavor_text_entries']['1']['flavor_text'];
+    let moveType = moveDetails['type']['name'];
+    // let moveDescription = moveDetails['flavor_text_entries']['2']['flavor_text']
+    
+    
+    allDetails = `
+    
+    <div>learned at level ${level}</div>
+    <div>Movetype ${moveType}</div>
+   
+   `
+   console.log(allDetails)
+   createMovesHTML(move, allDetails)
   }
-  return html
+  
 }
+function createMovesHTML(move, allDetails){
+document.getElementById('informationContainer').innerHTML += `
+            <div class="move">
+                ${move['move']['name']}
+             </div>
+             <div class="move-details">${allDetails}</div>
+            `;
+}
+// function createMovesHTML(pokemon){
+//   html += /*html*/ `
+//             <div class="move">
+//                 ${ move['move']['name']}
+//             </div>
+//             <div class="move-details">${allDetails}</div>
+//         `;
+// return html
+// }
 
 
-async function createMoveDetails(move) {
-  let url = move['moves']['0']['move']['url']
-  let level = move['moves']['0']['version_group_details']['0']['level_learned_at']
-  let moveDetails = await fetchApiReturnAsJson(url)
-  console.log(moveDetails)
-  let moveDescription = moveDetails['flavor_text_entries']['2']['flavor_text']
-  let moveType = moveDetails['type']['name']
-  let name = moveDetails['name']
-  console.log(name, level, moveType, moveDescription)
-}
+// async function createMoveDetails(move) {
+//   let url = move['moves']['0']['move']['url']
+//   let level = move['moves']['0']['version_group_details']['0']['level_learned_at']
+//   let moveDetails = await fetchApiReturnAsJson(url)
+//   console.log(moveDetails)
+//   let moveDescription = moveDetails['flavor_text_entries']['2']['flavor_text']
+//   let moveType = moveDetails['type']['name']
+//   let name = moveDetails['name']
+//   console.log(name, level, moveType, moveDescription)
+//   document.getElementById('informationContainer').innerHTML = createMovesHTML(pokemon);
+// }
+
 
 
 function createAboutHTML(pokemon, species) {

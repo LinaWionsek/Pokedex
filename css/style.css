@@ -363,7 +363,17 @@ a:hover {
 }
 
 /* ------------------MOVES---------------- */
-
+.move{
+    width: 200px;
+    cursor: pointer;
+}
+.move:hover + .move-details{
+    display: flex;
+    flex-direction: column;
+}
+.move-details {
+    display: none;
+}
 
 /* ------------------EVOLUTIONCHAIN---------------- */
 
