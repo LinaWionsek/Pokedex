@@ -389,6 +389,7 @@ a:hover {
 
 .move-details {
     display: none;
+    margin-right: 8px;
 }
 
 .bottom-placeholder {
