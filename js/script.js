@@ -222,38 +222,47 @@ async function renderMoves(i) {
   createMoveDetails(pokemon);
   document.getElementById('informationContainer').classList.add('add-scrolling');
 }
-let allDetails = "";
+
 // -----------------------------------------------------------------------------------------------------------------
 async function createMoveDetails(pokemon) {
+
+  
   let moves = pokemon['moves']
+  console.log( pokemon['moves'])
   let html = ""; //string
+  let counter = 0;
   for (let i = 0; i < moves.length; i++) {
     let move = moves[i];
     let level = move['version_group_details']['0']['level_learned_at'];
     let url = move['move']['url'];
     let moveDetails = await fetchApiReturnAsJson(url)
-    // let moveDescription = moveDetails['flavor_text_entries']['1']['flavor_text'];
-    let moveType = moveDetails['type']['name'];
-    // let moveDescription = moveDetails['flavor_text_entries']['2']['flavor_text']
-    
-    
-    allDetails = `
-    
-    <div>learned at level ${level}</div>
-    <div>Movetype ${moveType}</div>
-   
-   `
-   console.log(allDetails)
-   createMovesHTML(move, allDetails)
-  }
+    // console.log(moveDetails)
+    let moveDescription = "-"
+    if (moveDetails['effect_entries'].length != 0) {
+      moveDescription = moveDetails['effect_entries']['0']['effect']   
+    }
   
+    let moveType = moveDetails['type']['name'];
+    let allDetails = `
+    <div class="move-details">    
+    <div>${moveDescription}</div>
+    <div>Movetype ${moveType}</div>
+    <div>learned at level ${level}</div>
+    </div>
+   `;
+
+   createMovesHTML(move, allDetails)
+   counter++
+  }
+  console.log(counter)
 }
 function createMovesHTML(move, allDetails){
-document.getElementById('informationContainer').innerHTML += `
+ 
+  document.getElementById('informationContainer').innerHTML += `
             <div class="move">
                 ${move['move']['name']}
              </div>
-             <div class="move-details">${allDetails}</div>
+            ${allDetails}
             `;
 }
 // function createMovesHTML(pokemon){

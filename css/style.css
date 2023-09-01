@@ -365,11 +365,17 @@ a:hover {
 /* ------------------MOVES---------------- */
 .move{
     width: 200px;
+    height: 25px;
+    /* margin: 8px; */
     cursor: pointer;
 }
 .move:hover + .move-details{
     display: flex;
+    /* width: 200px; */
+    font-size: 12px;
     flex-direction: column;
+    background-color: lightgray;
+   
 }
 .move-details {
     display: none;
