@@ -225,12 +225,7 @@ async function renderMoves(i) {
 
 // -----------------------------------------------------------------------------------------------------------------
 async function createMoveDetails(pokemon) {
-
-  
   let moves = pokemon['moves']
-  console.log( pokemon['moves'])
-  let html = ""; //string
-  let counter = 0;
   for (let i = 0; i < moves.length; i++) {
     let move = moves[i];
     let level = move['version_group_details']['0']['level_learned_at'];
@@ -239,25 +234,20 @@ async function createMoveDetails(pokemon) {
     // console.log(moveDetails)
     let moveDescription = "-"
     if (moveDetails['effect_entries'].length != 0) {
-      moveDescription = moveDetails['effect_entries']['0']['effect']   
+      moveDescription = moveDetails['effect_entries']['0']['effect']
     }
-  
     let moveType = moveDetails['type']['name'];
     let allDetails = `
     <div class="move-details">    
     <div>${moveDescription}</div>
     <div>Movetype ${moveType}</div>
     <div>learned at level ${level}</div>
-    </div>
-   `;
-
+    </div>`;
    createMovesHTML(move, allDetails)
-   counter++
   }
-  console.log(counter)
 }
+
 function createMovesHTML(move, allDetails){
- 
   document.getElementById('informationContainer').innerHTML += `
             <div class="move">
                 ${move['move']['name']}
