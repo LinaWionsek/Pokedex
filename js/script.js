@@ -166,17 +166,17 @@ function createPokemonCardHTML(pokemon) {
       </div>
 
       <div class="navigation-container">
-        <a onclick="renderAbout(${i})"class="link" style="color: ${findColor(type)};">About</a>
-        <a onclick="renderStats(${i})" class="link" style="color: ${findColor(type)};">Base&nbspStats</a>
+        <a onclick="renderAbout(${i})"  class="link" style="color: ${findColor(type)};">About</a>
+        <a onclick="renderStats(${i})"  class="link" style="color: ${findColor(type)};">Base&nbspStats</a>
         <div class="dropdown">
-          <a class="dropdown-toggle link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+          <a class="dropdown-toggle nav-link link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
             style="color: ${findColor(type)};">
             More
           </a>
           <ul class="dropdown-menu">
-            <li><button onclick="renderEvolutionchain(${i})" class="dropdown-item link" type="button"
+            <li><button onclick="renderEvolutionchain(${i})" class="dropdown-item" type="button"
                 style="color: ${findColor(type)};">Evolution</button></li>
-            <li><button onclick="renderMoves(${i})" class="dropdown-item link" type="button"
+            <li><button onclick="renderMoves(${i})" class="dropdown-item" type="button"
                 style="color: ${findColor(type)};">Moves</button></li>
           </ul>
         </div>

@@ -1,31 +1,33 @@
 async function getSearchedPokemon() {
+    isAlreadyLoading = true
+    let results = [];
     let search_query = document.getElementById('searchQuery').value;
-    
+
     if (search_query.length < 3) {
         return;
     }
-   
+
     let newUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=1000'
     // console.log(newUrl)
     let data = await fetchApiReturnAsJson(newUrl);
-   
- 
+
+
     for (let i = 0; i < data.results.length; i++) {
-       
-        let tester = data.results[i].name
-        if (tester.match(search_query)){
-            // console.log(tester.match(search_query))
-           result
+
+        let names = data.results[i].name
+        let inputMatches = names.match(search_query)
+        if (inputMatches) {
+            results.push(inputMatches)
         }
-
-
-   
-    // let newstuff = data.results.find(record => record.name === searchedPokemon)
-}
-    // result
-    // let url = 'https://pokeapi.co/api/v2/pokemon/' + result
-    // let pokemon = await fetchApiReturnAsJson(url);
-    // renderSearchedPokemon(pokemon);
+        // let newstuff = data.results.find(record => record.name === searchedPokemon)
+    }
+    document.getElementById('content').innerHTML = /*html*/ `<div id="pokedex" class="dialog-bg d-none"></div>`
+    for (let i = 0; i < results.length; i++) {
+        let result = results[i];
+        let url = 'https://pokeapi.co/api/v2/pokemon/' +  result['input']
+        let pokemon = await fetchApiReturnAsJson(url);
+        renderSearchedPokemon(pokemon);
+    }
 }
 
 // let newstuff = data.results.find(record => record.name === searchedPokemon)
@@ -33,9 +35,8 @@ async function getSearchedPokemon() {
 
 
 function renderSearchedPokemon(pokemon) {
-    document.getElementById('content').innerHTML = /*html*/ `<div id="pokedex" class="dialog-bg d-none"></div>`
     document.getElementById('content').innerHTML += createPreviewCardHTML(pokemon);
-  }
+}
 
 
 function fixNumber(nr) {
