@@ -16,6 +16,9 @@ html {
 
 a:hover {
     cursor: pointer;
+   background-color: rgb(245, 245, 245);
+   border-radius: 5px;
+   padding: 1px 0 1px 0;
 }
 
 
@@ -91,7 +94,7 @@ a:hover {
 
 .previewCard {
     border-radius: 20px;
-    box-shadow: 1px 1px 8px 5px #737373;
+    box-shadow: inset 0px 5px 10px 0px rgba(255, 255, 255, 0.7);
     border: 2px solid;
     border-color: white;
     display: flex;
@@ -102,15 +105,32 @@ a:hover {
     font-size: medium;
     width: 300px;
     overflow: hidden;
+
 }
 
-/* .previewCard-images{
-    position: relative;
-} */
+.previewCard:hover .previewCardImg {
+    transform: scale(1.55, 1.55);
+    transition: 0.4s;
+    color: rgba(0, 0, 0, 0.1);
+}
+
+.previewCard:hover {
+    transform: scale(0.98, 0.98);
+    transition: 0.4s;
+    overflow: visible;
+    opacity: 0.9;
+    background-color: black !important;
+}
+
+.previewCard:hover .pokeball{
+    display: none;
+}
+
 .previewCardImg {
     height: 150px;
     width: 150px;
     z-index: 2;
+
 }
 
 .previewCard:hover {
@@ -170,7 +190,7 @@ a:hover {
     padding: 14px;
     border: 2px solid;
     border-color: #f3f5fa;
-    box-shadow: 1px 1px 8px 5px #737373;
+    box-shadow: inset 0px 0px 10px 0px rgba(255, 255, 255, 0.7);
 }
 
 
@@ -273,6 +293,7 @@ a:hover {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    height: 26px;
     background-color: white;
     padding: 0px 8px 0px 8px;
 }
@@ -370,18 +391,25 @@ a:hover {
 
 .move {
     display: flex;
-    width: 200px;
+    width: 112px;
     height: 35px;
     cursor: pointer;
     padding: 5px;
+    
+}
+.move:hover {
+    background-color: rgb(245, 245, 245);
+    border-radius: 8px;
 }
 
 .move:hover+.move-details {
+   
     display: flex;
     /* width: 200px; */
     font-size: 12px;
     margin-bottom: 8px;
     padding: 5px;
+    margin-top: 2px;
     flex-direction: column;
     background-color: rgb(245, 245, 245);
     border-radius: 10px;
@@ -395,7 +423,7 @@ a:hover {
 .bottom-placeholder {
     height: 50px;
     /* DO NOT DELETE THIS MARGIN */
-    margin: 10px; 
+    margin: 10px;
 }
 
 /* ------------------EVOLUTIONCHAIN---------------- */
@@ -423,6 +451,12 @@ a:hover {
     cursor: pointer;
     height: 80px;
     width: 80px;
+}
+
+.pokemonchain-img:hover {
+    transform: scale(1.10, 1.10);
+    box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 0.1);
+    filter: brightness(80%);
 }
 
 /* --------------------------------------RESPONSIVE------------------------------------------ */

@@ -125,8 +125,7 @@ function renderPokedex(pokemon) {
   let i = pokemon['id'];
   document.getElementById('pokedex').innerHTML = createPokemonCardHTML(pokemon);
   disableScroll();
-  // renderAbout(i);
-  renderMoves(i)
+  renderAbout(i);
 }
 
 
@@ -177,8 +176,6 @@ function createPokemonCardHTML(pokemon) {
                 style="color: ${findColor(type)};">Evolution</button></li>
             <li><button onclick="renderMoves(${i})" class="dropdown-item" type="button"
                 style="color: ${findColor(type)};">Moves</button></li>
-            <li><button class="dropdown-item" type="button" style="color: ${findColor(type)};">Something else
-                here</button></li>
           </ul>
         </div>
       </div>
