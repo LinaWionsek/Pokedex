@@ -14,11 +14,46 @@ html {
     height: 100% !important;
 }
 
-a:hover {
+
+
+.link {
+    padding: 5px;
     cursor: pointer;
-   background-color: rgb(245, 245, 245);
-   border-radius: 5px;
-   padding: 1px 0 1px 0;
+    text-decoration: none;
+    color: rgba(33,255,214,0.72);
+    position: relative;
+    transition: transform .1s ease-in-out;
+}
+.link::before, .link::after{
+    content: "";
+    position: absolute;
+    background-color: rgba(33,255,214,0.72);
+    transition: transform .5s;
+  }
+.link::before,
+.link::after {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    border-style: solid;
+    border-color:black;
+    background-color: transparent;
+}
+
+.link::before {
+    border-width: 1px 0;
+    transform: scaleX(0);
+}
+
+.link::after {
+    border-width: 0 1px;
+    transform: scaleY(0);
+}
+
+.link:hover::before,
+.link:hover::after {
+    transform: scale(1);
 }
 
 
@@ -101,7 +136,7 @@ a:hover {
     flex-direction: column;
     padding: 20px;
     margin: 1%;
-    color: white;
+    /* color: white; */
     font-size: medium;
     width: 300px;
     overflow: hidden;
@@ -122,7 +157,7 @@ a:hover {
     background-color: black !important;
 }
 
-.previewCard:hover .pokeball{
+.previewCard:hover .pokeball {
     display: none;
 }
 
@@ -206,7 +241,7 @@ a:hover {
     overflow: hidden;
     width: 100%;
     background-color: white;
-    border-radius: 20px;
+    border-radius: 10px;
     padding: 8px;
 }
 
@@ -215,6 +250,16 @@ a:hover {
 .close-card {
     display: flex;
     justify-content: flex-end;
+}
+
+.icon-bg {
+    /* background-color: yellow; */
+    border-radius: 5px;
+}
+
+.icon-bg:hover {
+    background-color: #ffe69b;
+    border-radius: 5px;
 }
 
 .arrow {
@@ -240,7 +285,6 @@ a:hover {
 .pokemonImage-container {
     display: flex;
     justify-content: center;
-    padding: 8px;
 }
 
 .pokemonImage-background {
@@ -283,8 +327,8 @@ a:hover {
     display: flex;
     justify-content: space-between;
     background-color: white;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     padding: 8px;
 }
 
@@ -301,11 +345,25 @@ a:hover {
 /* .navigation-container a {
     font-weight: 500;
 } */
-
-.dropdown-menu {
-    --bs-dropdown-link-active-bg: #e9ecef !important;
-    --bs-dropdown-link-hover-bg: rgb(245, 245, 245) !important;
+.progress{
+    border-radius: 5px !important;
 }
+.dropdown-menu {
+    padding: 5px !important;
+    --bs-dropdown-link-active-bg:none !important;
+    --bs-dropdown-link-hover-bg: background-color:none !important;
+    border: none !important;
+   
+    /* rgb(245, 245, 245) !important; */
+}
+.dropdown-item {
+    width: 104% !important;
+    background-color: white !important;
+}
+.dropdown-toggle::after {
+    border-top: none !important;
+}
+
 
 #informationContainer {
     display: flex;
@@ -315,8 +373,8 @@ a:hover {
     font-size: 15px;
     /* height: 180px; */
     padding: 8px;
-    border-bottom-right-radius: 20px;
-    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 
 /* ------------------ABOUT---------------- */
@@ -324,7 +382,7 @@ a:hover {
     font-style: italic;
     margin-bottom: 8px;
     background-color: #e9ecef;
-    border-radius: 8px;
+    border-radius: 5px;
     text-align: center;
 }
 
@@ -358,13 +416,14 @@ a:hover {
     justify-content: space-between;
     width: 100%;
     gap: 16px;
+    margin-bottom: 4px;
 }
 
 .stat-name {
     width: 250px;
     gap: 8px;
     font-weight: 550;
-    /* font-size: 14px; */
+    font-size: 14px;
 }
 
 .stat-name:first-letter {
@@ -374,6 +433,7 @@ a:hover {
 .stat-value {
     text-align: right;
     gap: 8px;
+    font-size: 14px;
     width: 45px;
     color: #666666;
 }
@@ -395,15 +455,22 @@ a:hover {
     height: 35px;
     cursor: pointer;
     padding: 5px;
-    
+    border-radius: 5px;
+    margin-bottom: 4px;
+    background-color: #e9ecef;
+    border: 1px solid;
+    border-color: rgba(0, 0, 0, 0.17);
+
 }
+
 .move:hover {
     background-color: rgb(245, 245, 245);
-    border-radius: 8px;
+    border: 1px solid;
+    border-color: rgba(0, 0, 0, 0.17);
 }
 
 .move:hover+.move-details {
-   
+
     display: flex;
     /* width: 200px; */
     font-size: 12px;
@@ -412,7 +479,7 @@ a:hover {
     margin-top: 2px;
     flex-direction: column;
     background-color: rgb(245, 245, 245);
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 .move-details {

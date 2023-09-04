@@ -87,7 +87,7 @@ function createPreviewCardHTML(pokemon) {
       <div class="previewCard-Pokemon-Id h5">#${pokemon['id']}</div>            
       <div class="d-flex w-100 previewCard-content">
             <div class="previewCard-details test:after">
-                <div class="Pokemon-Name h5">${pokemon['name']}</div>
+                <div class="Pokemon-Name h4">${pokemon['name']}</div>
                 <div class="pokemon-type-tag" style = "background-color: ${findColorTag(type)}">${type}</div> 
                 ${secondType}
             </div> 
@@ -139,11 +139,13 @@ function createPokemonCardHTML(pokemon) {
     <!--  DETAIL HEADER   -->
     <div class="detail-header">
       <div onclick="closePokedex()" class="close-card">
-        <svg class="arrow" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"
-          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z" />
+        <div class="link">
+          <svg class="arrow" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"
+            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z" />
           </svg>
+        </div>
       </div>
       <div class="pokemonCard-id h5">#${i}</div>
       <div class="types-container">
@@ -159,22 +161,22 @@ function createPokemonCardHTML(pokemon) {
     <!--  DETAIL FOOTER   -->
     <div>
       <div class="back-forward">
-        <div onclick="lastPokemon(${i})"><img class="arrow" src="./img/left.png"></div>
-        <div onclick="nextPokemon(${i})"><img class="arrow" src="./img/right.png"></div>
+        <div class="link" onclick="lastPokemon(${i})"> <div onclick="lastPokemon(${i})"><img class="arrow" src="./img/left.png"></div></div>
+        <div class="link" onclick="nextPokemon(${i})"><div onclick="nextPokemon(${i})"><img class="arrow" src="./img/right.png"></div></div>   
       </div>
 
       <div class="navigation-container">
-        <a onclick="renderAbout(${i})" style="color: ${findColor(type)};">About</a>
-        <a onclick="renderStats(${i})" style="color: ${findColor(type)};">Base&nbspStats</a>
+        <a onclick="renderAbout(${i})"class="link" style="color: ${findColor(type)};">About</a>
+        <a onclick="renderStats(${i})" class="link" style="color: ${findColor(type)};">Base&nbspStats</a>
         <div class="dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+          <a class="dropdown-toggle link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
             style="color: ${findColor(type)};">
             More
           </a>
           <ul class="dropdown-menu">
-            <li><button onclick="renderEvolutionchain(${i})" class="dropdown-item" type="button"
+            <li><button onclick="renderEvolutionchain(${i})" class="dropdown-item link" type="button"
                 style="color: ${findColor(type)};">Evolution</button></li>
-            <li><button onclick="renderMoves(${i})" class="dropdown-item" type="button"
+            <li><button onclick="renderMoves(${i})" class="dropdown-item link" type="button"
                 style="color: ${findColor(type)};">Moves</button></li>
           </ul>
         </div>
@@ -220,6 +222,7 @@ async function renderMoves(i) {
 // -----------------------------------------------------------------------------------------------------------------
 async function createMoveDetails(pokemon) {
   let moves = pokemon['moves']
+  let type = findFirstType(pokemon);
   for (let i = 0; i < moves.length; i++) {
     let move = moves[i];
     let level = move['version_group_details']['0']['level_learned_at'];
@@ -239,7 +242,7 @@ async function createMoveDetails(pokemon) {
     <div>movetype ${moveType}</div>
     <div>learned at level ${level}</div>
     </div>`;
-    createMovesHTML(move, allDetails)
+    createMovesHTML(move, allDetails, type)
     if (i === moves.length - 1) {
       document.getElementById('movecontainer').innerHTML += `<div class="bottom-placeholder"></div>`
     }
@@ -248,7 +251,7 @@ async function createMoveDetails(pokemon) {
 }
 
 
-function createMovesHTML(move, allDetails) {
+function createMovesHTML(move, allDetails, type) {
   document.getElementById('movecontainer').innerHTML += `
             <div class="move">
                 ${move['move']['name']}
