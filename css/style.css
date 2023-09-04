@@ -136,7 +136,7 @@ html {
     flex-direction: column;
     padding: 20px;
     margin: 1%;
-    /* color: white; */
+    color: white;
     font-size: medium;
     width: 300px;
     overflow: hidden;
