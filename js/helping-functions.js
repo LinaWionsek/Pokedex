@@ -1,7 +1,7 @@
 async function getSearchedPokemon() {
     isAlreadyLoading = true
     let results = [];
-    let search_query = document.getElementById('searchQuery').value;
+    let search_query = document.getElementById('searchQuery').value.toLowerCase();
 
     if (search_query.length < 3) {
         return;
