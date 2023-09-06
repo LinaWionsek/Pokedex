@@ -559,7 +559,8 @@ input {
 
     .header {
         flex-direction: column;
-        gap: 16px;
+        padding: 10px;
+        justify-content: space-evenly;
     }
 }
 
@@ -615,7 +616,7 @@ input {
         width: 100%;
     }
 
-    /* Stilregeln für kleine Mobiltelefone hier */
+   
     .detail {
         height: 70vh;
 
