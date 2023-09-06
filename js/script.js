@@ -21,6 +21,7 @@ window.addEventListener('scroll', async function () {
   }
 });
 
+
 // Gibt Liste mit einzelenen PokemonURLs als JSON raus
 async function fetchApiReturnAsJson(url) {
   let response = await fetch(url);
@@ -28,7 +29,6 @@ async function fetchApiReturnAsJson(url) {
   // console.log("erstes pokemon",currentPokemon)
   return currentPokemon;
 }
-
 
 // wenn trigger zb button lade die nächsten pokemon mit loadPokemonWithNextURL(nextUrl) danach renderallcards 
 async function loadPokemonWithNextURL(url) {
