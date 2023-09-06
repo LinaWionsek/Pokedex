@@ -56,7 +56,9 @@ function searchByName(data, results, search_query) {
 
 function resetSearch(){
     document.getElementById('content').innerHTML = "";
-    getURL();
+    document.getElementById('content').innerHTML = /*html*/ `<div id="pokedex" class="dialog-bg d-none"></div>`
+    document.getElementById('searchQuery').value = "";
+    getURL()
 }
 
 function renderSearchedPokemon(pokemon) {
