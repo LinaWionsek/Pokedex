@@ -34,7 +34,7 @@ function searchByNumber(data, results, search_query) {
         let segments = urls.split('/')
         // 6. segment is individual pokemon id: e.g 1: (/v2/pokemon/1)
         let pokemonID = segments[6]
-        console.log(pokemonID)
+      
         if (pokemonID === search_query) {
             results.push(pokemonID)
            break //stops loop 
@@ -47,13 +47,17 @@ function searchByName(data, results, search_query) {
     for (let i = 0; i < data.results.length; i++) {
         let names = data.results[i].name
         let inputMatches = names.match(search_query)
-        console.log(inputMatches)
+       
         if (inputMatches) {
             results.push(inputMatches['input'])
         }
     }
 }
 
+function resetSearch(){
+    document.getElementById('content').innerHTML = "";
+    getURL();
+}
 
 function renderSearchedPokemon(pokemon) {
     document.getElementById('content').innerHTML += createPreviewCardHTML(pokemon);
