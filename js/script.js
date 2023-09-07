@@ -25,21 +25,18 @@ async function includeHTML() {
 }
 
 
-// Gibt Liste mit einzelenen PokemonURLs als JSON raus
+// returns list with single PokemonURLs as JSON
 async function fetchApiReturnAsJson(url) {
   let response = await fetch(url);
   let currentPokemon = await response.json(); // JSON 
   return currentPokemon;
 }
 
-
-// wenn trigger zb button lade die nächsten pokemon mit loadPokemonWithNextURL(nextUrl) danach renderallcards 
+// when trigger e.g button, load next pokemon with loadPokemonWithNextURL(nextUrl), after that: renderallcards 
 async function loadPokemonWithNextURL(url) {
-  let currentPokemon = await fetchApiReturnAsJson(url); // genauso wie await response.json();
-  // kein let vor nextUrl deshalb wird die globale Variable benutzt!
-  // nextUrl wird erst gefüllt wenn loadPokemonWithNextURL ausgeführt wird
-  nextUrl = currentPokemon['next']; //nextURL mit neuem offset 
-  // console.log("NextURL", currentPokemon)
+  let currentPokemon = await fetchApiReturnAsJson(url); // same as await response.json();
+  // nextUrl only filled if loadPokemonWithNextURL executed
+  nextUrl = currentPokemon['next']; //nextURL with new offset 
   return currentPokemon;
 }
 
@@ -50,7 +47,6 @@ async function loadMorePokemon() {
 }
 
 
-// offsetNumber change um 20 - 20 40 60 80 100
 async function getURL() {
   let url = 'https://pokeapi.co/api/v2/pokemon/?offset=' + offsetNumber + '0&limit=' + limitNumber;
   let currentPokemon = await loadPokemonWithNextURL(url);
@@ -58,7 +54,7 @@ async function getURL() {
 }
 
 
-// Nimmt die einzelnen PokemonURLs ruas und gibt sie der loadPokemonAsJSON Funktion mit
+//gets singl PokemonURLs give over loadPokemonAsJSON
 async function renderAllCards(currentPokemon) {
   let getPokemonApiURLs = currentPokemon['results'];
   for (let i = 0; i < getPokemonApiURLs.length; i++) {
@@ -68,7 +64,7 @@ async function renderAllCards(currentPokemon) {
 }
 
 
-// Verwandelt PokeApiUrl in JSON mit den Daten die ich haben will
+//PokeApiUrl to JSON
 async function loadPokemonAsJSON(getPokemonApiURL) {
   let pokemon = await fetchApiReturnAsJson(getPokemonApiURL);
   renderPokemonPreviewCard(pokemon);

@@ -28,7 +28,7 @@ async function getSearchedPokemon() {
     } else {
         searchByNumber(data, results, search_query);
     }
-    document.getElementById('content').innerHTML = /*html*/ `<div id="pokedex" class="dialog-bg d-none"></div>`
+    document.getElementById('content').innerHTML = /*html*/ `<div id="pokedex" class="dialog-bg d-none"></div>`;
     for (let i = 0; i < results.length; i++) {
         let result = results[i];
         let url = 'https://pokeapi.co/api/v2/pokemon/' + result;
