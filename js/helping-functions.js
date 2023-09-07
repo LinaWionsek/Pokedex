@@ -1,17 +1,19 @@
 let isAlreadyLoading = false;
 
+
 function getId(Id) {
     return document.getElementById(Id);
 }
 
+
 window.addEventListener('scroll', async function () {
     if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1 && !isAlreadyLoading) {
-      isAlreadyLoading = true;
-      await loadMorePokemon();
-      isAlreadyLoading = false;
+        isAlreadyLoading = true;
+        await loadMorePokemon();
+        isAlreadyLoading = false;
     }
-  });
-  
+});
+
 
 async function getSearchedPokemon() {
     // prevents new loading pokemons on scroll
@@ -21,6 +23,23 @@ async function getSearchedPokemon() {
     let search_query = getId('searchQuery').value.toLowerCase();
     let newUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=1000';
     let data = await fetchApiReturnAsJson(newUrl);
+    proofIfText(search_query, results, data);
+    renderSearchedPokemon(results);
+}
+
+
+async function renderSearchedPokemon(results){
+    getId('content').innerHTML = /*html*/ `<div id="pokedex" class="dialog-bg d-none"></div>`;
+    for (let i = 0; i < results.length; i++) {
+        let result = results[i];
+        let url = 'https://pokeapi.co/api/v2/pokemon/' + result;
+        let pokemon = await fetchApiReturnAsJson(url);
+        getId('content').innerHTML += createPreviewCardHTML(pokemon);
+    }
+}
+
+
+async function proofIfText(search_query, results, data) {
     // isNaN = is not a Number (proof if it is text)
     if (isNaN(search_query)) {
         // if it is a text, proof if the value more than 3 letters long
@@ -30,13 +49,6 @@ async function getSearchedPokemon() {
         searchByName(data, results, search_query);
     } else {
         searchByNumber(data, results, search_query);
-    }
-    getId('content').innerHTML = /*html*/ `<div id="pokedex" class="dialog-bg d-none"></div>`;
-    for (let i = 0; i < results.length; i++) {
-        let result = results[i];
-        let url = 'https://pokeapi.co/api/v2/pokemon/' + result;
-        let pokemon = await fetchApiReturnAsJson(url);
-        renderSearchedPokemon(pokemon);
     }
 }
 
@@ -50,7 +62,7 @@ function searchByNumber(data, results, search_query) {
         let pokemonID = segments[6];
         if (pokemonID === search_query) {
             results.push(pokemonID);
-           break; //stops loop 
+            break; //stops loop 
         }
     }
 }
@@ -67,16 +79,11 @@ function searchByName(data, results, search_query) {
 }
 
 
-function resetSearch(){
+function resetSearch() {
     getId('content').innerHTML = "";
     getId('content').innerHTML = /*html*/ `<div id="pokedex" class="dialog-bg d-none"></div>`;
     getId('searchQuery').value = "";
     getURL();
-}
-
-
-function renderSearchedPokemon(pokemon) {
-    getId('content').innerHTML += createPreviewCardHTML(pokemon);
 }
 
 

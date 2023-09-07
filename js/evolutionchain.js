@@ -98,7 +98,7 @@ async function findMoreThanTwoPokemonForChain(chainArr) {
 }
 
 
-function renderPokemon3(lvl2, img3, chainArr){
+function renderPokemon3(lvl2, img3, chainArr) {
   return pokemon3 = /*html*/ `
   <div>Level ${lvl2}</div>
   <div class="pokemonchain-detail">
