@@ -1,5 +1,8 @@
 let isAlreadyLoading = false;
 
+function getId(Id) {
+    return document.getElementById(Id);
+}
 
 window.addEventListener('scroll', async function () {
     if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1 && !isAlreadyLoading) {
@@ -15,7 +18,7 @@ async function getSearchedPokemon() {
     isAlreadyLoading = true;
     let results = [];
     // toLowerCase important because mobile phones start with uppercase letter and so function doesn't work
-    let search_query = document.getElementById('searchQuery').value.toLowerCase();
+    let search_query = getId('searchQuery').value.toLowerCase();
     let newUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=1000';
     let data = await fetchApiReturnAsJson(newUrl);
     // isNaN = is not a Number (proof if it is text)
@@ -28,7 +31,7 @@ async function getSearchedPokemon() {
     } else {
         searchByNumber(data, results, search_query);
     }
-    document.getElementById('content').innerHTML = /*html*/ `<div id="pokedex" class="dialog-bg d-none"></div>`;
+    getId('content').innerHTML = /*html*/ `<div id="pokedex" class="dialog-bg d-none"></div>`;
     for (let i = 0; i < results.length; i++) {
         let result = results[i];
         let url = 'https://pokeapi.co/api/v2/pokemon/' + result;
@@ -65,15 +68,15 @@ function searchByName(data, results, search_query) {
 
 
 function resetSearch(){
-    document.getElementById('content').innerHTML = "";
-    document.getElementById('content').innerHTML = /*html*/ `<div id="pokedex" class="dialog-bg d-none"></div>`;
-    document.getElementById('searchQuery').value = "";
+    getId('content').innerHTML = "";
+    getId('content').innerHTML = /*html*/ `<div id="pokedex" class="dialog-bg d-none"></div>`;
+    getId('searchQuery').value = "";
     getURL();
 }
 
 
 function renderSearchedPokemon(pokemon) {
-    document.getElementById('content').innerHTML += createPreviewCardHTML(pokemon);
+    getId('content').innerHTML += createPreviewCardHTML(pokemon);
 }
 
 

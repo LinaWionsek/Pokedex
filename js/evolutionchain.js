@@ -34,8 +34,8 @@ async function findChain(evolutionchain) {
     pokemon2 = "";
     pokemon3 = "";
   }
-  document.getElementById('informationContainer').innerHTML = createChainHTML(pokemon1, pokemon2, pokemon3);
-  document.getElementById('informationContainer').classList.remove('add-scrolling');
+  getId('informationContainer').innerHTML = createChainHTML(pokemon1, pokemon2, pokemon3);
+  getId('informationContainer').classList.remove('add-scrolling');
 }
 
 

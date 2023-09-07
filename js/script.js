@@ -72,7 +72,7 @@ async function loadPokemonAsJSON(getPokemonApiURL) {
 
 
 function renderPokemonPreviewCard(pokemon) {
-  document.getElementById('content').innerHTML += createPreviewCardHTML(pokemon);
+  getId('content').innerHTML += createPreviewCardHTML(pokemon);
 }
 
 
@@ -99,20 +99,20 @@ function createPreviewCardHTML(pokemon) {
 
 async function openPokedex(i) {
   let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`);
-  document.getElementById('pokedex').classList.remove("d-none");
+  getId('pokedex').classList.remove("d-none");
   renderPokedex(pokemon);
 }
 
 
 function closePokedex() {
-  document.getElementById('pokedex').classList.add('d-none');
+  getId('pokedex').classList.add('d-none');
   enableScroll();
 }
 
 
 function renderPokedex(pokemon) {
   let i = pokemon['id'];
-  document.getElementById('pokedex').innerHTML = createPokemonCardHTML(pokemon);
+  getId('pokedex').innerHTML = createPokemonCardHTML(pokemon);
   disableScroll();
   renderAbout(i);
 }
@@ -195,15 +195,15 @@ async function lastPokemon(i) {
 async function renderAbout(i) {
   let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`);
   let species = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon-species/${i}`);
-  document.getElementById('informationContainer').innerHTML = createAboutHTML(pokemon, species);
-  document.getElementById('informationContainer').classList.remove('add-scrolling');
+  getId('informationContainer').innerHTML = createAboutHTML(pokemon, species);
+  getId('informationContainer').classList.remove('add-scrolling');
 }
 
 
 async function renderMoves(i) {
   let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`);
   createMoveDetails(pokemon);
-  document.getElementById('informationContainer').innerHTML = /*html*/ `<div id="movecontainer"></div>`;
+  getId('informationContainer').innerHTML = /*html*/ `<div id="movecontainer"></div>`;
 }
 
 
@@ -230,14 +230,14 @@ async function createMoveDetails(pokemon) {
     `;
     createMovesHTML(move, allDetails);
     if (i === moves.length - 1) {
-      document.getElementById('movecontainer').innerHTML += /*html*/ `<div class="bottom-placeholder"></div>`;
+      getId('movecontainer').innerHTML += /*html*/ `<div class="bottom-placeholder"></div>`;
     }
   }
 }
 
 
 function createMovesHTML(move, allDetails) {
-  document.getElementById('movecontainer').innerHTML += /*html*/ `
+  getId('movecontainer').innerHTML += /*html*/ `
     <div class="move">
         ${move['move']['name']}
       </div>
@@ -276,7 +276,7 @@ function createAboutHTML(pokemon, species) {
 
 async function renderStats(i) {
   let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`);
-  document.getElementById('informationContainer').innerHTML = createStatsHTML(pokemon);
+  getId('informationContainer').innerHTML = createStatsHTML(pokemon);
 }
 
 

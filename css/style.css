@@ -243,6 +243,8 @@ input {
 .link {
     cursor: pointer;
     text-decoration: none !important;
+    font-weight: 500 !important;
+    
 }
 
 .link:hover {
