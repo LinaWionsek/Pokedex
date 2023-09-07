@@ -2,9 +2,6 @@ let offsetNumber = 0
 let limitNumber = 20
 let nextUrl;
 let isAlreadyLoading = false;
-let pokemon1 = "";
-let pokemon2 = "";
-let pokemon3 = "";
 let lvl1 = "";
 let lvl2 = "";
 
