@@ -60,7 +60,7 @@ async function renderEvolutionchain(i) {
     pokemon2 += ` <div>Level ${lvl1}</div>
     <div class="pokemonchain-detail">
     <div>${img2}</div>
-    <div class="pokemon">${chainArr['species']['name']}</div>
+    <div class="pokemonchain-pokemon">${chainArr['species']['name']}</div>
     </div>
   `;
   }
