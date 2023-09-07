@@ -14,15 +14,14 @@ async function renderEvolutionchain(i) {
 async function findChain(evolutionchain) {
   let chain = evolutionchain['chain'];
   pokemon3 = "";
-  //1. POKEMON
-  let img1 = await loadPokemon1IMG(evolutionchain);
-  pokemon1 = /*html*/ ` 
-      <div class="pokemonchain-detail">
-        <div id="pokemon1IMG">${img1}</div>
-        <div class="pokemon">${chain['species']['name']}</div>
-      </div>
-  `;
+  renderPokemon1(evolutionchain, chain)
   //PROOF IF 2. POKEMON EXISTS
+  await proofSecondPokemonExist(chain);
+  renderChain();
+}
+
+
+async function proofSecondPokemonExist(chain) {
   if (chain['evolves_to'].length != 0) {
     pokemon2 = "";
     for (let i = 0; i < chain['evolves_to'].length; i++) {
@@ -31,10 +30,31 @@ async function findChain(evolutionchain) {
       await findMoreThanTwoPokemonForChain(chainArr);
     }
   } else {
-    pokemon2 = "";
-    pokemon3 = "";
+    resetPokemon1And2();
   }
-  getId('informationContainer').innerHTML = createChainHTML(pokemon1, pokemon2, pokemon3);
+}
+
+
+async function renderPokemon1(evolutionchain, chain) {
+  let img1 = await loadPokemon1IMG(evolutionchain);
+  //1. POKEMON
+  return pokemon1 = /*html*/ ` 
+      <div class="pokemonchain-detail">
+        <div id="pokemon1IMG">${img1}</div>
+        <div class="pokemon">${chain['species']['name']}</div>
+      </div>
+  `;
+}
+
+
+function resetPokemon1And2() {
+  pokemon2 = "";
+  pokemon3 = "";
+}
+
+
+function renderChain() {
+  getId('informationContainer').innerHTML = createChainHTML();
   getId('informationContainer').classList.remove('add-scrolling');
 }
 
@@ -47,7 +67,12 @@ async function findSecondPokemonForChain(chainArr) {
     lvl1 = "-";
   };
   let img2 = await loadPokemon2IMG(chainArr);
-  pokemon2 += /*html*/ `
+  renderPokemon2(lvl1, img2, chainArr);
+}
+
+
+function renderPokemon2(lvl1, img2, chainArr) {
+  return pokemon2 += /*html*/ `
     <div>Level ${lvl1}</div>
     <div class="pokemonchain-detail">
       <div>${img2}</div>
@@ -66,18 +91,22 @@ async function findMoreThanTwoPokemonForChain(chainArr) {
       lvl2 = "-";
     };
     let img3 = await loadPokemon3IMG(chainArr);
-    pokemon3 = /*html*/ `
-      <div>Level ${lvl2}</div>
-      <div class="pokemonchain-detail">
-        <div>${img3}</div>
-        <div class="pokemon">${chainArr['evolves_to']['0']['species']['name']}</div>
-      </div>
-    `;
+    renderPokemon3(lvl2, img3, chainArr);
   } else {
     pokemon3 = "";
   }
 }
 
+
+function renderPokemon3(lvl2, img3, chainArr){
+  return pokemon3 = /*html*/ `
+  <div>Level ${lvl2}</div>
+  <div class="pokemonchain-detail">
+    <div>${img3}</div>
+    <div class="pokemon">${chainArr['evolves_to']['0']['species']['name']}</div>
+  </div>
+`;
+}
 
 async function loadPokemon1IMG(evolutionchain) {
   let chain = evolutionchain['chain'];
@@ -107,7 +136,7 @@ async function loadPokemonIMG(pokemonlink) {
 }
 
 
-function createChainHTML(pokemon1, pokemon2, pokemon3) {
+function createChainHTML() {
   return /*html*/ `
     <div class="chain-container">
       <h5>Evolution</h5>
