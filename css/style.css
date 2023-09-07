@@ -18,12 +18,13 @@ html {
 }
 
 input {
-    outline:none;
+    outline: none;
 }
 
 .btn {
     padding: 3px !important;
 }
+
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -63,7 +64,6 @@ input {
     display: flex;
     align-items: center;
     justify-content: space-between
-
 }
 
 .header img {
@@ -76,11 +76,13 @@ input {
     gap: 16px;
     align-items: center;
 }
+
 .search {
     display: flex;
     align-items: center;
     gap: 16px;
 }
+
 .footer {
     font-size: 14px;
     background-color: rgba(0, 0, 0, 0.5);
@@ -365,6 +367,7 @@ input {
 .dropdown-menu {
     --bs-dropdown-link-active-bg: #e9ecef !important;
     --bs-dropdown-link-hover-bg: rgb(245, 245, 245) !important;
+    padding: 8px !important;
 }
 
 
@@ -594,77 +597,12 @@ input {
 
 
 @media (max-width: 360px) {
-    .pokemonchain-img {
-        cursor: pointer;
-        height: 85px;
-        width: 85px;
-    }
 
-    .chain-container {
-        overflow-y: scroll;
-    }
+}
 
-    .chain {
-        flex-direction: column;
-    }
-
-    .pokemonchain-detail {
-        margin: 24px 0 24px 0;
-    }
-
-    .pokeball-pokedex {
-        width: 100%;
-    }
-
-   
-    .detail {
-        height: 70vh;
-
-    }
-
-    .detail-header {
-        padding: 6px;
-    }
-
-    .pokemon-type-tag {
-        font-size: 12px;
-    }
-
-    .pokemonImage-background {
-        height: 200px;
-        width: 200px;
-    }
-
-    .pokemonImage {
-        height: 200px;
-        width: 200px;
-    }
-
-
-    .navigation-container {
-        padding: 0px 5px 0px 5px;
-        font-size: 15px;
-    }
-
-
-    .back-forward {
-        padding: 6px;
-    }
-
-    #informationContainer {
-        padding: 6px;
-    }
-
-    .arrow {
-        height: 20px;
-        width: 20px;
-    }
-
-    .progress-hide {
-        display: none !important;
-    }
-
-    /* .dropdown-menu {
-        font-size: 14px !important;
+@media (max-width: 300px) {
+/* 
+    .previewCard:hover .previewCardImg {
+        transform: scale(1.2, 1.2);
     } */
 }

@@ -174,10 +174,10 @@ function createPokemonCardHTML(pokemon) {
             More
           </a>
           <ul class="dropdown-menu">
-            <li><button onclick="renderEvolutionchain(${i})" class="dropdown-item" type="button"
-                style="color: ${findColor(type)};">Evolution</button></li>
-            <li><button onclick="renderMoves(${i})" class="dropdown-item" type="button"
-                style="color: ${findColor(type)};">Moves</button></li>
+            <li><a onclick="renderEvolutionchain(${i})" class="link" type="button"
+                style="color: ${findColor(type)};">Evolution</a></li>
+            <li><a onclick="renderMoves(${i})" class="link" type="button"
+                style="color: ${findColor(type)};">Moves</a></li>
           </ul>
         </div>
       </div>
