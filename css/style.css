@@ -7,7 +7,6 @@ body {
     background-size: cover;
 }
 
-
 html {
     scroll-behavior: smooth !important;
     scrollbar-color: black white;
@@ -17,13 +16,6 @@ html {
     /* width */
 }
 
-input {
-    outline: none;
-}
-
-.btn {
-    padding: 3px !important;
-}
 
 ::-webkit-scrollbar {
     width: 10px;
@@ -40,16 +32,6 @@ input {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #1a1a1a;
-}
-
-.link {
-    cursor: pointer;
-    text-decoration: none !important;
-}
-
-.link:hover {
-    background-color: rgb(245, 245, 245);
-    border-radius: 5px;
 }
 
 
@@ -75,6 +57,10 @@ input {
     display: flex;
     gap: 16px;
     align-items: center;
+}
+
+input {
+    outline: none;
 }
 
 .search {
@@ -114,14 +100,8 @@ input {
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    /* -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover; */
     background-size: cover;
     background-color: black;
-
-
     z-index: 999;
     position: fixed;
     left: 0;
@@ -137,10 +117,6 @@ input {
     display: none;
 }
 
-.previewCard-content {
-    position: relative;
-}
-
 .previewCard {
     border-radius: 20px;
     box-shadow: inset 0px 5px 10px 0px rgba(255, 255, 255, 0.7);
@@ -154,13 +130,6 @@ input {
     font-size: medium;
     width: 300px;
     overflow: hidden;
-
-}
-
-.previewCard:hover .previewCardImg {
-    transform: scale(1.55, 1.55);
-    transition: 0.4s;
-    color: rgba(0, 0, 0, 0.1);
 }
 
 .previewCard:hover {
@@ -169,21 +138,17 @@ input {
     overflow: visible;
     opacity: 0.9;
     background-color: black !important;
+    cursor: pointer;
+}
+
+.previewCard:hover .previewCardImg {
+    transform: scale(1.55, 1.55);
+    transition: 0.4s;
+    color: rgba(0, 0, 0, 0.1);
 }
 
 .previewCard:hover .pokeball {
     display: none;
-}
-
-.previewCardImg {
-    height: 150px;
-    width: 150px;
-    z-index: 2;
-
-}
-
-.previewCard:hover {
-    cursor: pointer;
 }
 
 .previewCard-Pokemon-Id {
@@ -191,6 +156,10 @@ input {
     justify-content: flex-end;
     width: 100%;
     color: black !important;
+}
+
+.previewCard-content {
+    position: relative;
 }
 
 .previewCard-details {
@@ -203,7 +172,6 @@ input {
 
 .Pokemon-Name {
     font-size: x-large;
-
 }
 
 .Pokemon-Name:first-letter {
@@ -225,6 +193,22 @@ input {
     text-transform: uppercase;
 }
 
+.previewCardImg {
+    height: 150px;
+    width: 150px;
+    z-index: 2;
+}
+
+.pokeball {
+    left: 162px;
+    top: -10px;
+    opacity: 0.2;
+    position: absolute;
+    width: 90%;
+    /* left: 130px;
+    top: -10px;        */
+}
+
 /* --------------------------------------DETAIL_HEADER------------------------------------------ */
 .detail {
     display: flex;
@@ -234,7 +218,6 @@ input {
     overflow-y: scroll;
     max-height: 100%;
     height: 660px;
-    padding: 25px;
     border-radius: 20px;
     padding: 14px;
     border: 2px solid;
@@ -317,15 +300,7 @@ input {
     z-index: 1;
 }
 
-.pokeball {
-    left: 162px;
-    top: -10px;
-    opacity: 0.2;
-    position: absolute;
-    width: 90%;
-    /* left: 130px;
-    top: -10px;        */
-}
+
 
 .pokeball-pokedex {
     opacity: 0.2;
@@ -363,6 +338,15 @@ input {
     border-radius: 5px !important;
 }
 
+.link {
+    cursor: pointer;
+    text-decoration: none !important;
+}
+
+.link:hover {
+    background-color: rgb(245, 245, 245);
+    border-radius: 5px;
+}
 
 .dropdown-menu {
     --bs-dropdown-link-active-bg: #e9ecef !important;
