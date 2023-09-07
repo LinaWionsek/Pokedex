@@ -37,7 +37,7 @@ html {
     background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
     height: 150px;
-    padding: 50px;
+    padding: 38px;
     color: white;
     display: flex;
     align-items: center;
@@ -65,12 +65,16 @@ input {
     gap: 16px;
 }
 
+.button{
+    padding: 2px;
+}
+
 .footer {
     font-size: 14px;
     background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
     height: 150px;
-    padding: 0px 50px 0px 50px;
+    padding: 0px 38px 0px 38px;
     color: white;
     display: flex;
     justify-content: center;
@@ -481,6 +485,11 @@ input {
 
 /* --------------------------------------RESPONSIVE------------------------------------------ */
 @media (max-width: 768px) {
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+    
     .previewCard {
         margin: 1.3%;
     }
