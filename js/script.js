@@ -1,71 +1,76 @@
-let offsetNumber = 0
-let limitNumber = 20
+let offsetNumber = 0;
+let limitNumber = 20;
 let nextUrl;
-let isAlreadyLoading = false;
 let lvl1 = "";
 let lvl2 = "";
 
-// https://pokeapi.co/api/v2/evolution-chain/528/
-// https://pokeapi.co/api/v2/generation/1/
-// https://pokeapi.co/api/v2/pokemon-species/2/ generation -> name: generation-i url:https://pokeapi.co/api/v2/generation/1/
-// evolution chain -> url: url mit link zu evolution chain
 
-window.addEventListener('scroll', async function () {
-  if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1 && !isAlreadyLoading) {
-    isAlreadyLoading = true
-    await loadMorePokemon();
-    isAlreadyLoading = false
+function init() {
+  includeHTML();
+  getURL();
+}
+
+
+async function includeHTML() {
+  let includeElements = document.querySelectorAll('[w3-include-html]');
+  for (const element of includeElements) {
+    const file = element.getAttribute("w3-include-html");
+    let resp = await fetch(file);
+    if (resp.ok) {
+      element.innerHTML = await resp.text();
+    } else {
+      element.innerHTML = 'Page not found';
+    }
   }
-});
+}
 
 
 // Gibt Liste mit einzelenen PokemonURLs als JSON raus
 async function fetchApiReturnAsJson(url) {
   let response = await fetch(url);
   let currentPokemon = await response.json(); // JSON 
-  // console.log("erstes pokemon",currentPokemon)
   return currentPokemon;
 }
+
 
 // wenn trigger zb button lade die nächsten pokemon mit loadPokemonWithNextURL(nextUrl) danach renderallcards 
 async function loadPokemonWithNextURL(url) {
   let currentPokemon = await fetchApiReturnAsJson(url); // genauso wie await response.json();
   // kein let vor nextUrl deshalb wird die globale Variable benutzt!
   // nextUrl wird erst gefüllt wenn loadPokemonWithNextURL ausgeführt wird
-  nextUrl = currentPokemon['next'] //nextURL mit neuem offset 
+  nextUrl = currentPokemon['next']; //nextURL mit neuem offset 
   // console.log("NextURL", currentPokemon)
   return currentPokemon;
 }
 
 
 async function loadMorePokemon() {
-  let currentPokemon = await loadPokemonWithNextURL(nextUrl)
+  let currentPokemon = await loadPokemonWithNextURL(nextUrl);
   await renderAllCards(currentPokemon);
 }
+
 
 // offsetNumber change um 20 - 20 40 60 80 100
 async function getURL() {
   let url = 'https://pokeapi.co/api/v2/pokemon/?offset=' + offsetNumber + '0&limit=' + limitNumber;
-  let currentPokemon = await loadPokemonWithNextURL(url)
+  let currentPokemon = await loadPokemonWithNextURL(url);
   await renderAllCards(currentPokemon);
 }
 
 
 // Nimmt die einzelnen PokemonURLs ruas und gibt sie der loadPokemonAsJSON Funktion mit
 async function renderAllCards(currentPokemon) {
-  let getPokemonApiURLs = currentPokemon['results']
+  let getPokemonApiURLs = currentPokemon['results'];
   for (let i = 0; i < getPokemonApiURLs.length; i++) {
     const getPokemonApiURL = getPokemonApiURLs[i]['url'];
-    // console.log(getPokemonApiURL)
-    await loadPokemonAsJSON(getPokemonApiURL)
+    await loadPokemonAsJSON(getPokemonApiURL);
   }
 }
 
 
 // Verwandelt PokeApiUrl in JSON mit den Daten die ich haben will
 async function loadPokemonAsJSON(getPokemonApiURL) {
-  let pokemon = await fetchApiReturnAsJson(getPokemonApiURL)
-  // console.log("pokemon as jason", pokemon)
+  let pokemon = await fetchApiReturnAsJson(getPokemonApiURL);
   renderPokemonPreviewCard(pokemon);
 }
 
@@ -78,7 +83,7 @@ function renderPokemonPreviewCard(pokemon) {
 function createPreviewCardHTML(pokemon) {
   let type = findFirstType(pokemon);
   let secondType = findSecondType(pokemon);
-  let i = pokemon['id']
+  let i = pokemon['id'];
   return /*html*/ `
     <div onclick="openPokedex(${i})" class="previewCard" style = "background-color: ${findColor(type)}">
       <div class="previewCard-Pokemon-Id h5">#${pokemon['id']}</div>            
@@ -92,13 +97,12 @@ function createPreviewCardHTML(pokemon) {
             <img class="pokeball" src="img/pokeball.png" alt="">          
         </div>
     </div>
-`;
+  `;
 }
 
 
 async function openPokedex(i) {
-  let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`)
-  // console.log("openPokedex", pokemon)
+  let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`);
   document.getElementById('pokedex').classList.remove("d-none");
   renderPokedex(pokemon);
 }
@@ -108,14 +112,6 @@ function closePokedex() {
   document.getElementById('pokedex').classList.add('d-none');
   enableScroll();
 }
-
-
-// window.addEventListener('mouseup', function (event) {
-//   document.getElementById('detailID');
-//   if (!(event.target.closest("#detailID"))) {
-//     closePokedex();
-//   }
-// });
 
 
 function renderPokedex(pokemon) {
@@ -130,7 +126,6 @@ function createPokemonCardHTML(pokemon) {
   let type = findFirstType(pokemon);
   let secondType = findSecondType(pokemon);
   let i = pokemon['id'];
-  // counter = i;
   return /*html*/ `
   <div class="detail" id="detailID" style="background-color: ${findColor(type)}">
     <!--  DETAIL HEADER   -->
@@ -161,7 +156,6 @@ function createPokemonCardHTML(pokemon) {
         <div class="link" onclick="lastPokemon(${i})"> <div onclick="lastPokemon(${i})"><img class="arrow" src="./img/left.png"></div></div>
         <div class="link" onclick="nextPokemon(${i})"><div onclick="nextPokemon(${i})"><img class="arrow" src="./img/right.png"></div></div>   
       </div>
-
       <div class="navigation-container">
         <a onclick="renderAbout(${i})"  class="link" style="color: ${findColor(type)};">About</a>
         <a onclick="renderStats(${i})"  class="link" style="color: ${findColor(type)};">Base&nbspStats</a>
@@ -185,89 +179,75 @@ function createPokemonCardHTML(pokemon) {
   `;
 }
 
+
 async function nextPokemon(i) {
-  let newI = i + 1
-  let url = `https://pokeapi.co/api/v2/pokemon/${newI}`
-  let pokemon = await fetchApiReturnAsJson(url)
+  let newI = i + 1;
+  let url = `https://pokeapi.co/api/v2/pokemon/${newI}`;
+  let pokemon = await fetchApiReturnAsJson(url);
   renderPokedex(pokemon);
 }
 
 
 async function lastPokemon(i) {
-  let newI = i - 1
-  let url = `https://pokeapi.co/api/v2/pokemon/${newI}`
-  let pokemon = await fetchApiReturnAsJson(url)
+  let newI = i - 1;
+  let url = `https://pokeapi.co/api/v2/pokemon/${newI}`;
+  let pokemon = await fetchApiReturnAsJson(url);
   renderPokedex(pokemon);
 }
 
 
 async function renderAbout(i) {
-  let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`)
-  let species = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon-species/${i}`)
-  console.log("species", species)
-  document.getElementById('informationContainer').innerHTML = createAboutHTML(pokemon, species)
+  let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`);
+  let species = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon-species/${i}`);
+  document.getElementById('informationContainer').innerHTML = createAboutHTML(pokemon, species);
   document.getElementById('informationContainer').classList.remove('add-scrolling');
 }
 
 
 async function renderMoves(i) {
-  let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`)
+  let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`);
   createMoveDetails(pokemon);
-  document.getElementById('informationContainer').innerHTML = ` <div id="movecontainer"></div>`
+  document.getElementById('informationContainer').innerHTML = /*html*/ `<div id="movecontainer"></div>`;
 }
+
 
 // -----------------------------------------------------------------------------------------------------------------
 async function createMoveDetails(pokemon) {
-  let moves = pokemon['moves']
+  let moves = pokemon['moves'];
   let type = findFirstType(pokemon);
   for (let i = 0; i < moves.length; i++) {
     let move = moves[i];
     let level = move['version_group_details']['0']['level_learned_at'];
     let url = move['move']['url'];
-    let moveDetails = await fetchApiReturnAsJson(url)
-    console.log(moveDetails)
-    let moveDescription = "-"
-
+    let moveDetails = await fetchApiReturnAsJson(url);
+    let moveDescription = "-";
     if (moveDetails['effect_entries'].length != 0) {
-      moveDescription = moveDetails['effect_entries']['0']['short_effect'].replace('$effect_chance', '')
-      console.log(moveDescription)
+      moveDescription = moveDetails['effect_entries']['0']['short_effect'].replace('$effect_chance', '');
     }
     let moveType = moveDetails['type']['name'];
-    let allDetails = `
-    <div class="move-details">    
-    <div>${moveDescription}</div>
-    <div>movetype ${moveType}</div>
-    <div>learned at level ${level}</div>
-    </div>`;
-    createMovesHTML(move, allDetails, type)
+    let allDetails = /*html*/ `
+      <div class="move-details">    
+        <div>${moveDescription}</div>
+        <div>movetype ${moveType}</div>
+        <div>learned at level ${level}</div>
+      </div>
+    `;
+    createMovesHTML(move, allDetails);
     if (i === moves.length - 1) {
-      document.getElementById('movecontainer').innerHTML += `<div class="bottom-placeholder"></div>`
+      document.getElementById('movecontainer').innerHTML += /*html*/ `<div class="bottom-placeholder"></div>`;
     }
-
   }
 }
 
 
-function createMovesHTML(move, allDetails, type) {
-  document.getElementById('movecontainer').innerHTML += `
-            <div class="move">
-                ${move['move']['name']}
-             </div>
-             ${allDetails}
-            `;
+function createMovesHTML(move, allDetails) {
+  document.getElementById('movecontainer').innerHTML += /*html*/ `
+    <div class="move">
+        ${move['move']['name']}
+      </div>
+      ${allDetails}
+  `;
 }
-
-// async function createMoveDetails(move) {
-//   let url = move['moves']['0']['move']['url']
-//   let level = move['moves']['0']['version_group_details']['0']['level_learned_at']
-//   let moveDetails = await fetchApiReturnAsJson(url)
-//   console.log(moveDetails)
-//   let moveDescription = moveDetails['flavor_text_entries']['2']['flavor_text']
-//   let moveType = moveDetails['type']['name']
-//   let name = moveDetails['name']
-//   console.log(name, level, moveType, moveDescription)
-//   document.getElementById('informationContainer').innerHTML = createMovesHTML(pokemon);
-// }
 
 
 function createAboutHTML(pokemon, species) {
@@ -297,9 +277,10 @@ function createAboutHTML(pokemon, species) {
     `;
 }
 
+
 async function renderStats(i) {
-  let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`)
-  document.getElementById('informationContainer').innerHTML = createStatsHTML(pokemon)
+  let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`);
+  document.getElementById('informationContainer').innerHTML = createStatsHTML(pokemon);
 }
 
 
@@ -307,11 +288,11 @@ function createStatsHTML(pokemon) {
   let type = findFirstType(pokemon);
   return /*html*/ `
     ${pokemon['stats'].map(s => `
-                    <div id="statID" class="stats"><span class="stat-name">${s['stat']['name']}</span>
-                        <span class="stat-value">${s['base_stat']}</span>
-                        <div class="progress-hide progress bar-height-width" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar" style="width: ${s['base_stat']}%; height=20px; background-color: ${findColor(type)};"></div>
-                        </div>
-                    </div>`).join(' ')}
-   `;
+      <div id="statID" class="stats"><span class="stat-name">${s['stat']['name']}</span>
+          <span class="stat-value">${s['base_stat']}</span>
+          <div class="progress-hide progress bar-height-width" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+              <div class="progress-bar" style="width: ${s['base_stat']}%; height=20px; background-color: ${findColor(type)};"></div>
+          </div>
+      </div>`).join(' ')}
+  `;
 }

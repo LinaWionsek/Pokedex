@@ -560,6 +560,11 @@ input {
         gap: 8px;
     }
 
+    .pokemonImage {
+        height: 200px;
+        width: 200px;
+    }
+
     .bar-height-width {
         height: 0;
         width: 0;
