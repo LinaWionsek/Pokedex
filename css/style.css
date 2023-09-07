@@ -593,16 +593,50 @@ input {
     .previewCard {
         margin: 3%;
     }
+
+    .chain {
+        flex-direction: column;
+    }
 }
 
 
 @media (max-width: 360px) {
+    #content {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
 
+    .previewCard:hover .previewCardImg {
+        transform: scale(1.2, 1.2);
+    }
+
+    .previewCard {
+        margin: 1%;
+    }
 }
 
 @media (max-width: 300px) {
-/* 
+    .previewCard {
+        width: 250px;
+    }
+
+    .previewCardImg {
+        height: 130px;
+        width: 130px;
+    }
+
     .previewCard:hover .previewCardImg {
         transform: scale(1.2, 1.2);
-    } */
+    }
+
+    .search {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .bar-height-width {
+        height: 0;
+        width: 0;
+    }
 }
