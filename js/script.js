@@ -202,36 +202,40 @@ async function renderAbout(i) {
 
 async function renderMoves(i) {
   let pokemon = await fetchApiReturnAsJson(`https://pokeapi.co/api/v2/pokemon/${i}`);
-  createMoveDetails(pokemon);
+  createMoveDetails(pokemon['moves']);
   getId('informationContainer').innerHTML = /*html*/ `<div id="movecontainer"></div>`;
 }
 
 
 // -----------------------------------------------------------------------------------------------------------------
-async function createMoveDetails(pokemon) {
-  let moves = pokemon['moves'];
-  let type = findFirstType(pokemon);
+async function createMoveDetails(moves) {
   for (let i = 0; i < moves.length; i++) {
     let move = moves[i];
     let level = move['version_group_details']['0']['level_learned_at'];
     let url = move['move']['url'];
     let moveDetails = await fetchApiReturnAsJson(url);
     let moveDescription = "-";
+    // movedescription
     if (moveDetails['effect_entries'].length != 0) {
       moveDescription = moveDetails['effect_entries']['0']['short_effect'].replace('$effect_chance', '');
     }
     let moveType = moveDetails['type']['name'];
-    let allDetails = /*html*/ `
-      <div class="move-details">    
-        <div>${moveDescription}</div>
-        <div>movetype ${moveType}</div>
-        <div>learned at level ${level}</div>
-      </div>
-    `;
-    createMovesHTML(move, allDetails);
-    if (i === moves.length - 1) {
-      getId('movecontainer').innerHTML += /*html*/ `<div class="bottom-placeholder"></div>`;
-    }
+    renderMoveDetails(moveDescription, moveType, level, move, moves.length, i)
+  }
+}
+
+
+function renderMoveDetails(moveDescription, moveType, level, move, length, i) {
+  let allDetails = /*html*/ `
+  <div class="move-details">    
+    <div>${moveDescription}</div>
+    <div>movetype ${moveType}</div>
+    <div>learned at level ${level}</div>
+  </div>
+`;
+  createMovesHTML(move, allDetails);
+  if (i === length - 1) {
+    getId('movecontainer').innerHTML += /*html*/ `<div class="bottom-placeholder"></div>`;
   }
 }
 

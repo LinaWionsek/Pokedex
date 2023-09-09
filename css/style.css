@@ -8,10 +8,10 @@ body {
 }
 
 html {
-    scroll-behavior: smooth !important;
+    /* scroll-behavior: smooth !important; */
     scrollbar-color: black white;
     scrollbar-width: small;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
     height: 100% !important;
 }
 
@@ -96,12 +96,7 @@ input {
 }
 
 .dialog-bg {
-    background-image: url(../img/bg.jpg);
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    background-color: black;
+    background-color: rgba(0,0,0,0.7);
     z-index: 999;
     position: fixed;
     left: 0;
