@@ -1,0 +1,9 @@
+.add-scrolling{
+    overflow-y: scroll;
+}
+
+.remove-scrolling {
+    height: 100%;
+    overflow: hidden;
+} 
+
