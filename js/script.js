@@ -1,5 +1,5 @@
 let offsetNumber = 0;
-let limitNumber = 20;
+let limitNumber = 50;
 let nextUrl;
 let lvl1 = "";
 let lvl2 = "";
@@ -58,8 +58,8 @@ async function getURL() {
 async function renderAllCards(currentPokemon) {
   let getPokemonApiURLs = currentPokemon['results'];
   for (let i = 0; i < getPokemonApiURLs.length; i++) {
-    const getPokemonApiURL = getPokemonApiURLs[i]['url'];
-    await loadPokemonAsJSON(getPokemonApiURL);
+      const getPokemonApiURL = getPokemonApiURLs[i]['url'];
+      await loadPokemonAsJSON(getPokemonApiURL);
   }
 }
 
@@ -106,17 +106,22 @@ async function openPokedex(i) {
 
 function closePokedex() {
   getId('pokedex').classList.add('d-none');
-  enableScroll();
 }
 
 
 function renderPokedex(pokemon) {
   let i = pokemon['id'];
   getId('pokedex').innerHTML = createPokemonCardHTML(pokemon);
-  disableScroll();
+  myFunction(i);
   renderAbout(i);
 }
 
+function myFunction(i) {
+  if (i == 1) {
+    getId('left-arrow-container').classList.add('d-none')
+
+  }
+}
 
 function createPokemonCardHTML(pokemon) {
   let type = findFirstType(pokemon);
@@ -149,8 +154,8 @@ function createPokemonCardHTML(pokemon) {
     <!--  DETAIL FOOTER   -->
     <div>
       <div class="back-forward">
-        <div class="link" onclick="lastPokemon(${i})"> <div onclick="lastPokemon(${i})"><img class="arrow" src="./img/left.png"></div></div>
-        <div class="link" onclick="nextPokemon(${i})"><div onclick="nextPokemon(${i})"><img class="arrow" src="./img/right.png"></div></div>   
+        <div class="link"><img onclick="lastPokemon(${i})" id="left-arrow-container" class="arrow" src="./img/left.png"></div>
+        <div class="link"><img onclick="nextPokemon(${i})" class="arrow" src="./img/right.png"></div>   
       </div>
       <div class="navigation-container">
         <a onclick="renderAbout(${i})"  class="link" style="color: ${findColor(type)};">About</a>

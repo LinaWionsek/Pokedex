@@ -21,7 +21,7 @@ async function getSearchedPokemon() {
     let results = [];
     // toLowerCase important because mobile phones start with uppercase letter and so function doesn't work
     let search_query = getId('searchQuery').value.toLowerCase();
-    let newUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=1000';
+    let newUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=1010';
     let data = await fetchApiReturnAsJson(newUrl);
     proofIfText(search_query, results, data);
     renderSearchedPokemon(results);
