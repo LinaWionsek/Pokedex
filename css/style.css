@@ -9,7 +9,7 @@ body {
 
 html {
     /* scroll-behavior: smooth !important; */
-    scrollbar-color: black white;
+    scrollbar-color: black rgb(29, 29, 29);
     scrollbar-width: small;
     /* overflow-x: hidden; */
     height: 100% !important;
@@ -220,6 +220,7 @@ input {
     border: 2px solid;
     border-color: #f3f5fa;
     box-shadow: inset 0px 0px 10px 0px rgba(255, 255, 255, 0.7);
+    overflow-y: hidden;
 }
 
 .detail::-webkit-scrollbar {
@@ -409,6 +410,7 @@ input {
 /* ------------------MOVES---------------- */
 #movecontainer {
     overflow-y: scroll;
+    scrollbar-color: rgb(29, 29, 29) white;
 }
 
 .move {
@@ -458,6 +460,7 @@ input {
     flex-direction: column;
     align-items: center;
     overflow-y: scroll;
+    scrollbar-color: rgb(29, 29, 29) white;
 }
 
 .chain {
