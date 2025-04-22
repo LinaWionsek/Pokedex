@@ -7,10 +7,16 @@ function getId(Id) {
 
 
 window.addEventListener('scroll', async function () {
+  
     if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1 && !isAlreadyLoading) {
+        const spinner = document.getElementById('spinner');
         isAlreadyLoading = true;
+        console.log('Loading more Pokémon...');
+        spinner.classList.remove('d-none');
         await loadMorePokemon();
         isAlreadyLoading = false;
+        console.log('Pokémon loaded!');
+        spinner.classList.add('d-none');
     }
 });
 
