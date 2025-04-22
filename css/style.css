@@ -1,10 +1,5 @@
 body {
     margin: 0 !important;
-    background-image: url(../img/bg.jpg);
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
 }
 
 html {
@@ -15,7 +10,57 @@ html {
     height: 100% !important;
 }
 
-.add-scrolling{
+#background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+    background-image: url(../img/bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#spinner {
+    position: fixed;
+    /* Statt absolute */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(3px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.loader {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3b4cca;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+.pokeball-spinner {
+    width: 100px;
+    height: 100px;
+    animation: spin 1s linear infinite;
+}
+
+.add-scrolling {
     overflow-y: scroll;
 }
 
@@ -69,7 +114,7 @@ input {
     gap: 16px;
 }
 
-.button{
+.button {
     padding: 2px;
 }
 
@@ -100,7 +145,7 @@ input {
 }
 
 .dialog-bg {
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0, 0, 0, 0.7);
     z-index: 999;
     position: fixed;
     left: 0;
@@ -248,7 +293,7 @@ input {
     cursor: pointer;
     text-decoration: none !important;
     font-weight: 500 !important;
-    
+
 }
 
 .link:hover {
@@ -491,9 +536,9 @@ input {
     ::-webkit-scrollbar {
         display: none;
     }
-    
+
     .previewCard {
-        margin: 1.3%;
+        margin: 2.5%;
     }
 
     .header {
@@ -503,14 +548,17 @@ input {
     }
 }
 
+@media (max-width: 600px) {
+
+    #background {
+        background-repeat: repeat;
+        background-size: 228vw;
+        background-position: 52% 128%; 
+       
+    }
+}
 
 @media (max-width: 420px) {
-
-    body {
-        background-repeat: repeat;
-        background-size: 250vw;
-        background-position: 50% 130%;
-    }
 
     .dialog-bg {
         background-repeat: repeat;
@@ -583,43 +631,3 @@ input {
         width: 0;
     }
 }
-
-
-
-
-#spinner {
-    position: fixed; /* Statt absolute */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(3px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .loader {
-    border: 8px solid #f3f3f3;
-    border-top: 8px solid #3b4cca;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-  
-  
-  .pokeball-spinner {
-    width: 100px;
-    height: 100px;
-    animation: spin 1s linear infinite;
-  }
-  
- 
-  
