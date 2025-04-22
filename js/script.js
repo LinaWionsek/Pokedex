@@ -50,16 +50,11 @@ async function loadMorePokemon() {
 
 async function getURL() {
   let url = 'https://pokeapi.co/api/v2/pokemon/?offset=' + offsetNumber + '0&limit=' + limitNumber;
-
   const spinner = document.getElementById('spinner');
   spinner.classList.remove('d-none');
-  console.log("loading...");
-  
   let currentPokemon = await loadPokemonWithNextURL(url);
   await renderAllCards(currentPokemon);
   spinner.classList.add('d-none');
-  console.log("loading complete");
-  
 }
 
 
